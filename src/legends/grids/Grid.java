@@ -1,6 +1,6 @@
-package legends;
+package legends.grids;
 
-import legends.cells.Cell;
+import legends.grids.cells.Cell;
 
 /**
  * Grid for the game.

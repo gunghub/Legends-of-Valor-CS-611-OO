@@ -1,6 +1,6 @@
-package legends.cells;
+package legends.grids.cells;
 
-import legends.Fight;
+import legends.gameplay.Fight;
 import legends.players.LegendsPlayer;
 
 import java.util.Random;

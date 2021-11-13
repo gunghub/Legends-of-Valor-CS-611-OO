@@ -1,15 +1,15 @@
-package legends;
+package legends.grids;
 
-import legends.cells.Cell;
-import legends.cells.CommonSpace;
-import legends.cells.Inaccessible;
-import legends.cells.MarketCell;
+import legends.grids.cells.Cell;
+import legends.grids.cells.CommonSpace;
+import legends.grids.cells.Inaccessible;
+import legends.grids.cells.MarketCell;
 import legends.players.LegendsPlayer;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class LegendsGrid extends Grid{
+public class LegendsGrid extends Grid {
     private Cell[][] grid;
     private ArrayList<Cell> cells;
     public LegendsGrid(){

@@ -1,6 +1,4 @@
-package legends.cells;
-
-import legends.cells.Cell;
+package legends.grids.cells;
 
 public class PlayerCell extends Cell {
     public PlayerCell(int row, int col){

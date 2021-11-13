@@ -1,7 +1,7 @@
 package legends.characters.heroes;
 
-import legends.*;
 import legends.characters.Character;
+import legends.gameplay.Inventory;
 import legends.items.Armor;
 import legends.items.Item;
 import legends.items.Potion;

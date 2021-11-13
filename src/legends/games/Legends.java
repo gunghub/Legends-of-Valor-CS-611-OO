@@ -1,5 +1,6 @@
-package legends;
+package legends.games;
 
+import legends.grids.LegendsGrid;
 import legends.characters.heroes.Hero;
 import legends.players.LegendsPlayer;
 import legends.utilities.FileParser;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Legends class. Runs the game.
  */
-public class Legends extends RPGGame{
+public class Legends extends RPGGame {
 
     private boolean play;
     public Legends(){

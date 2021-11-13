@@ -1,5 +1,8 @@
 package legends;
 
+import legends.games.Game;
+import legends.games.Legends;
+
 public class Main {
 
     public static void main(String[] args) {

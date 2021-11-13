@@ -1,4 +1,4 @@
-package legends.cells;
+package legends.grids.cells;
 
 /**
  * abstratct class for a Cell. Extends to three types of cells.

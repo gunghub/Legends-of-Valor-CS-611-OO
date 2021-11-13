@@ -1,7 +1,7 @@
-package legends.cells;
+package legends.grids.cells;
 
 import legends.players.LegendsPlayer;
-import legends.Markets;
+import legends.gameplay.Markets;
 
 /**
  * Market cells.

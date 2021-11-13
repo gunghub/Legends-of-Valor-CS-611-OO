@@ -1,6 +1,7 @@
-package legends;
+package legends.gameplay;
 
 import legends.characters.heroes.Hero;
+import legends.gameplay.Fight;
 import legends.items.Potion;
 import legends.characters.monsters.Monster;
 import legends.items.spells.Spell;

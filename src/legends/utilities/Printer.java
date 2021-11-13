@@ -1,6 +1,6 @@
 package legends.utilities;
 
-import legends.Inventory;
+import legends.gameplay.Inventory;
 import legends.characters.heroes.Hero;
 import legends.items.Armor;
 import legends.items.Potion;

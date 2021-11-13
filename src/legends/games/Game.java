@@ -1,4 +1,4 @@
-package legends;
+package legends.games;
 
 public abstract class Game {
     abstract public void playGame();

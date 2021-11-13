@@ -1,6 +1,6 @@
 package legends.players;
 
-import legends.LegendsGrid;
+import legends.grids.LegendsGrid;
 import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
 import legends.characters.heroes.Hero;

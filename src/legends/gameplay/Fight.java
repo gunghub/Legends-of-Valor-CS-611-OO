@@ -1,4 +1,4 @@
-package legends;
+package legends.gameplay;
 
 import legends.characters.heroes.Hero;
 import legends.characters.monsters.Monster;

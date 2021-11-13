@@ -1,4 +1,4 @@
-package legends;
+package legends.gameplay;
 
 import legends.items.Armor;
 import legends.items.Item;

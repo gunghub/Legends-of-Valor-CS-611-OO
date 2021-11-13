@@ -1,6 +1,7 @@
-package legends;
+package legends.gameplay;
 
 import legends.characters.heroes.Hero;
+import legends.gameplay.Inventory;
 import legends.items.Potion;
 import legends.players.LegendsPlayer;
 import legends.utilities.FileParser;

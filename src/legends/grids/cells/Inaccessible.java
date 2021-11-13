@@ -1,4 +1,4 @@
-package legends.cells;
+package legends.grids.cells;
 
 import legends.players.LegendsPlayer;
 
