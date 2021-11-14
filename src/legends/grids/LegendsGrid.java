@@ -1,9 +1,11 @@
 package legends.grids;
 
+import legends.characters.heroes.Hero;
 import legends.grids.cells.Cell;
 import legends.grids.cells.CommonSpace;
 import legends.grids.cells.Inaccessible;
-import legends.grids.cells.MarketCell;
+import legends.grids.cells.InaccessibleCell;
+import legends.grids.cells.NexusCell;
 import legends.players.LegendsPlayer;
 
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import java.util.Random;
 public class LegendsGrid extends Grid {
     private Cell[][] grid;
     private ArrayList<Cell> cells;
-    protected String symbol;
     public LegendsGrid(){
         super(8,8);
         grid = new Cell[8][8];
@@ -54,14 +55,18 @@ public class LegendsGrid extends Grid {
 
     }
 
-    public void printGrid(LegendsPlayer p){
+    public void printGrid(Hero h){
         for(int i=0; i<getNumRows(); i++){
             for(int j=0; j<getNumCols(); j++){
                 if(j<getNumCols()-1){
 //                    if(i%2==0){
 //                        System.out.printf("__");
 //                    }else {
-                    if(p.getPRow() == i && p.getPCol() == j){
+                        if(p.getPRow() == i && p.getPCol() == j){
+                            System.out.printf("| P ");
+                        } else{
+                            System.out.printf("| " + grid[i][j].getIcon()+" ");
+                    if(h.getRow() == i && h.getCol() == j){
 //                            System.out.printf("| P ");
 //                            String context = String.format("%-2s\uFE31", symbol);
                         System.out.print("| " + 'P' + " ");
@@ -73,7 +78,7 @@ public class LegendsGrid extends Grid {
 //                    if(i%2==0){
 //                        System.out.printf("___\n");
 //                    }else{
-                        if(p.getPRow() == i && p.getPCol() == j){
+                        if(h.getRow() == i && h.getCol() == j){
                             System.out.printf("| P |\n");
                         } else{
                             System.out.printf("| " + grid[i][j].getIcon()+" |\n");
@@ -92,20 +97,20 @@ public class LegendsGrid extends Grid {
      * @param p
      * @param cell
      */
-    public void land(int row, int col, LegendsPlayer p, Cell cell, String move){
+    public void land(int row, int col, Hero h, Cell cell, String move){
 //        printGrid(p);
         String icon = grid[row][col].getIcon();
         switch(icon){
-            case "#":
-                Inaccessible i = (Inaccessible) grid[row][col];
-                i.land(move, p);
-                p.makeMove(this);
+            case "I":
+                InaccessibleCell i = (InaccessibleCell) grid[row][col];
+                i.land(move, h);
+                h.makeMove(this);
                 break;
 
-            case "M":
-                MarketCell m = (MarketCell) grid[row][col];
-                m.land(p);
-                p.makeMove(this);
+            case "N":
+                NexusCell n = (NexusCell) grid[row][col];
+                n.land(h);
+                h.makeMove(this);
                 break;
 
             case " ":

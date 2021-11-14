@@ -1,6 +1,7 @@
 package legends.grids;
 
-import legends.NexusCell;
+
+import legends.grids.cells.NexusCell;
 
 public abstract class Nexus {
 
@@ -9,7 +10,6 @@ public abstract class Nexus {
 
     }
 
-    // spawn a monster or hero to the given legends.NexusCell
-
+    // spawn a monster or hero to the given NexusCell
     abstract public void spawn(Character c, NexusCell nc);
 }

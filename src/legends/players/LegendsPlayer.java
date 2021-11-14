@@ -21,63 +21,63 @@ public class LegendsPlayer extends Player {
     }
 
 
-    /**
-     * player chooses a move
-     *
-     * @param grid
-     * @return
-     */
-    public boolean makeMove(LegendsGrid grid) {
-        grid.printGrid(this);
-        boolean play = true;
-        System.out.println("Please choose your move:");
-        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n" +
-                "I/i: show information");
-        String move = ScannerParser.parseString();
-        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
-                move.equals("D") && move.equals("d") && move.equals("Q") && move.equals("q") && move.equals("I") && move.equals("i")) {
-            move = ScannerParser.tryString();
-        }
-        switch (move) {
-            case "W":
-            case "w":
-                setPRow(pRow - 1);
-                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
-                break;
-
-            case "A":
-            case "a":
-                setPCol(pCol - 1);
-                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
-                break;
-
-            case "S":
-            case "s":
-                setPRow(pRow + 1);
-                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
-                break;
-
-            case "D":
-            case "d":
-                setPCol(pCol + 1);
-                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
-                break;
-
-            case "Q":
-            case "q":
-                System.out.println("Thanks for playing! Exiting program...");
-                play = false;
-                break;
-
-            case "I":
-            case "i":
-                Printer printer = new Printer();
-                printer.printHeroes(getHeroes());
-                break;
-        }
-        grid.printGrid(this);
-        return play;
-    }
+//    /**
+//     * player chooses a move
+//     *
+//     * @param grid
+//     * @return
+//     */
+//    public boolean makeMove(LegendsGrid grid) {
+//        grid.printGrid(this);
+//        boolean play = true;
+//        System.out.println("Please choose your move:");
+//        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n" +
+//                "I/i: show information");
+//        String move = ScannerParser.parseString();
+//        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
+//                move.equals("D") && move.equals("d") && move.equals("Q") && move.equals("q") && move.equals("I") && move.equals("i")) {
+//            move = ScannerParser.tryString();
+//        }
+//        switch (move) {
+//            case "W":
+//            case "w":
+//                setPRow(pRow - 1);
+//                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
+//                break;
+//
+//            case "A":
+//            case "a":
+//                setPCol(pCol - 1);
+//                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
+//                break;
+//
+//            case "S":
+//            case "s":
+//                setPRow(pRow + 1);
+//                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
+//                break;
+//
+//            case "D":
+//            case "d":
+//                setPCol(pCol + 1);
+//                grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
+//                break;
+//
+//            case "Q":
+//            case "q":
+//                System.out.println("Thanks for playing! Exiting program...");
+//                play = false;
+//                break;
+//
+//            case "I":
+//            case "i":
+//                Printer printer = new Printer();
+//                printer.printHeroes(getHeroes());
+//                break;
+//        }
+//        grid.printGrid(this);
+//        return play;
+//    }
 
 
     public boolean isValidMove(LegendsGrid grid, int row, int col){
