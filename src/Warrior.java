@@ -3,6 +3,8 @@ public class Warrior extends Hero{
 
     public Warrior(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience){
         super(name, level, HP, mana, strength, agility, dexterity, money, experience);
+        graphic = new Graphic();
+        colors = new Colors();
     }
 
     public String getType(){
@@ -17,7 +19,8 @@ public class Warrior extends Hero{
             setAgility((int)(getAgility()*1.1));
             setDexterity((int)(getDexterity()*1.05));
             setStrength((int)(getStrength()*1.1));
-            System.out.println("Your hero "+getName()+" leveled up! It's now level "+getLevel());
+            graphic.printLevelup();
+            System.out.println(colors.addColor("red","Your hero "+getName()+" leveled up! It's now level "+getLevel()));
 
         }
     }

@@ -9,6 +9,8 @@ public abstract class Hero extends Character {
     private Inventory inventory;
     private Weapon currentW;
     private Armor currentA;
+    protected Graphic graphic;
+    protected Colors colors;
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience) {
         super(name, level, HP);

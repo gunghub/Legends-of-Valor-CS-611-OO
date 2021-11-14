@@ -6,6 +6,7 @@ public class CommonSpace extends Cell{
     private final String type = "CommonSpace";
     public CommonSpace(int row, int col){
         super(" ", row, col);
+        colors = new Colors();
     }
 
     public boolean makeRandom(){
@@ -29,7 +30,7 @@ public class CommonSpace extends Cell{
             Fight f = new Fight();
             f.battle(p);
         }else{
-            System.out.println("Congrats! You landed on a safe space. Please choose your next move.\n");
+            System.out.println(colors.addColor("red","Congrats! You landed on a safe space. Please choose your next move.\n"));
         }
     }
 
