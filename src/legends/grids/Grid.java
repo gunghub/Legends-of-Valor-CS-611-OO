@@ -6,22 +6,24 @@ import legends.grids.cells.Cell;
  * RegularLane for the game.
  */
 public class Grid {
-    private Cell[][] grid;
-    private int numRows;
-    private int numCols;
+    protected LOVCell[][] grids;
+    protected int numRows;
+    protected int numCols;
+    protected String symbol;
 
     public Grid(int numRows, int numCols){
         this.numRows = numRows;
         this.numCols = numCols;
-        grid = new Cell[numRows][numCols];
+//        grid = new Cell[numRows][numCols];
+//        grid = new LOVCell[numRows][numCols];
     }
 
-    public Cell[][] getGrid() {
-        return grid;
+    public LOVCell[][] getGrid() {
+        return grids;
     }
 
-    public void setGrid(Cell[][] grid) {
-        this.grid = grid;
+    public void setGrid(LOVCell[][] grid) {
+        this.grids = grid;
     }
 
     public int getNumRows() {

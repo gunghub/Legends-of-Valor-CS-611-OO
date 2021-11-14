@@ -1,14 +1,3 @@
-package legends.characters.heroes;
-
-import legends.characters.Character;
-import legends.gameplay.Inventory;
-import legends.items.Armor;
-import legends.items.Item;
-import legends.items.Potion;
-import legends.items.Weapon;
-import legends.characters.monsters.Monster;
-import legends.items.spells.Spell;
-
 public abstract class Hero extends Character {
     private int mana;
     private int strength;
@@ -20,6 +9,8 @@ public abstract class Hero extends Character {
     private Inventory inventory;
     private Weapon currentWeapon;
     private Armor currentArmor;
+    protected Graphic graphic;
+    protected Colors colors;
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience) {
         super(name, level, HP);

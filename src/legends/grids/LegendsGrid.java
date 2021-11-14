@@ -12,6 +12,7 @@ import java.util.Random;
 public class LegendsGrid extends Grid {
     private Cell[][] grid;
     private ArrayList<Cell> cells;
+    protected String symbol;
     public LegendsGrid(){
         super(8,8);
         grid = new Cell[8][8];
@@ -60,10 +61,12 @@ public class LegendsGrid extends Grid {
 //                    if(i%2==0){
 //                        System.out.printf("__");
 //                    }else {
-                        if(p.getPRow() == i && p.getPCol() == j){
-                            System.out.printf("| P ");
-                        } else{
-                            System.out.printf("| " + grid[i][j].getIcon()+" ");
+                    if(p.getpRow() == i && p.getpCol() == j){
+//                            System.out.printf("| P ");
+//                            String context = String.format("%-2s\uFE31", symbol);
+                        System.out.print("| " + 'P' + " ");
+                    } else{
+                        System.out.printf("| " + grid[i][j].getIcon()+" ");
 //                        }
                     }
                 }else{

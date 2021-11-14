@@ -7,6 +7,7 @@ public abstract class Cell {
     private String icon;
     private int row;
     private int col;
+    protected Colors colors;
 
     public Cell(String icon, int row, int col){
         this.icon = icon;
