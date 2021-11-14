@@ -2,6 +2,7 @@ package legends.grids;
 
 
 import legends.grids.cells.NexusCell;
+import legends.characters.Character;
 
 public abstract class Nexus {
 

@@ -1,13 +1,13 @@
-package legends;
-
-public class NexusCell extends LOVCell {
-    public NexusCell(){
-        super();
-        border = "N";
-        hasmarket = true;
-    }
-
-    public String getBorder(){
-        return border;
-    }
-}
+//package legends;
+//
+//public class NexusCell extends LOVCell {
+//    public NexusCell(){
+//        super();
+//        border = "N";
+//        hasmarket = true;
+//    }
+//
+//    public String getBorder(){
+//        return border;
+//    }
+//}
