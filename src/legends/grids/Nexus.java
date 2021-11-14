@@ -1,3 +1,5 @@
+package legends.grids;
+
 public abstract class Nexus {
 
 

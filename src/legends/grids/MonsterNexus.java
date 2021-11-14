@@ -1,3 +1,5 @@
+package legends.grids;
+
 import java.util.ArrayList;
 
 public class MonsterNexus extends Nexus{

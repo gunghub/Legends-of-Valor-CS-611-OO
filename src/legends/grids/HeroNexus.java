@@ -1,3 +1,5 @@
+package legends.grids;
+
 public class HeroNexus extends Nexus{
 
     public HeroNexus(){
