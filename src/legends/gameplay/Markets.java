@@ -13,18 +13,20 @@ import java.util.HashMap;
 public class Markets {
     private Inventory market;
     private boolean isShopping;
+    
 
     public Markets() {
         market = new Inventory();
     }
 
-    public void storeConsole(LegendsPlayer p) {
-        System.out.println("You arrive at a market. Would you like to enter?(y/n)");
+
+    public void storeConsole(Hero h) {
+        System.out.println(colors.addColor("cyan", "You arrive at a market. Would you like to enter?(y/n)"));
         isShopping = ScannerParser.parseBoolean();
-        while(isShopping == true) {
-                enterStore(p);
+        while(isShopping) {
+            enterStore(p);
         }
-        System.out.println("You left the market.\n");
+        System.out.println(colors.addColor("cyan","You left the market.\n"));
 
     }
 
@@ -36,7 +38,7 @@ public class Markets {
         market.setWeapons(fp.parseWeapons());
     }
 
-    public void enterStore(LegendsPlayer p){
+    public void enterStore(Hero h){
         initMarket();
         System.out.println("Welcome to the market!");
         System.out.println("Please choose an hero from your list to enter the store:");
@@ -45,13 +47,21 @@ public class Markets {
         Hero chosenHero = p.getHeroes().get(input - 1);
         System.out.println("Hero " + chosenHero.getName() + " entered the store --");
         System.out.println("Would you like to buy or sell an item?");
+//        System.out.println("Welcome to the market!");
+        graphic.printMarket();
+//        System.out.println(colors.addColor("green", "Please choose an hero from your list to enter the store:"));
+//        p.printPlayerHeroes();
+//        int input = ScannerParser.parseInt();
+//        Hero chosenHero = p.getHeroes().get(input - 1);
+//        System.out.println(colors.addColor("green","Hero " + chosenHero.getName() + " entered the store --"));
+        System.out.println(colors.addColor("blue", "Would you like to buy or sell an item?"));
         System.out.println(" 0: Buy\n 1: Sell\n 2: Exit market");
-        input = ScannerParser.parseInt();
-        chooseBuySell(input, chosenHero, p);
+        int input = ScannerParser.parseInt();
+        chooseBuySell(input, h);
     }
 
 
-    public void chooseBuySell(int input, Hero h, LegendsPlayer p) {
+    public void chooseBuySell(int input, Hero h) {
         while (input != 0 &&input != 1 && input != 2) {
             System.out.println("Invalid option! Please try again!");
             input = ScannerParser.parseInt();
@@ -59,11 +69,11 @@ public class Markets {
         switch (input) {
             case 0:
                 heroBuy(h);
-                enterStore(p);
+                enterStore(h);
                 break;
             case 1:
                 heroSell(h);
-                enterStore(p);
+                enterStore(h);
                 break;
             case 2:
                 isShopping = false;

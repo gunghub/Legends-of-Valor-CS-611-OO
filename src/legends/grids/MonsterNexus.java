@@ -1,6 +1,8 @@
 package legends.grids;
 
 import java.util.ArrayList;
+import legends.grids.cells.NexusCell;
+import legends.characters.monsters.Monster;
 
 public class MonsterNexus extends Nexus{
     public MonsterNexus(){

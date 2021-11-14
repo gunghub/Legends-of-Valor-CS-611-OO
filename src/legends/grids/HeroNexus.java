@@ -1,5 +1,12 @@
 package legends.grids;
 
+import legends.grids.cells.NexusCell;
+import legends.characters.heroes.Hero;
+import legends.gameplay.Markets;
+import legends.players.LegendsPlayer;
+import legends.utilities.Factory;
+import legends.characters.Character;
+
 public class HeroNexus extends Nexus{
 
     public HeroNexus(){
@@ -13,9 +20,9 @@ public class HeroNexus extends Nexus{
         h.setCol(nc.getCol());
     }
 
-    public void shop(LegendsPlayer p){
+    public void shop(Hero h){
         Factory fac = new Factory();
         Markets m = fac.newMarkets();
-        m.enterStore(p);
+        m.storeConsole(h);
     }
 }
