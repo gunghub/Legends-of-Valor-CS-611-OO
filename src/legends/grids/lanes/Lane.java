@@ -1,16 +1,17 @@
-package legends.grids;
+package legends.grids.lanes;
+
 
 import legends.grids.cells.Cell;
 
-/**
- * RegularLane for the game.
- */
-public class Grid {
+public class Lane {
     private Cell[][] grid;
     private int numRows;
     private int numCols;
 
-    public Grid(int numRows, int numCols){
+    public Lane(){
+
+    }
+    public Lane(int numRows, int numCols){
         this.numRows = numRows;
         this.numCols = numCols;
         grid = new Cell[numRows][numCols];
@@ -39,7 +40,6 @@ public class Grid {
     public void setNumCols(int numCols) {
         this.numCols = numCols;
     }
-
 
 
 }
