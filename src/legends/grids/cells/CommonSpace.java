@@ -24,8 +24,8 @@ public class CommonSpace extends Cell {
     }
 
     public void makeHasMonster(){
-        boolean hasM = makeRandom();
-        hasMonster = hasM;
+        boolean hasMonster = makeRandom();
+        this.hasMonster = hasMonster;
     }
 
     public void land(LegendsPlayer p){

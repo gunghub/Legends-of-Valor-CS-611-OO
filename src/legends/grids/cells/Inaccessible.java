@@ -19,22 +19,22 @@ public class Inaccessible extends Cell {
         switch(move){
             case "W":
             case "w":
-                p.setpRow(p.getpRow() + 1);
+                p.setPRow(p.getPRow() + 1);
                 break;
 
             case "A":
             case "a":
-                p.setpCol(p.getpCol() + 1);
+                p.setPCol(p.getPCol() + 1);
                 break;
 
             case "S":
             case "s":
-                p.setpRow(p.getpRow() - 1);
+                p.setPRow(p.getPRow() - 1);
                 break;
 
             case "D":
             case "d":
-                p.setpCol(p.getpCol() - 1);
+                p.setPCol(p.getPCol() - 1);
                 break;
         }
         System.out.println("This space is inaccassible. Please try move another direction!\n");

@@ -1,7 +1,6 @@
 package legends.gameplay;
 
 import legends.characters.heroes.Hero;
-import legends.gameplay.Fight;
 import legends.items.Potion;
 import legends.characters.monsters.Monster;
 import legends.items.spells.Spell;
@@ -17,20 +16,20 @@ public class Round {
 
     }
 
-    public void playRound(Fight f, int index, Hero h, Monster m) {
-        ArrayList<Hero> heroes = f.getHeroes();
-        ArrayList<Monster> monsters = f.getMonsters();
+    public void playRound(Fight fight, int index, Hero hero, Monster monster) {
+        ArrayList<Hero> heroes = fight.getHeroes();
+        ArrayList<Monster> monsters = fight.getMonsters();
 
         if (index % 2 == 0) {
-            playOffense(h, m, heroes, monsters);
+            playOffense(hero, monster, heroes, monsters);
         } else {
-            playDefense(h, m, heroes, monsters);
+            playDefense(hero, monster, heroes, monsters);
         }
 
     }
 
     // NEED TO COMPLETE
-    public void playRound(Fight f, int index, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
+    public void playRound(Fight fight, int index, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
         Printer printer = new Printer();
         System.out.println("===============================Current Status=======================================");
         System.out.println("Heroes:");
@@ -86,8 +85,8 @@ public class Round {
         return true;
     }
 
-    public void takeAction(Hero h, Monster m, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
-        System.out.println("Choose an action for hero" + h.getName());
+    public void takeAction(Hero hero, Monster monster, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
+        System.out.println("Choose an action for hero" + hero.getName());
         System.out.println("0: Regular Attack\n1: Cast a spell\n2: Use a potion\n3: Change Armor/Weapon");
         int move = ScannerParser.parseInt();
         while (move != 0 && move != 1 && move != 2 && move != 3) {
@@ -97,42 +96,42 @@ public class Round {
         Printer printer = new Printer();
         switch (move) {
             case 0:
-                h.attack(m, null);
+                hero.attack(monster, null);
                 break;
 
             case 1:
-                ArrayList<Spell> spells = h.getInventory().getSpells();
+                ArrayList<Spell> spells = hero.getInventory().getSpells();
                 if (spells.size() != 0) {
                     System.out.println("Please choose a spell to cast (enter ID):");
                     printer.printSpells(spells);
                     int chosenSpell = ScannerParser.parseInt() - 1;
-                    while (chosenSpell > h.getInventory().getSpells().size()) {
+                    while (chosenSpell > hero.getInventory().getSpells().size()) {
                         chosenSpell = ScannerParser.tryInt() - 1;
                     }
-                    h.attack(m, h.getInventory().getSpells().get(chosenSpell));
+                    hero.attack(monster, hero.getInventory().getSpells().get(chosenSpell));
                 } else {
                     System.out.println("Your hero does not have any spell in their inventory! Choose another move!\n");
-                    takeAction(h, m, heroes, monsters);
+                    takeAction(hero, monster, heroes, monsters);
                 }
 
 
                 break;
 
             case 2:
-                HashMap<Potion, Integer> potions = h.getInventory().getPotions();
+                HashMap<Potion, Integer> potions = hero.getInventory().getPotions();
                 if (potions.size() != 0) {
                     System.out.println("Please choose a potion to use (enter ID):");
 
                     Potion[] keys = (Potion[]) potions.keySet().toArray();
                     printer.printPotions(potions);
                     int chosenPotion = ScannerParser.parseInt() - 1;
-                    while (chosenPotion > h.getInventory().getPotions().size()) {
+                    while (chosenPotion > hero.getInventory().getPotions().size()) {
                         chosenPotion = ScannerParser.tryInt() - 1;
                     }
-                    h.use(keys[chosenPotion]);
+                    hero.use(keys[chosenPotion]);
                 } else {
                     System.out.println("You hero does not have any potion in their inventory! Choose another move!\n");
-                    takeAction(h, m, heroes, monsters);
+                    takeAction(hero, monster, heroes, monsters);
                 }
                 break;
 
@@ -145,33 +144,33 @@ public class Round {
                 }
                 switch (type) {
                     case 0:
-                        System.out.println("Your current armor is:" + h.getCurrentA().getName());
-                        h.unequip(h.getCurrentA());
+                        System.out.println("Your current armor is:" + hero.getCurrentArmor().getName());
+                        hero.unequip(hero.getCurrentArmor());
                         System.out.println("Current armor is taken off.");
                         System.out.println("Which armor would you like to wear now?");
-                        printer.printArmors(h.getInventory().getArmors());
+                        printer.printArmors(hero.getInventory().getArmors());
                         int newarmor = ScannerParser.parseInt() - 1;
-                        while (newarmor > h.getInventory().getArmors().size()) {
+                        while (newarmor > hero.getInventory().getArmors().size()) {
                             newarmor = ScannerParser.tryInt() - 1;
                         }
 //                        h.equip(h.getInventory().getArmors().get(newarmor));
-                        h.changeArmor(h.getCurrentA(), h.getInventory().getArmors().get(newarmor));
-                        System.out.println("Armor " + h.getCurrentA().getName() + " is equipped now");
+                        hero.changeArmor(hero.getCurrentArmor(), hero.getInventory().getArmors().get(newarmor));
+                        System.out.println("Armor " + hero.getCurrentArmor().getName() + " is equipped now");
                         break;
 
                     case 1:
-                        System.out.println("Your current weapon is:" + h.getCurrentW().getName());
-                        h.unequip(h.getCurrentW());
+                        System.out.println("Your current weapon is:" + hero.getCurrentWeapon().getName());
+                        hero.unequip(hero.getCurrentWeapon());
                         System.out.println("Current weapon is unarmed now.");
                         System.out.println("Which weapon would you like to arm now?");
-                        printer.printWeapons(h.getInventory().getWeapons());
+                        printer.printWeapons(hero.getInventory().getWeapons());
                         int newWeapon = ScannerParser.parseInt() - 1;
-                        while (newWeapon > h.getInventory().getWeapons().size()) {
+                        while (newWeapon > hero.getInventory().getWeapons().size()) {
                             newWeapon = ScannerParser.tryInt() - 1;
                         }
 //                      h.equip(h.getInventory().getWeapons().get(newWeapon));
-                        h.changeWeapon(h.getCurrentW(), h.getInventory().getWeapons().get(newWeapon));
-                        System.out.println("Weapon " + h.getCurrentW().getName() + " is equipped now");
+                        hero.changeWeapon(hero.getCurrentWeapon(), hero.getInventory().getWeapons().get(newWeapon));
+                        System.out.println("Weapon " + hero.getCurrentWeapon().getName() + " is equipped now");
                         break;
 
                 }
@@ -201,8 +200,8 @@ public class Round {
      */
     public int countFaintH(ArrayList<Hero> heroes) {
         int count = 0;
-        for (Hero h : heroes) {
-            if (h.isFaint()) {
+        for (Hero hero : heroes) {
+            if (hero.isFaint()) {
                 count++;
             }
         }
@@ -250,14 +249,14 @@ public class Round {
 
     }
 
-    public void playOffense(Hero h, Monster m, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
-        takeAction(h, m, heroes, monsters);
-        h.takeDamage(m.getDamage());
+    public void playOffense(Hero hero, Monster monster, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
+        takeAction(hero, monster, heroes, monsters);
+        hero.takeDamage(monster.getDamage());
     }
 
-    public void playDefense(Hero h, Monster m, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
-        h.takeDamage(m.getDamage());
-        takeAction(h, m, heroes, monsters);
+    public void playDefense(Hero hero, Monster monster, ArrayList<Hero> heroes, ArrayList<Monster> monsters) {
+        hero.takeDamage(monster.getDamage());
+        takeAction(hero, monster, heroes, monsters);
 
     }
 

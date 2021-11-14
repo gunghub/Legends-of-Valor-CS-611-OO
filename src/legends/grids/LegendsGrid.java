@@ -60,7 +60,7 @@ public class LegendsGrid extends Grid {
 //                    if(i%2==0){
 //                        System.out.printf("__");
 //                    }else {
-                        if(p.getpRow() == i && p.getpCol() == j){
+                        if(p.getPRow() == i && p.getPCol() == j){
                             System.out.printf("| P ");
                         } else{
                             System.out.printf("| " + grid[i][j].getIcon()+" ");
@@ -70,7 +70,7 @@ public class LegendsGrid extends Grid {
 //                    if(i%2==0){
 //                        System.out.printf("___\n");
 //                    }else{
-                        if(p.getpRow() == i && p.getpCol() == j){
+                        if(p.getPRow() == i && p.getPCol() == j){
                             System.out.printf("| P |\n");
                         } else{
                             System.out.printf("| " + grid[i][j].getIcon()+" |\n");

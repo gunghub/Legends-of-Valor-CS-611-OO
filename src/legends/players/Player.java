@@ -6,7 +6,7 @@ public class Player {
 
     public Player(String name, String icon){
         this.name = name;
-        this.pIcon = pIcon;
+        this.pIcon = icon;
     }
 
     public String getName() {
@@ -17,11 +17,11 @@ public class Player {
         this.name = name;
     }
 
-    public String getpIcon() {
+    public String getPIcon() {
         return pIcon;
     }
 
-    public void setpIcon(String pIcon) {
+    public void setPIcon(String pIcon) {
         this.pIcon = pIcon;
     }
 

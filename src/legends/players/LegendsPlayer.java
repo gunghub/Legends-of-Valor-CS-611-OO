@@ -40,25 +40,25 @@ public class LegendsPlayer extends Player {
         switch (move) {
             case "W":
             case "w":
-                setpRow(pRow - 1);
+                setPRow(pRow - 1);
                 grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
                 break;
 
             case "A":
             case "a":
-                setpCol(pCol - 1);
+                setPCol(pCol - 1);
                 grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
                 break;
 
             case "S":
             case "s":
-                setpRow(pRow + 1);
+                setPRow(pRow + 1);
                 grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
                 break;
 
             case "D":
             case "d":
-                setpCol(pCol + 1);
+                setPCol(pCol + 1);
                 grid.land(pRow, pCol, this, grid.getGrid()[pRow][pCol], move);
                 break;
 
@@ -96,19 +96,19 @@ public class LegendsPlayer extends Player {
         heroes.add(newH);
     }
 
-    public int getpRow() {
+    public int getPRow() {
         return pRow;
     }
 
-    public void setpRow(int pRow) {
+    public void setPRow(int pRow) {
         this.pRow = pRow;
     }
 
-    public int getpCol() {
+    public int getPCol() {
         return pCol;
     }
 
-    public void setpCol(int pCol) {
+    public void setPCol(int pCol) {
         this.pCol = pCol;
     }
 

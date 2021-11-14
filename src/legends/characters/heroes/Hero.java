@@ -18,8 +18,8 @@ public abstract class Hero extends Character {
     private int experience;
     private Inventory armedInventory;
     private Inventory inventory;
-    private Weapon currentW;
-    private Armor currentA;
+    private Weapon currentWeapon;
+    private Armor currentArmor;
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience) {
         super(name, level, HP);
@@ -57,7 +57,7 @@ public abstract class Hero extends Character {
             for (Weapon w : inventory.getWeapons()) {
                 if (i.getName().equals(w.getName())) {
                     w.equipItem();
-                    currentW = w;
+                    currentWeapon = w;
                     return;
                 }
             }
@@ -65,7 +65,7 @@ public abstract class Hero extends Character {
             for (Armor a : inventory.getArmors()) {
                 if (i.getName().equals(a.getName())) {
                     a.equipItem();
-                    currentA = a;
+                    currentArmor = a;
                     return;
                 }
             }
@@ -79,13 +79,13 @@ public abstract class Hero extends Character {
     public void changeWeapon(Weapon orig, Weapon wear) {
         unequip(orig);
         equip(wear);
-        setCurrentW(wear);
+        setCurrentWeapon(wear);
     }
 
     public void changeArmor(Armor orig, Armor wear){
         unequip(orig);
         equip(wear);
-        setCurrentA(wear);
+        setCurrentArmor(wear);
     }
 
     public void unequip(Item i) {
@@ -93,10 +93,10 @@ public abstract class Hero extends Character {
             if (item.getName().equals(i.getName())) {
                 if (item instanceof Weapon) {
                     ((Weapon) item).equipItem();
-                    currentW = null;
+                    currentWeapon = null;
                 } else if (item instanceof Armor) {
                     ((Armor) item).equipItem();
-                    currentA = null;
+                    currentArmor = null;
                 }
             }
         }
@@ -183,21 +183,21 @@ public abstract class Hero extends Character {
     }
 
 
-    public Weapon getCurrentW() {
-        return currentW;
+    public Weapon getCurrentWeapon() {
+        return currentWeapon;
     }
 
-    public void setCurrentW(Weapon currentW) {
-        this.currentW = currentW;
+    public void setCurrentWeapon(Weapon currentWeapon) {
+        this.currentWeapon = currentWeapon;
     }
 
 
-    public Armor getCurrentA() {
-        return currentA;
+    public Armor getCurrentArmor() {
+        return currentArmor;
     }
 
-    public void setCurrentA(Armor currentA) {
-        this.currentA = currentA;
+    public void setCurrentArmor(Armor currentArmor) {
+        this.currentArmor = currentArmor;
     }
 
     public int getMana() {
