@@ -1,3 +1,5 @@
+package legends;
+
 public class LOVCell {
     protected String border;
     protected boolean hashero;

@@ -1,3 +1,5 @@
+package legends;
+
 public class NexusCell extends LOVCell {
     public NexusCell(){
         super();

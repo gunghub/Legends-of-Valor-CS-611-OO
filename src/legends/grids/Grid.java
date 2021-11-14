@@ -1,5 +1,6 @@
 package legends.grids;
 
+import legends.LOVCell;
 import legends.grids.cells.Cell;
 
 /**
@@ -15,7 +16,7 @@ public class Grid {
         this.numRows = numRows;
         this.numCols = numCols;
 //        grid = new Cell[numRows][numCols];
-//        grid = new LOVCell[numRows][numCols];
+//        grid = new legends.LOVCell[numRows][numCols];
     }
 
     public LOVCell[][] getGrid() {

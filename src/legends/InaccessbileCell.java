@@ -1,3 +1,5 @@
+package legends;
+
 public class InaccessbileCell extends LOVCell {
     public InaccessbileCell(){
         super();

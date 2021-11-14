@@ -1,5 +1,8 @@
 package legends.characters.heroes;
 
+import legends.Colors;
+import legends.Graphic;
+
 public class Paladin extends Hero {
     private final String type = "Paladin";
 

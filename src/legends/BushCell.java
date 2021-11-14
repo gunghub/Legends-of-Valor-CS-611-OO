@@ -1,3 +1,7 @@
+package legends;
+
+import legends.characters.heroes.Hero;
+
 public class BushCell extends LOVCell {
     public BushCell(){
         super();

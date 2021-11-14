@@ -1,5 +1,7 @@
 package legends.games;
 
+import legends.Colors;
+import legends.Graphic;
 import legends.grids.LegendsGrid;
 import legends.characters.heroes.Hero;
 import legends.players.LegendsPlayer;

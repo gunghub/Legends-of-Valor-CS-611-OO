@@ -1,3 +1,5 @@
+package legends;
+
 import java.util.HashMap;
 
 public class Colors {

@@ -1,5 +1,11 @@
 package legends.grids;
 
+import legends.NexusCell;
+import legends.characters.heroes.Hero;
+import legends.gameplay.Markets;
+import legends.players.LegendsPlayer;
+import legends.utilities.Factory;
+
 public class HeroNexus extends Nexus{
 
     public HeroNexus(){

@@ -1,3 +1,5 @@
+package legends;
+
 public class PlainCell extends LOVCell {
     public PlainCell(){
         super();

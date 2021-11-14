@@ -1,11 +1,12 @@
 package legends.players;
 
+import legends.characters.heroes.Hero;
 import legends.grids.LegendsGrid;
 import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
-import legends.characters.heroes.Hero;
 
 import java.util.ArrayList;
+
 
 public class LegendsPlayer extends Player {
     private ArrayList<Hero> heroes;

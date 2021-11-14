@@ -1,3 +1,16 @@
+package legends.characters.heroes;
+
+import legends.Colors;
+import legends.Graphic;
+import legends.characters.monsters.Monster;
+import legends.gameplay.Inventory;
+import legends.items.Armor;
+import legends.items.Item;
+import legends.items.Potion;
+import legends.items.Weapon;
+import legends.characters.Character;
+import legends.items.spells.Spell;
+
 public abstract class Hero extends Character {
     private int mana;
     private int strength;
@@ -26,7 +39,7 @@ public abstract class Hero extends Character {
 
     public abstract void levelUp();
 
-
+    
     public void buy(Item item) {
         inventory.addItem(item);
         money -= item.getPrice();

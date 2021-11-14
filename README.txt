@@ -79,6 +79,6 @@ Round() ----- class
 ScannerParser() ----- class to parse scanner inputs. All functions are static
 FileParser() ------ class to parse input files into objects
 Printer() ------ class to print shop/ heroes/ monsters/ weapon/ spell/ potion/ armor and other info
-Colors() ------ class for console colors
+legends.Colors() ------ class for console colors
 Factory() ----- class to create objects
 

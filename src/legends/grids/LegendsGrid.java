@@ -61,7 +61,7 @@ public class LegendsGrid extends Grid {
 //                    if(i%2==0){
 //                        System.out.printf("__");
 //                    }else {
-                    if(p.getpRow() == i && p.getpCol() == j){
+                    if(p.getPRow() == i && p.getPCol() == j){
 //                            System.out.printf("| P ");
 //                            String context = String.format("%-2s\uFE31", symbol);
                         System.out.print("| " + 'P' + " ");

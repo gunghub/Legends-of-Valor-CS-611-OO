@@ -1,3 +1,7 @@
+package legends;
+
+import legends.grids.Grid;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,7 @@ enum CellType {
     INACCESSIBLE
 }
 
-public class LOVMap extends Grid{
+public class LOVMap extends Grid {
     protected static int size = 8;
 
     public LOVMap(int numRows, int numCols) {

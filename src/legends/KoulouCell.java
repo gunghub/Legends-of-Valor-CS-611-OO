@@ -1,3 +1,7 @@
+package legends;
+
+import legends.characters.heroes.Hero;
+
 public class KoulouCell extends LOVCell {
     public KoulouCell(){
         super();
