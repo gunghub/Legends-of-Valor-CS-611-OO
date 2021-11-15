@@ -1,6 +1,6 @@
 package legends.grids.cells;
 
-import legends.Colors;
+import legends.utilities.Colors;
 import legends.gameplay.Fight;
 import legends.players.LegendsPlayer;
 

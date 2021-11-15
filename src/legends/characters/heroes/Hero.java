@@ -1,7 +1,7 @@
 package legends.characters.heroes;
 
-import legends.Colors;
-import legends.Graphic;
+import legends.utilities.Colors;
+import legends.utilities.Graphic;
 import legends.characters.monsters.Monster;
 import legends.gameplay.Inventory;
 import legends.items.Armor;

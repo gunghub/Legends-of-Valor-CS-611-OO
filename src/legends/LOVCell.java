@@ -38,5 +38,4 @@ public class LOVCell {
         hashero = false;
     }
 
-
 }
