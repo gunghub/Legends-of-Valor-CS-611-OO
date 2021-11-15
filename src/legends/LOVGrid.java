@@ -4,6 +4,7 @@ import legends.characters.heroes.Hero;
 import legends.characters.heroes.Warrior;
 import legends.characters.monsters.Monster;
 import legends.characters.monsters.Spirit;
+import legends.games.LegendsOfValor;
 import legends.grids.Grid;
 import legends.grids.HeroNexus;
 import legends.grids.cells.*;
@@ -19,16 +20,17 @@ import java.util.List;
 public class LOVGrid extends Grid {
 
     protected static int size = 8;
+    private LegendsOfValor legendsOfValor;
 
     public static void main(String[] args) {
-        LOVGrid lovGrid = new LOVGrid(8, 8);
-        lovGrid.createMap();
+        LegendsOfValor legendsOfValor=new LegendsOfValor();
+        LOVGrid lovGrid = new LOVGrid(8, 8, legendsOfValor);
     }
 
 
-    public LOVGrid(int numRows, int numCols) {
+    public LOVGrid(int numRows, int numCols, LegendsOfValor legendsOfValor) {
         super(numRows, numCols);
-
+        this.legendsOfValor=legendsOfValor;
         createMap();
     }
 
@@ -102,20 +104,33 @@ public class LOVGrid extends Grid {
      * @param col
      * @return
      */
-    private static String getCellComponent(int row, int col){
-        for (int i = 0; i < game.getHeroes.len(); i++){
-            if (row == game.getHeroes[i].getRow() && col == game.getHeroes[i].getCol()){
-                return ("H" + (i + 1));
-            }
-        }
-        for (int j = 0; j < game.getMonsters.len(); j++){
-            if (row == game.getMonsters[j].getRow() && col == game.getMonsters[i].getCol()){
-                return ("M" + (i + 1));
-            }
-        }
-        return "     ";
+    private String getCellComponent(int row, int col){
 
+        StringBuilder result=new StringBuilder();
+        boolean hasHero=false;
+        for (int i = 0; i < legendsOfValor.getHeroes().size(); i++){
+            if (row == legendsOfValor.getHeroes().get(i).getRow() && col == legendsOfValor.getHeroes().get(i).getCol()){
+                 result.append("H" + (i + 1));
+                 hasHero=true;
+                 break;
+            }
         }
+
+        if(!hasHero) result.append("  ");
+
+        boolean hasMonster=false;
+        for (int j = 0; j < legendsOfValor.getMonsters().size(); j++){
+            if (row == legendsOfValor.getMonsters().get(j).getRow() && col == legendsOfValor.getMonsters().get(j).getCol()){
+                result.append (" M" + (j + 1)+"");
+                hasMonster=true;
+                break;
+            }
+        }
+
+        if(!hasMonster) result.append("   ");
+
+        return result.toString();
+    }
 
 
 
@@ -138,14 +153,14 @@ public class LOVGrid extends Grid {
 
 
 
-    private static void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
+    private void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         String component = getCellComponent(row/3, col);
         if (map[row/3][col] == CellType.INACCESSIBLE)
             component = "X X X";
         printableMap.get(row).append(getInnerCellStr(component));
     }
 
-    public void createMap(){
+    private void createMap(){
         List<StringBuilder> printableMap = new ArrayList<StringBuilder>();
         CellType [][]map = {
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
