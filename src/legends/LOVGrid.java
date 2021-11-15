@@ -18,28 +18,28 @@ public class LOVGrid extends Grid {
     private void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         switch (map[row/3][col]){
             case NEXUS:
-                grids[row][col] = new NexusCell(row, col);
-                printableMap.get(row).append(grids[row][col].getIcon());
+                grid[row][col] = new NexusCell(row, col);
+                printableMap.get(row).append(grid[row][col].getIcon());
                 break;
             case PLAIN:
-                grids[row][col] = new PlainCell(row, col);
-                printableMap.get(row).append(grids[row][col].getIcon());
+                grid[row][col] = new PlainCell(row, col);
+                printableMap.get(row).append(grid[row][col].getIcon());
                 break;
             case KOULOU:
-                grids[row][col] = new KoulouCell(row, col);
-                printableMap.get(row).append(grids[row][col].getIcon());
+                grid[row][col] = new KoulouCell(row, col);
+                printableMap.get(row).append(grid[row][col].getIcon());
                 break;
             case CAVE:
-                grids[row][col] = new CaveCell(row, col);
-                printableMap.get(row).append(grids[row][col].getIcon());
+                grid[row][col] = new CaveCell(row, col);
+                printableMap.get(row).append(grid[row][col].getIcon());
                 break;
             case BUSH:
-                grids[row][col] = new BushCell(row, col);
-                printableMap.get(row).append(grids[row][col].getIcon());
+                grid[row][col] = new BushCell(row, col);
+                printableMap.get(row).append(grid[row][col].getIcon());
                 break;
             case INACCESSIBLE:
-                grids[row][col] = new InaccessbileCell();
-                printableMap.get(row).append(grids[row][col].getIcon());
+                grid[row][col] = new InaccessibleCell(row, col);
+                printableMap.get(row).append(grid[row][col].getIcon());
                 break;
         }
     }

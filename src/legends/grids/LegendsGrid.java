@@ -55,39 +55,39 @@ public class LegendsGrid extends Grid {
 
     }
 
-    public void printGrid(Hero h){
-        for(int i=0; i<getNumRows(); i++){
-            for(int j=0; j<getNumCols(); j++){
-                if(j<getNumCols()-1){
-//                    if(i%2==0){
-//                        System.out.printf("__");
-//                    }else {
-                        if(p.getPRow() == i && p.getPCol() == j){
-                            System.out.printf("| P ");
-                        } else{
-                            System.out.printf("| " + grid[i][j].getIcon()+" ");
-                    if(h.getRow() == i && h.getCol() == j){
+//    public void printGrid(Hero h){
+//        for(int i=0; i<getNumRows(); i++){
+//            for(int j=0; j<getNumCols(); j++){
+//                if(j<getNumCols()-1){
+////                    if(i%2==0){
+////                        System.out.printf("__");
+////                    }else {
+//                        if(p.getPRow() == i && p.getPCol() == j){
 //                            System.out.printf("| P ");
-//                            String context = String.format("%-2s\uFE31", symbol);
-                        System.out.print("| " + 'P' + " ");
-                    } else{
-                        System.out.printf("| " + grid[i][j].getIcon()+" ");
+//                        } else{
+//                            System.out.printf("| " + grid[i][j].getIcon()+" ");
+//                    if(h.getRow() == i && h.getCol() == j){
+////                            System.out.printf("| P ");
+////                            String context = String.format("%-2s\uFE31", symbol);
+//                        System.out.print("| " + 'P' + " ");
+//                    } else{
+//                        System.out.printf("| " + grid[i][j].getIcon()+" ");
+////                        }
+//                    }
+//                }else{
+////                    if(i%2==0){
+////                        System.out.printf("___\n");
+////                    }else{
+//                        if(h.getRow() == i && h.getCol() == j){
+//                            System.out.printf("| P |\n");
+//                        } else{
+//                            System.out.printf("| " + grid[i][j].getIcon()+" |\n");
 //                        }
-                    }
-                }else{
-//                    if(i%2==0){
-//                        System.out.printf("___\n");
-//                    }else{
-                        if(h.getRow() == i && h.getCol() == j){
-                            System.out.printf("| P |\n");
-                        } else{
-                            System.out.printf("| " + grid[i][j].getIcon()+" |\n");
-                        }
-                    }
-                }
-            }
-//       }
-    }
+//                    }
+//                }
+//            }
+////       }
+//    }
 
 
     /**
