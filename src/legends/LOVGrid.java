@@ -7,7 +7,10 @@ import legends.grids.cells.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Grids of Legends of Valor
+ * a.k.a. Map
+ */
 public class LOVGrid extends Grid {
 
     protected static int size = 8;
@@ -82,24 +85,17 @@ public class LOVGrid extends Grid {
             return CellType.PLAIN;
         }
     }
-    public CellType[][] createTypes(){
-        CellType [][]map = {
-                {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
-        };
-        return map;
-    }
 
     private static String getInnerCellStr(String component){
         return "| " + component + " |   ";
     }
 
+    /**
+     *
+     * @param row row of cells
+     * @param col
+     * @return
+     */
     private static String getCellComponent(int row, int col){
         if (row == 7 && col == 1){
             return "H1   ";
@@ -114,7 +110,9 @@ public class LOVGrid extends Grid {
         }else{
             return "     ";
         }
+        
     }
+
 
     private static void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         String component = getCellComponent(row/3, col);
@@ -125,7 +123,16 @@ public class LOVGrid extends Grid {
 
     public void createMap(){
         List<StringBuilder> printableMap = new ArrayList<StringBuilder>();
-        CellType[][]map = createTypes();
+        CellType [][]map = {
+                {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
+        };
         for (int row = 0; row < size * 3; row++) {
             printableMap.add(new StringBuilder());
             if ((row / 3) % 2 == 0){
