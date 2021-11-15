@@ -1,5 +1,6 @@
 package legends;
 
+import legends.characters.heroes.Hero;
 import legends.grids.Grid;
 import legends.grids.cells.*;
 
@@ -8,7 +9,10 @@ import java.util.List;
 
 
 public class LOVGrid extends Grid {
+
     protected static int size = 8;
+
+
 
     public LOVGrid(int numRows, int numCols) {
         super(numRows, numCols);
@@ -137,4 +141,32 @@ public class LOVGrid extends Grid {
             System.out.print(printableMap.get(i));
         }
     }
+
+//    public void land(int row, int col, Hero h, Cell cell, String move){
+////        printGrid(p);
+//        String icon = grid[row][col].getIcon();
+//        switch(icon){
+//            case "I":
+//                InaccessibleCell i = (InaccessibleCell) grid[row][col];
+//                i.land(move, h);
+//                h.makeMove(this);
+//                break;
+//
+//            case "N":
+//                NexusCell n = (NexusCell) grid[row][col];
+//                n.land(h);
+//                h.makeMove(this);
+//                break;
+//
+//            case " ":
+////                CommonSpace c = (CommonSpace) cell;
+////                c.land(p);
+////                p.makeMove(this);
+//                CommonSpace c = (CommonSpace)grid[row][col];
+//                c.land(p);
+//                p.makeMove(this);
+//                break;
+//
+//        }
+//    }
 }
