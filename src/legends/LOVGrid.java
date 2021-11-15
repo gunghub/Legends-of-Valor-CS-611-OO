@@ -1,8 +1,10 @@
 package legends;
 
 import legends.characters.heroes.Hero;
+import legends.characters.monsters.Monster;
 import legends.grids.Grid;
 import legends.grids.cells.*;
+import legends.characters.Character;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,13 @@ public class LOVGrid extends Grid {
     protected static int size = 8;
 
 
-
     public LOVGrid(int numRows, int numCols) {
         super(numRows, numCols);
         createMap();
     }
 
     private void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
-        switch (map[row/3][col]){
+        switch (map[row / 3][col]) {
             case NEXUS:
                 grid[row][col] = new NexusCell(row, col);
                 printableMap.get(row).append(grid[row][col].getIcon());
@@ -48,23 +49,21 @@ public class LOVGrid extends Grid {
         }
     }
 
-    public CellType calculateCellType(){
+    public CellType calculateCellType() {
         double index = Math.random();
-        if (index <= 0.2){
+        if (index <= 0.2) {
             return CellType.CAVE;
-        }
-        else if (index <= 0.4){
+        } else if (index <= 0.4) {
             return CellType.BUSH;
-        }
-        else if (index <= 0.6){
+        } else if (index <= 0.6) {
             return CellType.KOULOU;
-        }
-        else{
+        } else {
             return CellType.PLAIN;
         }
     }
-    public CellType[][] createTypes(){
-        CellType [][]map = {
+
+    public CellType[][] createTypes() {
+        CellType[][] map = {
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
                 {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
                 {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
@@ -77,54 +76,54 @@ public class LOVGrid extends Grid {
         return map;
     }
 
-    private static String getInnerCellStr(String component){
+    private static String getInnerCellStr(String component) {
         return "| " + component + " |   ";
     }
 
-    private static String getCellComponent(int row, int col){
-        if (row == 7 && col == 1){
+    private static String getCellComponent(int row, int col) {
+        if (row == 7 && col == 1) {
             return "H1   ";
-        }else if (row == 1 && col == 3){
+        } else if (row == 1 && col == 3) {
             return "H2   ";
-        }else if (row == 3 && col == 1){
+        } else if (row == 3 && col == 1) {
             return "   M1";
-        }else if (row == 1 && col == 4){
+        } else if (row == 1 && col == 4) {
             return "   M2";
-        }else if (row == 3 && col == 6){
+        } else if (row == 3 && col == 6) {
             return "H3 M3";
-        }else{
+        } else {
             return "     ";
         }
     }
 
     private static void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
-        String component = getCellComponent(row/3, col);
-        if (map[row/3][col] == CellType.INACCESSIBLE)
+        String component = getCellComponent(row / 3, col);
+        if (map[row / 3][col] == CellType.INACCESSIBLE)
             component = "X X X";
         printableMap.get(row).append(getInnerCellStr(component));
     }
 
-    public void createMap(){
+    public void createMap() {
         List<StringBuilder> printableMap = new ArrayList<StringBuilder>();
-        CellType[][]map = createTypes();
+        CellType[][] map = createTypes();
         for (int row = 0; row < size * 3; row++) {
             printableMap.add(new StringBuilder());
-            if ((row / 3) % 2 == 0){
+            if ((row / 3) % 2 == 0) {
                 for (int col = 0; col < size; col++) {
-                    if (row % 2 == 0){
+                    if (row % 2 == 0) {
                         createOutterCell(map, printableMap, row, col);
-                    }else{
+                    } else {
                         createInnerCell(map, printableMap, row, col);
                     }
 
                     if (col == size - 1)
                         printableMap.get(row).append("\n");
                 }
-            }else{
+            } else {
                 for (int col = 0; col < size; col++) {
-                    if (row % 2 == 1){
+                    if (row % 2 == 1) {
                         createOutterCell(map, printableMap, row, col);
-                    }else{
+                    } else {
                         createInnerCell(map, printableMap, row, col);
                     }
 
@@ -142,31 +141,47 @@ public class LOVGrid extends Grid {
         }
     }
 
-//    public void land(int row, int col, Hero h, Cell cell, String move){
-////        printGrid(p);
-//        String icon = grid[row][col].getIcon();
-//        switch(icon){
-//            case "I":
-//                InaccessibleCell i = (InaccessibleCell) grid[row][col];
-//                i.land(move, h);
-//                h.makeMove(this);
-//                break;
-//
-//            case "N":
-//                NexusCell n = (NexusCell) grid[row][col];
-//                n.land(h);
-//                h.makeMove(this);
-//                break;
-//
-//            case " ":
-////                CommonSpace c = (CommonSpace) cell;
-////                c.land(p);
-////                p.makeMove(this);
-//                CommonSpace c = (CommonSpace)grid[row][col];
+
+    /**
+     * land on a cell and prompt the corresponding scenarios. When finished, let player make another move
+     *
+     * @param row
+     * @param col
+     * @param
+     * @param cell
+     */
+    public void land(int row, int col, Hero hero, Cell cell, String move) {
+//        printMap(p);
+        String icon = grid[row][col].getIcon();
+        switch (icon) {
+            case "I":
+                InaccessibleCell i = (InaccessibleCell) grid[row][col];
+                i.land(move, hero);
+                hero.makeMove(this);
+                break;
+
+            case "N":
+                NexusCell n = (NexusCell) grid[row][col];
+                n.land(hero);
+                hero.makeMove(this);
+                break;
+
+            case "P":
+//                CommonSpace c = (CommonSpace) cell;
 //                c.land(p);
 //                p.makeMove(this);
-//                break;
-//
-//        }
+                CommonSpace c = (CommonSpace) grid[row][col];
+                c.land(hero);
+                hero.makeMove(this);
+                break;
+
+            case "B":
+            case "C":
+            case "K":
+            case "N":
+
+
+        }
 //    }
+    }
 }

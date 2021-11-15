@@ -45,6 +45,34 @@ public abstract class Hero extends Character {
 
     public abstract void levelUp();
 
+    // hero chooses to attack, cast a spell, move, teleport, back, or quit game
+    public boolean takeAction(LOVGrid grid){
+        boolean play = true;
+        System.out.println("Please choose an action:");
+        System.out.println(" 1: Attack\n 2: Cast spell\n 3: Move\n 4: Teleport\n 5: Back\n 6: Quit game\n");
+        int move = ScannerParser.parseInt();
+        while(move <1 || move>5){
+            move = ScannerParser.tryInt();
+        }
+        switch(move){
+            case 1:
+                if(canAttack()){
+
+                }
+            case 2:
+            case 3:
+                makeMove(grid);
+                break;
+
+            case 4:
+            case 5:
+            case 6:
+                System.out.println("Thanks for playing! Exiting program...");
+                play = false;
+                break;
+        }
+        return play;
+    }
 
     /**
      * player chooses a move
@@ -52,57 +80,76 @@ public abstract class Hero extends Character {
      * @param
      * @return
      */
-//    public boolean makeMove(LOVGrid grid) {
+    public void makeMove(LOVGrid grid) {
+        grid.createMap();
+        System.out.println("Please choose a move:");
+        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n");
+        String move = ScannerParser.parseString();
+        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
+                move.equals("D") && move.equals("d")) {
+            move = ScannerParser.tryString();
+        }
+        switch (move) {
+            case "W":
+            case "w":
+
+                setRow(row - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "A":
+            case "a":
+                setCol(col - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "S":
+            case "s":
+                setRow(row + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "D":
+            case "d":
+                setCol(col + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+        }
 //        grid.printGrid(this);
-//        boolean play = true;
-//        System.out.println("Please choose your move:");
-//        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n" +
-//                "I/i: show information");
-//        String move = ScannerParser.parseString();
-//        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
-//                move.equals("D") && move.equals("d") && move.equals("Q") && move.equals("q") && move.equals("I") && move.equals("i")) {
-//            move = ScannerParser.tryString();
-//        }
-//        switch (move) {
-//            case "W":
-//            case "w":
-//                setRow(row - 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "A":
-//            case "a":
-//                setCol(col - 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "S":
-//            case "s":
-//                setRow(row + 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "D":
-//            case "d":
-//                setCol(col + 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "Q":
-//            case "q":
-//                System.out.println("Thanks for playing! Exiting program...");
-//                play = false;
-//                break;
-//
-//            case "I":
-//            case "i":
-//                Printer printer = new Printer();
-//           //     printer.printHeroes(getHeroes());
-//                break;
-//        }
-//        grid.printGrid(this);
-//        return play;
-//    }
+    }
+
+    public boolean isValidMove(String move){
+        switch(move){
+            case "W":
+            case "w":
+
+                setRow(row - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "A":
+            case "a":
+                setCol(col - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "S":
+            case "s":
+                setRow(row + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "D":
+            case "d":
+                setCol(col + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+        }
+    }
+
+    public boolean canAttack(){
+
+    }
     
     public void buy(Item item) {
         inventory.addItem(item);
@@ -112,11 +159,6 @@ public abstract class Hero extends Character {
     public void sell(Item item) {
         inventory.removeItem(item);
         money += item.getPrice();
-    }
-
-    //TODO: need to view hero stats at any moment of the game
-    public void viewHeroStats() {
-
     }
 
 
