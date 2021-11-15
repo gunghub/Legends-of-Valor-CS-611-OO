@@ -48,7 +48,12 @@ public class LOVGrid extends Grid {
         }
     }
 
+    /**
+     * generate a CellType at random
+     * @return a CellType
+     */
     public CellType calculateCellType(){
+
         double index = Math.random();
         if (index <= 0.2){
             return CellType.CAVE;
