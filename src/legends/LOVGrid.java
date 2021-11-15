@@ -12,38 +12,52 @@ public class LOVGrid extends Grid {
 
     protected static int size = 8;
 
+    public static void main(String[] args) {
+        LOVGrid lovGrid = new LOVGrid(8, 8);
+        lovGrid.createMap();
+    }
 
 
     public LOVGrid(int numRows, int numCols) {
         super(numRows, numCols);
+
         createMap();
+    }
+
+    private static String getOuterCellStr(String c){
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < 2; i++) {
+            str.append(c).append(" - ");
+        }
+        str.append(c).append("   ");
+        return str.toString();
     }
 
     private void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         switch (map[row/3][col]){
             case NEXUS:
                 grid[row][col] = new NexusCell(row, col);
-                printableMap.get(row).append(grid[row][col].getIcon());
+                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
                 break;
             case PLAIN:
                 grid[row][col] = new PlainCell(row, col);
-                printableMap.get(row).append(grid[row][col].getIcon());
+                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
                 break;
             case KOULOU:
                 grid[row][col] = new KoulouCell(row, col);
-                printableMap.get(row).append(grid[row][col].getIcon());
+                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
                 break;
             case CAVE:
                 grid[row][col] = new CaveCell(row, col);
-                printableMap.get(row).append(grid[row][col].getIcon());
+                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
                 break;
             case BUSH:
                 grid[row][col] = new BushCell(row, col);
-                printableMap.get(row).append(grid[row][col].getIcon());
+                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
                 break;
             case INACCESSIBLE:
                 grid[row][col] = new InaccessibleCell(row, col);
-                printableMap.get(row).append(grid[row][col].getIcon());
+                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
                 break;
         }
     }

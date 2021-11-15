@@ -16,6 +16,7 @@ public abstract class Grid {
     public Grid(int numRows, int numCols){
         this.numRows = numRows;
         this.numCols = numCols;
+        grid = new Cell[numRows][numCols];
 //        grid = new Cell[numRows][numCols];
 //        grid = new legends.LOVCell[numRows][numCols];
     }
