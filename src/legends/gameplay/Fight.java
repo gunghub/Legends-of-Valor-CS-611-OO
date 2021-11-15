@@ -41,7 +41,7 @@ public class Fight {
         for (int i = 0; i < numHeroes; i++) {
             System.out.println("Choose your hero" + (i + 1) + " :");
             heroes.add(p.getHeroes().get(i));
-            monsters.add(chooseRandMonster(fp));
+            monsters.add(fp.chooseRandMonster(p.getHeroes().get(i).getLevel()));
         }
         while (!isOver) {
             Round r = new Round();
@@ -60,15 +60,6 @@ public class Fight {
             h.levelUp();
         }
     }
-
-
-    public Monster chooseRandMonster(FileParser fp) {
-        ArrayList<Monster> am = fp.parseMonsters();
-        Random r = new Random();
-        int n = r.nextInt(am.size());
-        return am.get(n);
-    }
-
 
     public void setHeroes(ArrayList<Hero> heroes) {
         this.heroes = heroes;

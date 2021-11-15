@@ -1,17 +1,19 @@
 package legends.characters.heroes;
 
-import legends.utilities.Colors;
-import legends.utilities.Graphic;
-import legends.characters.monsters.Monster;
+import legends.characters.Character;
 import legends.gameplay.Inventory;
+import legends.grids.LegendsGrid;
 import legends.items.Armor;
 import legends.items.Item;
 import legends.items.Potion;
 import legends.items.Weapon;
-import legends.characters.Character;
+import legends.characters.monsters.Monster;
 import legends.items.spells.Spell;
+import legends.utilities.Colors;
+import legends.utilities.Printer;
+import legends.utilities.ScannerParser;
 
-public abstract class Hero extends Character {
+public abstract class Hero<Graphic> extends Character {
     private int mana;
     private int strength;
     private int agility;
@@ -22,8 +24,11 @@ public abstract class Hero extends Character {
     private Inventory inventory;
     private Weapon currentWeapon;
     private Armor currentArmor;
+
     protected Graphic graphic;
     protected Colors colors;
+    private int row;
+    private int col;
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience) {
         super(name, level, HP);
@@ -32,13 +37,71 @@ public abstract class Hero extends Character {
         this.agility = agility;
         this.dexterity = dexterity;
         this.money = money;
-        this.experience = experience;
+        this.experience = experience;4
         armedInventory = new Inventory();
         inventory = new Inventory();
     }
 
     public abstract void levelUp();
 
+
+    /**
+     * player chooses a move
+     *
+     * @param grid
+     * @return
+     */
+    public boolean makeMove(LegendsGrid grid) {
+        grid.printGrid(this);
+        boolean play = true;
+        System.out.println("Please choose your move:");
+        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n" +
+                "I/i: show information");
+        String move = ScannerParser.parseString();
+        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
+                move.equals("D") && move.equals("d") && move.equals("Q") && move.equals("q") && move.equals("I") && move.equals("i")) {
+            move = ScannerParser.tryString();
+        }
+        switch (move) {
+            case "W":
+            case "w":
+                setRow(row - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "A":
+            case "a":
+                setCol(col - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "S":
+            case "s":
+                setRow(row + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "D":
+            case "d":
+                setCol(col + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "Q":
+            case "q":
+                System.out.println("Thanks for playing! Exiting program...");
+                play = false;
+                break;
+
+            case "I":
+            case "i":
+                Printer printer = new Printer();
+           //     printer.printHeroes(getHeroes());
+                break;
+        }
+        grid.printGrid(this);
+        return play;
+    }
     
     public void buy(Item item) {
         inventory.addItem(item);
@@ -250,5 +313,21 @@ public abstract class Hero extends Character {
 
     public void setExperience(int experience) {
         this.experience = experience;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 }

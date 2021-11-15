@@ -5,10 +5,10 @@ import legends.players.LegendsPlayer;
 /**
  * Inaccessible cells.
  */
-public class Inaccessible extends Cell {
-    private final String type = "Inaccessible";
-    public Inaccessible(int row, int col){
-        super("#", row, col);
+public class InaccessibleCell extends Cell {
+    private final String type = "InaccessibleCell";
+    public InaccessibleCell(int row, int col){
+        super("I", row, col);
     }
 
     public String getType() {

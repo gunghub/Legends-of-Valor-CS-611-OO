@@ -1,10 +1,9 @@
 package legends.grids;
 
-import legends.LOVCell;
 import legends.grids.cells.Cell;
 
 /**
- * RegularLane for the game.
+ * Grid for the game.
  */
 public class Grid {
     protected LOVCell[][] grids;
@@ -19,12 +18,12 @@ public class Grid {
 //        grid = new legends.LOVCell[numRows][numCols];
     }
 
-    public LOVCell[][] getGrid() {
-        return grids;
+    public Cell[][] getGrid() {
+        return grid;
     }
 
-    public void setGrid(LOVCell[][] grid) {
-        this.grids = grid;
+    public void setGrid(Cell[][] grid) {
+        this.grid = grid;
     }
 
     public int getNumRows() {

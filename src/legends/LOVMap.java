@@ -1,6 +1,7 @@
 package legends;
 
 import legends.grids.Grid;
+import legends.grids.cells.*;
 
 import java.util.ArrayList;
 import java.util.List;

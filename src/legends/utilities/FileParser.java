@@ -19,6 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class FileParser {
 
@@ -47,6 +48,19 @@ public class FileParser {
     public int parseint(String s){
         return Integer.parseInt(s);
     }
+
+    /**
+     * choose a random monster who has the input level from all monsters
+     * @param level
+     * @return
+     */
+    public Monster chooseRandMonster(int level) {
+        ArrayList<Monster> am = parseMonsters();
+        Random r = new Random();
+        int n = r.nextInt(am.size());
+        return am.get(n);
+    }
+
 
     public ArrayList<Armor> parseArmor(){
         ArrayList<Armor> armors = new ArrayList<Armor>();
