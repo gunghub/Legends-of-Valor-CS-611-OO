@@ -2,11 +2,9 @@ package legends.grids;
 
 import legends.characters.heroes.Hero;
 import legends.grids.cells.Cell;
-import legends.grids.cells.CommonSpace;
 import legends.grids.cells.Inaccessible;
 import legends.grids.cells.InaccessibleCell;
 import legends.grids.cells.NexusCell;
-import legends.players.LegendsPlayer;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -11,7 +11,6 @@ import legends.gameplay.Inventory;
 import legends.gameplay.Markets;
 import legends.gameplay.Round;
 import legends.grids.LegendsGrid;
-import legends.grids.cells.CommonSpace;
 import legends.grids.cells.InaccessibleCell;
 import legends.items.Armor;
 import legends.items.Potion;
