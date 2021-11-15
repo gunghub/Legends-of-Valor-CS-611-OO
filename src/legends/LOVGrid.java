@@ -1,8 +1,13 @@
 package legends;
 
 import legends.characters.heroes.Hero;
+import legends.characters.heroes.Warrior;
+import legends.characters.monsters.Monster;
+import legends.characters.monsters.Spirit;
 import legends.grids.Grid;
+import legends.grids.HeroNexus;
 import legends.grids.cells.*;
+import legends.characters.Character;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,30 +42,31 @@ public class LOVGrid extends Grid {
     }
 
     private void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
-        switch (map[row/3][col]){
+        int cellRow = row/3;
+        switch (map[cellRow][col]){
             case NEXUS:
-                grid[row][col] = new NexusCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new NexusCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case PLAIN:
-                grid[row][col] = new PlainCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new PlainCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case KOULOU:
-                grid[row][col] = new KoulouCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new KoulouCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case CAVE:
-                grid[row][col] = new CaveCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new CaveCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case BUSH:
-                grid[row][col] = new BushCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new BushCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case INACCESSIBLE:
-                grid[row][col] = new InaccessibleCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new InaccessibleCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
         }
     }
@@ -97,21 +103,39 @@ public class LOVGrid extends Grid {
      * @return
      */
     private static String getCellComponent(int row, int col){
-        if (row == 7 && col == 1){
-            return "H1   ";
-        }else if (row == 1 && col == 3){
-            return "H2   ";
-        }else if (row == 3 && col == 1){
-            return "   M1";
-        }else if (row == 1 && col == 4){
-            return "   M2";
-        }else if (row == 3 && col == 6){
-            return "H3 M3";
-        }else{
-            return "     ";
+        for (int i = 0; i < game.getHeroes.len(); i++){
+            if (row == game.getHeroes[i].getRow() && col == game.getHeroes[i].getCol()){
+                return ("H" + (i + 1));
+            }
+        }
+        for (int j = 0; j < game.getMonsters.len(); j++){
+            if (row == game.getMonsters[j].getRow() && col == game.getMonsters[i].getCol()){
+                return ("M" + (i + 1));
+            }
+        }
+        return "     ";
+
         }
 
-    }
+
+
+
+//        if (row ==  && col == 1){
+//            return "H1   ";
+//        }else if (row == 1 && col == 3){
+//            return "H2   ";
+//        }else if (row == 3 && col == 1){
+//            return "   M1";
+//        }else if (row == 1 && col == 4){
+//            return "   M2";
+//        }else if (row == 3 && col == 6){
+//            return "H3 M3";
+//        }else{
+//            return "     ";
+//        }
+//    }
+
+
 
 
     private static void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
