@@ -25,9 +25,9 @@ public class LegendsGrid extends Grid {
     public void initCells(){
         for (int i=0; i<getNumRows()*getNumCols(); i++){
             if(i<(int)getNumRows()*getNumCols()*0.2){
-                cells.add(new Inaccessible(-1,-1));
+                cells.add(new InaccessibleCell(-1,-1));
             }else if((int)getNumRows()*getNumCols()*0.2<=i && i<(int)getNumRows()*getNumCols()*0.5){
-                cells.add(new MarketCell(-1,-1));
+                cells.add(new NexusCell(-1,-1));
             }else{
                 cells.add(new CommonSpace(-1,-1));
             }

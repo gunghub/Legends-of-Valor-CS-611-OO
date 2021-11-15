@@ -29,6 +29,14 @@ public class Printer {
         }
     }
 
+    public void printHero(Hero h){
+        System.out.println("\t  Name\t\tLevel\t  HP\t  Mana\t  Strength\t  Agility\t  Dexterity\t\t  Money\t\t  Experience");
+        System.out.println("=================================================================================================================");
+        System.out.format("%5d%12s%7d%8d%8d%12d%11d%13d%18d%12d",h.getName(),h.getLevel(),h.getHP(),h.getMana(),h.getStrength(),h.getAgility()
+                ,h.getDexterity(),h.getMoney(),h.getExperience());
+        System.out.println("\n");
+    }
+
     public void printMonsters(ArrayList<Monster> monsters){
         System.out.println("\t ID  \t  Name\t\tLevel\t  Damage\t  Defense\t  Dodge Chance");
         System.out.println("=================================================================================================================");

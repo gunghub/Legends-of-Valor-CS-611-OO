@@ -5,8 +5,8 @@ import legends.grids.cells.Cell;
 /**
  * Grid for the game.
  */
-public class Grid {
-    protected Cell[][] grids;
+public abstract class Grid {
+    protected Cell[][] grid;
     protected int numRows;
     protected int numCols;
     protected String symbol;
@@ -19,11 +19,11 @@ public class Grid {
     }
 
     public Cell[][] getGrid() {
-        return grids;
+        return grid;
     }
 
-    public void setGrid(Cell[][] grids) {
-        this.grids = grids;
+    public void setGrid(Cell[][] grid) {
+        this.grid = grid;
     }
 
     public int getNumRows() {
