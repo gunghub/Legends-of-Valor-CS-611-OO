@@ -11,6 +11,8 @@ public abstract class Grid {
     protected int numCols;
     protected String symbol;
 
+
+    public Grid(){}
     public Grid(int numRows, int numCols){
         this.numRows = numRows;
         this.numCols = numCols;

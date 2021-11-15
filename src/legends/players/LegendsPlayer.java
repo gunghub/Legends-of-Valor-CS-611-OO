@@ -1,7 +1,8 @@
 package legends.players;
 
+import legends.LOVGrid;
 import legends.characters.heroes.Hero;
-import legends.grids.LegendsGrid;
+
 import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
 
@@ -80,7 +81,7 @@ public class LegendsPlayer extends Player {
 //    }
 
 
-    public boolean isValidMove(LegendsGrid grid, int row, int col){
+    public boolean isValidMove(LOVGrid grid, int row, int col){
         boolean isValid = false;
         return false;
     }

@@ -38,42 +38,42 @@ public class Markets {
     }
 
     public void enterStore(Hero h){
-        Factory fac = new Factory();
-        Printer printer = fac.
-        initMarket();
+//        Factory fac = new Factory();
+//        Printer printer = fac.
+//        initMarket();
 //        System.out.println("Welcome to the market!");
-        graphic.printMarket();
-        System.out.println(colors.addColor("green", "Please choose an hero from your list to enter the store:"));
-        h.p();
-        int input = ScannerParser.parseInt();
-        Hero chosenHero = p.getHeroes().get(input - 1);
-        System.out.println(colors.addColor("green","Hero " + chosenHero.getName() + " entered the store --"));
-        System.out.println(colors.addColor("blue", "Would you like to buy or sell an item?"));
-        System.out.println(" 0: Buy\n 1: Sell\n 2: Exit market");
-        input = ScannerParser.parseInt();
-        chooseBuySell(input, chosenHero, p);
+//        graphic.printMarket();
+//        System.out.println(colors.addColor("green", "Please choose an hero from your list to enter the store:"));
+//        h.p();
+//        int input = ScannerParser.parseInt();
+//        Hero chosenHero = p.getHeroes().get(input - 1);
+//        System.out.println(colors.addColor("green","Hero " + chosenHero.getName() + " entered the store --"));
+//        System.out.println(colors.addColor("blue", "Would you like to buy or sell an item?"));
+//        System.out.println(" 0: Buy\n 1: Sell\n 2: Exit market");
+//        input = ScannerParser.parseInt();
+//        chooseBuySell(input, chosenHero, p);
     }
 
 
     public void chooseBuySell(int input, Hero h, LegendsPlayer p) {
-        while (input != 0 &&input != 1 && input != 2) {
-            System.out.println(colors.addColor("red","Invalid option! Please try again!"));
-            input = ScannerParser.parseInt();
-        }
-        switch (input) {
-            case 0:
-                heroBuy(h);
-                enterStore(p);
-                break;
-            case 1:
-                heroSell(h);
-                enterStore(p);
-                break;
-            case 2:
-                isShopping = false;
+//        while (input != 0 &&input != 1 && input != 2) {
+//            System.out.println(colors.addColor("red","Invalid option! Please try again!"));
+//            input = ScannerParser.parseInt();
+//        }
+//        switch (input) {
+//            case 0:
+//                heroBuy(h);
 //                enterStore(p);
-                break;
-        }
+//                break;
+//            case 1:
+//                heroSell(h);
+//                enterStore(p);
+//                break;
+//            case 2:
+//                isShopping = false;
+////                enterStore(p);
+//                break;
+//        }
     }
 
 

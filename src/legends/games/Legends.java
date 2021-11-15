@@ -1,8 +1,8 @@
 package legends.games;
 
+import legends.LOVGrid;
 import legends.utilities.Colors;
 import legends.utilities.Graphic;
-import legends.grids.LegendsGrid;
 import legends.characters.heroes.Hero;
 import legends.players.LegendsPlayer;
 import legends.utilities.FileParser;
@@ -29,21 +29,19 @@ public class Legends extends RPGGame {
     public void playGame(){
 //        System.out.println("Welcome to Legends!");
         graphic.printBanner();
-        LegendsGrid grid = new LegendsGrid();
+        LOVGrid grid = new LOVGrid(8, 8);
         LegendsPlayer p = initPlayer();
         System.out.println("========================================================================================");
         System.out.println(colors.addColor("blue","'P' = Your position\n" +
                 "'M' = Market. You can buy or sell items here\n" +
                 "'#' = Inaccessible space. You cannot land on this space\n" +
                 "' ' = Common space. This space might be safe or you might encounter some monsters"));
-        grid.initGrid();
+//        grid.initGrid();
 
-        while(play){
-//            grid.printGrid(p);
-            //p.makeMove(grid);
-            play = p.makeMove(grid);
-
-        }
+//        while(play){
+//            play = p.makeMove(grid);
+//
+//        }
     }
 
 

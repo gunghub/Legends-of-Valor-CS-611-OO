@@ -1,5 +1,6 @@
 package legends.utilities;
 
+import legends.LOVGrid;
 import legends.characters.heroes.Paladin;
 import legends.characters.heroes.Sorcerer;
 import legends.characters.heroes.Warrior;
@@ -10,7 +11,6 @@ import legends.gameplay.Fight;
 import legends.gameplay.Inventory;
 import legends.gameplay.Markets;
 import legends.gameplay.Round;
-import legends.grids.LegendsGrid;
 import legends.grids.cells.InaccessibleCell;
 import legends.items.Armor;
 import legends.items.Potion;
@@ -22,8 +22,8 @@ import legends.players.LegendsPlayer;
 
 public class Factory {
 
-    public LegendsGrid newLegendsGrid(){
-        return new LegendsGrid();
+    public LOVGrid newLegendsGrid(){
+        return new LOVGrid(8, 8);
     }
 
     public Inventory newInventory(){
@@ -96,10 +96,6 @@ public class Factory {
 
     public LightningSpell newLightningSpell(String name, int price, int minLevel, int mana, int damage){
         return new LightningSpell(name, price, minLevel, mana, damage);
-    }
-
-    public CommonSpace newCommonSpace(int row, int col){
-        return new CommonSpace(row, col);
     }
 
     public InaccessibleCell newInaccessible(int row, int col){

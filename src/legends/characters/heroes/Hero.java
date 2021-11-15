@@ -1,8 +1,8 @@
 package legends.characters.heroes;
 
+import legends.LOVGrid;
 import legends.characters.Character;
 import legends.gameplay.Inventory;
-import legends.grids.LegendsGrid;
 import legends.items.Armor;
 import legends.items.Item;
 import legends.items.Potion;
@@ -10,10 +10,11 @@ import legends.items.Weapon;
 import legends.characters.monsters.Monster;
 import legends.items.spells.Spell;
 import legends.utilities.Colors;
+import legends.utilities.Graphic;
 import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
 
-public abstract class Hero<Graphic> extends Character {
+public abstract class Hero extends Character {
     private int mana;
     private int strength;
     private int agility;
@@ -37,7 +38,7 @@ public abstract class Hero<Graphic> extends Character {
         this.agility = agility;
         this.dexterity = dexterity;
         this.money = money;
-        this.experience = experience;4
+        this.experience = experience;
         armedInventory = new Inventory();
         inventory = new Inventory();
     }
@@ -48,60 +49,60 @@ public abstract class Hero<Graphic> extends Character {
     /**
      * player chooses a move
      *
-     * @param grid
+     * @param
      * @return
      */
-    public boolean makeMove(LegendsGrid grid) {
-        grid.printGrid(this);
-        boolean play = true;
-        System.out.println("Please choose your move:");
-        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n" +
-                "I/i: show information");
-        String move = ScannerParser.parseString();
-        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
-                move.equals("D") && move.equals("d") && move.equals("Q") && move.equals("q") && move.equals("I") && move.equals("i")) {
-            move = ScannerParser.tryString();
-        }
-        switch (move) {
-            case "W":
-            case "w":
-                setRow(row - 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
-                break;
-
-            case "A":
-            case "a":
-                setCol(col - 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
-                break;
-
-            case "S":
-            case "s":
-                setRow(row + 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
-                break;
-
-            case "D":
-            case "d":
-                setCol(col + 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
-                break;
-
-            case "Q":
-            case "q":
-                System.out.println("Thanks for playing! Exiting program...");
-                play = false;
-                break;
-
-            case "I":
-            case "i":
-                Printer printer = new Printer();
-           //     printer.printHeroes(getHeroes());
-                break;
-        }
-        grid.printGrid(this);
-        return play;
-    }
+//    public boolean makeMove(LOVGrid grid) {
+//        grid.printGrid(this);
+//        boolean play = true;
+//        System.out.println("Please choose your move:");
+//        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n" +
+//                "I/i: show information");
+//        String move = ScannerParser.parseString();
+//        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
+//                move.equals("D") && move.equals("d") && move.equals("Q") && move.equals("q") && move.equals("I") && move.equals("i")) {
+//            move = ScannerParser.tryString();
+//        }
+//        switch (move) {
+//            case "W":
+//            case "w":
+//                setRow(row - 1);
+//                grid.land(row, col, this, grid.getGrid()[row][col], move);
+//                break;
+//
+//            case "A":
+//            case "a":
+//                setCol(col - 1);
+//                grid.land(row, col, this, grid.getGrid()[row][col], move);
+//                break;
+//
+//            case "S":
+//            case "s":
+//                setRow(row + 1);
+//                grid.land(row, col, this, grid.getGrid()[row][col], move);
+//                break;
+//
+//            case "D":
+//            case "d":
+//                setCol(col + 1);
+//                grid.land(row, col, this, grid.getGrid()[row][col], move);
+//                break;
+//
+//            case "Q":
+//            case "q":
+//                System.out.println("Thanks for playing! Exiting program...");
+//                play = false;
+//                break;
+//
+//            case "I":
+//            case "i":
+//                Printer printer = new Printer();
+//           //     printer.printHeroes(getHeroes());
+//                break;
+//        }
+//        grid.printGrid(this);
+//        return play;
+//    }
     
     public void buy(Item item) {
         inventory.addItem(item);
