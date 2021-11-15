@@ -135,7 +135,7 @@ public class LOVGrid extends Grid {
 //        }
 //    }
 
-    }
+
 
 
     private static void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
