@@ -15,5 +15,6 @@ public class LegendsOfValor extends RPGGame {
         //todo
 
         return null;
+
     }
 }
