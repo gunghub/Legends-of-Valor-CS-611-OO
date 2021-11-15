@@ -5,8 +5,8 @@ import legends.grids.cells.Cell;
 /**
  * Grid for the game.
  */
-public class Grid {
-    protected LOVCell[][] grids;
+public abstract class Grid {
+    protected Cell[][] grid;
     protected int numRows;
     protected int numCols;
     protected String symbol;

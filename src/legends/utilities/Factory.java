@@ -12,7 +12,7 @@ import legends.gameplay.Markets;
 import legends.gameplay.Round;
 import legends.grids.LegendsGrid;
 import legends.grids.cells.CommonSpace;
-import legends.grids.cells.Inaccessible;
+import legends.grids.cells.InaccessibleCell;
 import legends.items.Armor;
 import legends.items.Potion;
 import legends.items.Weapon;
@@ -50,7 +50,6 @@ public class Factory {
     public FileParser newFileParser(){
         return new FileParser();
     }
-
 
     public Paladin newPaladin(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience){
         return new Paladin(name, level, HP, mana, strength, agility, dexterity, money, experience);
@@ -104,8 +103,8 @@ public class Factory {
         return new CommonSpace(row, col);
     }
 
-    public Inaccessible newInaccessible(int row, int col){
-        return new Inaccessible(row, col);
+    public InaccessibleCell newInaccessible(int row, int col){
+        return new InaccessibleCell(row, col);
     }
 
     public LegendsPlayer newLegendsPlayer(String name, String icon){
