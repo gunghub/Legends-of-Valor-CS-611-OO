@@ -1,5 +1,7 @@
 package legends.grids.cells;
 
+import legends.utilities.Colors;
+
 /**
  * abstratct class for a Cell. Extends to three types of cells.
  */
