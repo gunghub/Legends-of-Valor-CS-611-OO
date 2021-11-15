@@ -6,19 +6,11 @@ import legends.grids.cells.*;
 import java.util.ArrayList;
 import java.util.List;
 
-enum CellType {
-    NEXUS,
-    PLAIN,
-    KOULOU,
-    CAVE,
-    BUSH,
-    INACCESSIBLE
-}
 
-public class LOVMap extends Grid {
+public class LOVGrid extends Grid {
     protected static int size = 8;
 
-    public LOVMap(int numRows, int numCols) {
+    public LOVGrid(int numRows, int numCols) {
         super(numRows, numCols);
         createMap();
     }
@@ -26,28 +18,28 @@ public class LOVMap extends Grid {
     private void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         switch (map[row/3][col]){
             case NEXUS:
-                grids[row][col] = new NexusCell();
-                printableMap.get(row).append(grids[row][col].getBorder());
+                grids[row][col] = new NexusCell(row, col);
+                printableMap.get(row).append(grids[row][col].getIcon());
                 break;
             case PLAIN:
-                grids[row][col] = new PlainCell();
-                printableMap.get(row).append(grids[row][col].getBorder());
+                grids[row][col] = new PlainCell(row, col);
+                printableMap.get(row).append(grids[row][col].getIcon());
                 break;
             case KOULOU:
-                grids[row][col] = new KoulouCell();
-                printableMap.get(row).append(grids[row][col].getBorder());
+                grids[row][col] = new KoulouCell(row, col);
+                printableMap.get(row).append(grids[row][col].getIcon());
                 break;
             case CAVE:
-                grids[row][col] = new CaveCell();
-                printableMap.get(row).append(grids[row][col].getBorder());
+                grids[row][col] = new CaveCell(row, col);
+                printableMap.get(row).append(grids[row][col].getIcon());
                 break;
             case BUSH:
-                grids[row][col] = new BushCell();
-                printableMap.get(row).append(grids[row][col].getBorder());
+                grids[row][col] = new BushCell(row, col);
+                printableMap.get(row).append(grids[row][col].getIcon());
                 break;
             case INACCESSIBLE:
                 grids[row][col] = new InaccessbileCell();
-                printableMap.get(row).append(grids[row][col].getBorder());
+                printableMap.get(row).append(grids[row][col].getIcon());
                 break;
         }
     }
@@ -70,12 +62,12 @@ public class LOVMap extends Grid {
     public CellType[][] createTypes(){
         CellType [][]map = {
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, CellType.INACCESSIBLE, CellType.INACCESSIBLE},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, CellType.INACCESSIBLE, CellType.INACCESSIBLE},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, CellType.INACCESSIBLE, CellType.INACCESSIBLE},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, CellType.INACCESSIBLE, CellType.INACCESSIBLE},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, CellType.INACCESSIBLE, CellType.INACCESSIBLE},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, CellType.INACCESSIBLE, CellType.INACCESSIBLE},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
+                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
         };
         return map;
