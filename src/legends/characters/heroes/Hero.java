@@ -171,6 +171,7 @@ public abstract class Hero extends Character {
         return isValid;
     }
 
+    // return boolean indicating whether there is a monster within the hero's attacking range
     public boolean withinRange(LOVGrid grid){
         Cell[][] grids= grid.getGrid();
         if(grids[Math.max(row-1,0)][Math.max(col-1,0)].isHasmonster() || grids[Math.max(row-1,0)][col].isHasmonster()||grids[Math.max(row-1,0)][Math.min(col+1,7)].isHasmonster()||
@@ -183,20 +184,10 @@ public abstract class Hero extends Character {
         }
     }
 
+    // return the nearby monster of the hero
     //TODO: implement
     public Monster nearbyMonster(LOVGrid grid, LegendsOfValor lovgame){
-        Cell[][] grids= grid.getGrid();
-        if(grids[Math.max(row-1,0)][Math.max(col-1,0)].isHasmonster()){
-            return lovgame.get
-        }
-    || grids[Math.max(row-1,0)][col].isHasmonster()||grids[Math.max(row-1,0)][Math.min(col+1,7)].isHasmonster()||
-                grids[row][Math.min(col-1,0)].isHasmonster()||grids[row][col].isHasmonster()||grids[row][Math.min(col+1,7)].isHasmonster()||
-                grids[Math.min(row+1,7)][Math.max(col-1,0)].isHasmonster()||grids[Math.min(row+1,7)][col].isHasmonster() || grids[Math.min(row+1,7)][Math.min(col+1,7)].isHasmonster()){
-            return ;
-        }
-        else{
-            return false;
-        }
+        return null;
     }
     
     public void buy(Item item) {
