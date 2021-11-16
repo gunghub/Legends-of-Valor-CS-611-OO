@@ -5,33 +5,16 @@ import legends.grids.cells.Cell;
 
 public class Lane {
 
-    private int numRows;
-    private int numCols;
     private int maxMonsterRow;
+    private String name;
 
     public Lane(){
 
     }
-    public Lane(int numRows, int numCols){
-        this.numRows = numRows;
-        this.numCols = numCols;
-    }
+    public Lane(String name, int maxMonsterRow){
+        this.name = name;
+        this.maxMonsterRow = maxMonsterRow;
 
-
-    public int getNumRows() {
-        return numRows;
-    }
-
-    public void setNumRows(int numRows) {
-        this.numRows = numRows;
-    }
-
-    public int getNumCols() {
-        return numCols;
-    }
-
-    public void setNumCols(int numCols) {
-        this.numCols = numCols;
     }
 
     public int getMaxMonsterRow() {
@@ -40,5 +23,13 @@ public class Lane {
 
     public void setMaxMonsterRow(int maxMonsterRow) {
         this.maxMonsterRow = maxMonsterRow;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
