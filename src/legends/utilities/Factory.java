@@ -22,9 +22,9 @@ import legends.players.LegendsPlayer;
 
 public class Factory {
 
-    public LOVGrid newLegendsGrid(){
-        return new LOVGrid(8, 8);
-    }
+//    public LOVGrid newLegendsGrid(){
+//        return new LOVGrid(8, 8);
+//    }
 
     public Inventory newInventory(){
         return new Inventory();

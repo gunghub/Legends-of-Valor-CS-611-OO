@@ -1,8 +1,14 @@
 package legends;
 
 import legends.characters.heroes.Hero;
+import legends.characters.heroes.Warrior;
+import legends.characters.monsters.Monster;
+import legends.characters.monsters.Spirit;
+import legends.games.LegendsOfValor;
 import legends.grids.Grid;
+import legends.grids.HeroNexus;
 import legends.grids.cells.*;
+import legends.characters.Character;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +20,17 @@ import java.util.List;
 public class LOVGrid extends Grid {
 
     protected static int size = 8;
+    private LegendsOfValor legendsOfValor;
 
     public static void main(String[] args) {
-        LOVGrid lovGrid = new LOVGrid(8, 8);
-        lovGrid.createMap();
+        LegendsOfValor legendsOfValor=new LegendsOfValor();
+        LOVGrid lovGrid = new LOVGrid(8, 8, legendsOfValor);
     }
 
 
-    public LOVGrid(int numRows, int numCols) {
+    public LOVGrid(int numRows, int numCols, LegendsOfValor legendsOfValor) {
         super(numRows, numCols);
-
+        this.legendsOfValor=legendsOfValor;
         createMap();
     }
 
@@ -37,30 +44,31 @@ public class LOVGrid extends Grid {
     }
 
     private void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
-        switch (map[row/3][col]){
+        int cellRow = row/3;
+        switch (map[cellRow][col]){
             case NEXUS:
-                grid[row][col] = new NexusCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new NexusCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case PLAIN:
-                grid[row][col] = new PlainCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new PlainCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case KOULOU:
-                grid[row][col] = new KoulouCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new KoulouCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case CAVE:
-                grid[row][col] = new CaveCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new CaveCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case BUSH:
-                grid[row][col] = new BushCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new BushCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
             case INACCESSIBLE:
-                grid[row][col] = new InaccessibleCell(row, col);
-                printableMap.get(row).append(getOuterCellStr(grid[row][col].getIcon()));
+                grid[cellRow][col] = new InaccessibleCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
                 break;
         }
     }
@@ -96,32 +104,63 @@ public class LOVGrid extends Grid {
      * @param col
      * @return
      */
-    private static String getCellComponent(int row, int col){
-        if (row == 7 && col == 1){
-            return "H1   ";
-        }else if (row == 1 && col == 3){
-            return "H2   ";
-        }else if (row == 3 && col == 1){
-            return "   M1";
-        }else if (row == 1 && col == 4){
-            return "   M2";
-        }else if (row == 3 && col == 6){
-            return "H3 M3";
-        }else{
-            return "     ";
+    private String getCellComponent(int row, int col){
+
+        StringBuilder result=new StringBuilder();
+        boolean hasHero=false;
+        for (int i = 0; i < legendsOfValor.getHeroes().size(); i++){
+            if (row == legendsOfValor.getHeroes().get(i).getRow() && col == legendsOfValor.getHeroes().get(i).getCol()){
+                 result.append("H" + (i + 1));
+                 hasHero=true;
+                 break;
+            }
         }
 
+        if(!hasHero) result.append("  ");
+
+        boolean hasMonster=false;
+        for (int j = 0; j < legendsOfValor.getMonsters().size(); j++){
+            if (row == legendsOfValor.getMonsters().get(j).getRow() && col == legendsOfValor.getMonsters().get(j).getCol()){
+                result.append (" M" + (j + 1)+"");
+                hasMonster=true;
+                break;
+            }
+        }
+
+        if(!hasMonster) result.append("   ");
+
+        return result.toString();
     }
 
 
-    private static void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
+
+
+//        if (row ==  && col == 1){
+//            return "H1   ";
+//        }else if (row == 1 && col == 3){
+//            return "H2   ";
+//        }else if (row == 3 && col == 1){
+//            return "   M1";
+//        }else if (row == 1 && col == 4){
+//            return "   M2";
+//        }else if (row == 3 && col == 6){
+//            return "H3 M3";
+//        }else{
+//            return "     ";
+//        }
+//    }
+
+
+
+
+    private void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         String component = getCellComponent(row/3, col);
         if (map[row/3][col] == CellType.INACCESSIBLE)
             component = "X X X";
         printableMap.get(row).append(getInnerCellStr(component));
     }
 
-    public void createMap(){
+    private void createMap(){
         List<StringBuilder> printableMap = new ArrayList<StringBuilder>();
         CellType [][]map = {
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
