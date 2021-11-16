@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class LOVGrid extends Grid {
 
+    List<StringBuilder> printableMap;
+
     protected static int size = 8;
     private LegendsOfValor legendsOfValor;
 
@@ -207,6 +209,12 @@ public class LOVGrid extends Grid {
         }
     }
 
+    public void display(){
+        for (int i = 0; i < size * 3; i++) {
+            System.out.print(printableMap.get(i));
+        }
+    }
+
     public void land(int row, int col, Hero h, Cell cell, String move){
 //        printGrid(p);
         String icon = grid[row][col].getIcon();
@@ -227,10 +235,11 @@ public class LOVGrid extends Grid {
 //                CommonSpace c = (CommonSpace) cell;
 //                c.land(p);
 //                p.makeMove(this);
-                CommonSpace c = (CommonSpace)grid[row][col];
-                c.land(p);
-                p.makeMove(this);
-                break;
+                //todo
+//                CommonSpace c = (CommonSpace)grid[row][col];
+//                c.land(p);
+//                p.makeMove(this);
+//                break;
 
         }
     }
