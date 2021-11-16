@@ -168,31 +168,31 @@ public class LOVGrid extends Grid {
         }
     }
 
-//    public void land(int row, int col, Hero h, Cell cell, String move){
-////        printGrid(p);
-//        String icon = grid[row][col].getIcon();
-//        switch(icon){
-//            case "I":
-//                InaccessibleCell i = (InaccessibleCell) grid[row][col];
-//                i.land(move, h);
-//                h.makeMove(this);
-//                break;
-//
-//            case "N":
-//                NexusCell n = (NexusCell) grid[row][col];
-//                n.land(h);
-//                h.makeMove(this);
-//                break;
-//
-//            case " ":
-////                CommonSpace c = (CommonSpace) cell;
-////                c.land(p);
-////                p.makeMove(this);
-//                CommonSpace c = (CommonSpace)grid[row][col];
+    public void land(int row, int col, Hero h, Cell cell, String move){
+//        printGrid(p);
+        String icon = grid[row][col].getIcon();
+        switch(icon){
+            case "I":
+                InaccessibleCell i = (InaccessibleCell) grid[row][col];
+                i.land(move, h);
+                h.makeMove(this);
+                break;
+
+            case "N":
+                NexusCell n = (NexusCell) grid[row][col];
+                n.land(h);
+                h.makeMove(this);
+                break;
+
+            case "P":
+//                CommonSpace c = (CommonSpace) cell;
 //                c.land(p);
 //                p.makeMove(this);
-//                break;
-//
-//        }
-//    }
+                CommonSpace c = (CommonSpace)grid[row][col];
+                c.land(p);
+                p.makeMove(this);
+                break;
+
+        }
+    }
 }

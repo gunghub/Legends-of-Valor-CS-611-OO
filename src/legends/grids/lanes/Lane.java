@@ -4,9 +4,10 @@ package legends.grids.lanes;
 import legends.grids.cells.Cell;
 
 public class Lane {
-    private Cell[][] grid;
+
     private int numRows;
     private int numCols;
+    private int maxMonsterRow;
 
     public Lane(){
 
@@ -14,16 +15,8 @@ public class Lane {
     public Lane(int numRows, int numCols){
         this.numRows = numRows;
         this.numCols = numCols;
-        grid = new Cell[numRows][numCols];
     }
 
-    public Cell[][] getGrid() {
-        return grid;
-    }
-
-    public void setGrid(Cell[][] grid) {
-        this.grid = grid;
-    }
 
     public int getNumRows() {
         return numRows;
@@ -41,5 +34,11 @@ public class Lane {
         this.numCols = numCols;
     }
 
+    public int getMaxMonsterRow() {
+        return maxMonsterRow;
+    }
 
+    public void setMaxMonsterRow(int maxMonsterRow) {
+        this.maxMonsterRow = maxMonsterRow;
+    }
 }

@@ -3,6 +3,9 @@ package legends.characters.heroes;
 import legends.LOVGrid;
 import legends.characters.Character;
 import legends.gameplay.Inventory;
+import legends.games.LegendsOfValor;
+import legends.grids.cells.Cell;
+import legends.grids.lanes.Lane;
 import legends.items.Armor;
 import legends.items.Item;
 import legends.items.Potion;
@@ -30,6 +33,8 @@ public abstract class Hero extends Character {
     protected Colors colors;
     private int row;
     private int col;
+    private Lane currLane;
+    private Lane initLnae;
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience) {
         super(name, level, HP);
@@ -56,10 +61,12 @@ public abstract class Hero extends Character {
         }
         switch(move){
             case 1:
-                if(canAttack()){
+                if(withinRange(grid)){
 
                 }
             case 2:
+                if()
+
             case 3:
                 makeMove(grid);
                 break;
@@ -75,7 +82,8 @@ public abstract class Hero extends Character {
     }
 
     /**
-     * player chooses a move
+     * player choose to move a hero a certain direction. The hero then land on the cell and prompt the corresponding
+     * scenarios
      *
      * @param
      * @return
@@ -83,16 +91,18 @@ public abstract class Hero extends Character {
     public void makeMove(LOVGrid grid) {
         grid.createMap();
         System.out.println("Please choose a move:");
-        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n");
+        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
         String move = ScannerParser.parseString();
         while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
                 move.equals("D") && move.equals("d")) {
             move = ScannerParser.tryString();
         }
+        while(!isValidMove(move, grid)){
+            move = ScannerParser.tryString();
+        }
         switch (move) {
             case "W":
             case "w":
-
                 setRow(row - 1);
                 grid.land(row, col, this, grid.getGrid()[row][col], move);
                 break;
@@ -118,37 +128,75 @@ public abstract class Hero extends Character {
 //        grid.printGrid(this);
     }
 
-    public boolean isValidMove(String move){
+    public boolean isValidMove(String move, LOVGrid grid){
+        boolean isValid = true;
+        Cell[][] grids= grid.getGrid();
         switch(move){
             case "W":
             case "w":
-
-                setRow(row - 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                if(grids[row-1][col].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
+                if(row == currLane.getMaxMonsterRow()){
+                    System.out.println("You shall not bypass an monser without killing it! Please try again!");
+                    isValid = false;
+                }
                 break;
 
             case "A":
             case "a":
-                setCol(col - 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                if(grids[row][col-1].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
                 break;
 
             case "S":
             case "s":
-                setRow(row + 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                if(grids[row+1][col].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
                 break;
 
             case "D":
             case "d":
-                setCol(col + 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                if(grids[row][col+1].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
                 break;
+        }
+        return isValid;
+    }
+
+    public boolean withinRange(LOVGrid grid){
+        Cell[][] grids= grid.getGrid();
+        if(grids[Math.max(row-1,0)][Math.max(col-1,0)].isHasmonster() || grids[Math.max(row-1,0)][col].isHasmonster()||grids[Math.max(row-1,0)][Math.min(col+1,7)].isHasmonster()||
+                grids[row][Math.min(col-1,0)].isHasmonster()||grids[row][col].isHasmonster()||grids[row][Math.min(col+1,7)].isHasmonster()||
+                grids[Math.min(row+1,7)][Math.max(col-1,0)].isHasmonster()||grids[Math.min(row+1,7)][col].isHasmonster() || grids[Math.min(row+1,7)][Math.min(col+1,7)].isHasmonster()){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
-    public boolean canAttack(){
-
+    //TODO: implement
+    public Monster nearbyMonster(LOVGrid grid, LegendsOfValor lovgame){
+        Cell[][] grids= grid.getGrid();
+        if(grids[Math.max(row-1,0)][Math.max(col-1,0)].isHasmonster()){
+            return lovgame.get
+        }
+    || grids[Math.max(row-1,0)][col].isHasmonster()||grids[Math.max(row-1,0)][Math.min(col+1,7)].isHasmonster()||
+                grids[row][Math.min(col-1,0)].isHasmonster()||grids[row][col].isHasmonster()||grids[row][Math.min(col+1,7)].isHasmonster()||
+                grids[Math.min(row+1,7)][Math.max(col-1,0)].isHasmonster()||grids[Math.min(row+1,7)][col].isHasmonster() || grids[Math.min(row+1,7)][Math.min(col+1,7)].isHasmonster()){
+            return ;
+        }
+        else{
+            return false;
+        }
     }
     
     public void buy(Item item) {
