@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class LOVGrid extends Grid {
 
+    List<StringBuilder> printableMap;
+
     protected static int size = 8;
     private LegendsOfValor legendsOfValor;
 
@@ -161,7 +163,7 @@ public class LOVGrid extends Grid {
     }
 
     private void createMap(){
-        List<StringBuilder> printableMap = new ArrayList<StringBuilder>();
+        printableMap = new ArrayList<StringBuilder>();
         CellType [][]map = {
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
                 {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
@@ -202,6 +204,12 @@ public class LOVGrid extends Grid {
                 printableMap.get(row).append("\n");
         }
 
+        for (int i = 0; i < size * 3; i++) {
+            System.out.print(printableMap.get(i));
+        }
+    }
+
+    public void display(){
         for (int i = 0; i < size * 3; i++) {
             System.out.print(printableMap.get(i));
         }

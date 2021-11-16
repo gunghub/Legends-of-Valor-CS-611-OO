@@ -1,6 +1,7 @@
 package legends;
 
 import legends.games.Game;
+import legends.utilities.Colors;
 
 
 public class Main {
@@ -10,5 +11,6 @@ public class Main {
 //        System.out.println("Hi, Player!");
 //        Game game = new Legends();
 //        game.playGame();
+
     }
 }
