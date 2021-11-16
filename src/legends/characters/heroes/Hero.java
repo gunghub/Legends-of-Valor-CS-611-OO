@@ -50,6 +50,7 @@ public abstract class Hero extends Character {
 
     public abstract void levelUp();
 
+
     // hero chooses to attack, cast a spell, move, teleport, back, or quit game
     public boolean takeAction(LOVGrid grid){
         boolean play = true;
@@ -169,6 +170,75 @@ public abstract class Hero extends Character {
                 break;
         }
         return isValid;
+    }
+
+    public Monster getNeighborMonster(LOVGrid grid, LegendsOfValor legendofvalor){
+        Cell[][] grids = grid.getGrid();
+        if (grids[Math.max(row - 1, 0)][Math.max(col-1,0)].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == Math.max(row - 1, 0) && legendofvalor.getMonsters().get(i).getCol() == Math.max(col-1,0)){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+
+        }
+        else if (grids[Math.max(row-1,0)][col].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == Math.max(row-1,0) && legendofvalor.getMonsters().get(i).getCol() == col){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        else if (grids[Math.max(row-1,0)][Math.min(col+1,7)].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == Math.max(row-1,0) && legendofvalor.getMonsters().get(i).getCol() == Math.min(col+1,7)){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        else if (grids[row][Math.min(col-1,0)].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == row && legendofvalor.getMonsters().get(i).getCol() == Math.min(col-1,0)){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        else if (grids[row][col].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == row && legendofvalor.getMonsters().get(i).getCol() == col){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        else if (grids[row][Math.min(col+1,7)].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == row && legendofvalor.getMonsters().get(i).getCol() == Math.min(col+1,7)){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        else if (grids[Math.min(row+1,7)][Math.max(col-1,0)].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == Math.min(row+1,7) && legendofvalor.getMonsters().get(i).getCol() == Math.max(col-1,0)){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        else if (grids[Math.min(row+1,7)][col].isHasmonster()){
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == Math.min(row+1,7) && legendofvalor.getMonsters().get(i).getCol() == col){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
+                if (legendofvalor.getMonsters().get(i).getRow() == Math.min(row+1,7) && legendofvalor.getMonsters().get(i).getCol() == Math.min(col+1,7)){
+                    return legendofvalor.getMonsters().get(i);
+                }
+            }
+        }
+        return null;
     }
 
     // return boolean indicating whether there is a monster within the hero's attacking range
