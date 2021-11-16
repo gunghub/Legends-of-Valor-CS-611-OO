@@ -235,10 +235,11 @@ public class LOVGrid extends Grid {
 //                CommonSpace c = (CommonSpace) cell;
 //                c.land(p);
 //                p.makeMove(this);
-                CommonSpace c = (CommonSpace)grid[row][col];
-                c.land(p);
-                p.makeMove(this);
-                break;
+                //todo
+//                CommonSpace c = (CommonSpace)grid[row][col];
+//                c.land(p);
+//                p.makeMove(this);
+//                break;
 
         }
     }
