@@ -10,28 +10,25 @@ import java.util.List;
 
 
 public class LegendsOfValor extends RPGGame {
+    private ArrayList<Hero> heroes;
+    private ArrayList<Monster> monsters;
     public void playGame(){
         //TODO
     }
 
-    public List<Hero> getHeroes(){
-
-        //todo
-
-        List<Hero> heroes =new ArrayList<>();
-        heroes.add(new Warrior("sdf",1,1,1,1,1,1,1,1));
-        Hero hero=new Warrior("sdf",1,1,1,1,1,1,1,1);
-        hero.setRow(3);
-        hero.setCol(3);
-        heroes.add(hero);
-
+    public ArrayList<Hero> getHeroes() {
         return heroes;
     }
-    public List<Monster> getMonsters(){
 
-        //todo
-        List<Monster> monsters =new ArrayList<>();
-        monsters.add(new Dragon("sdf",1,1,1,1,1));
+    public void setHeroes(ArrayList<Hero> heroes) {
+        this.heroes = heroes;
+    }
+
+    public ArrayList<Monster> getMonsters() {
         return monsters;
+    }
+
+    public void setMonsters(ArrayList<Monster> monsters) {
+        this.monsters = monsters;
     }
 }

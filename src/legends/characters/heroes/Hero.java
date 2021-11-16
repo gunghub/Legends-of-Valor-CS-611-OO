@@ -3,6 +3,9 @@ package legends.characters.heroes;
 import legends.LOVGrid;
 import legends.characters.Character;
 import legends.gameplay.Inventory;
+import legends.games.LegendsOfValor;
+import legends.grids.cells.Cell;
+import legends.grids.lanes.Lane;
 import legends.items.Armor;
 import legends.items.Item;
 import legends.items.Potion;
@@ -30,6 +33,8 @@ public abstract class Hero extends Character {
     protected Colors colors;
     private int row;
     private int col;
+    private Lane currLane;
+    private Lane initLnae;
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience) {
         super(name, level, HP);
@@ -45,64 +50,145 @@ public abstract class Hero extends Character {
 
     public abstract void levelUp();
 
+    // hero chooses to attack, cast a spell, move, teleport, back, or quit game
+    public boolean takeAction(LOVGrid grid){
+        boolean play = true;
+        System.out.println("Please choose an action:");
+        System.out.println(" 1: Attack\n 2: Cast spell\n 3: Move\n 4: Teleport\n 5: Back\n 6: Quit game\n");
+        int move = ScannerParser.parseInt();
+        while(move <1 || move>5){
+            move = ScannerParser.tryInt();
+        }
+        switch(move){
+            case 1:
+                if(withinRange(grid)){
+
+                }
+            case 2:
+                if()
+
+            case 3:
+                makeMove(grid);
+                break;
+
+            case 4:
+            case 5:
+            case 6:
+                System.out.println("Thanks for playing! Exiting program...");
+                play = false;
+                break;
+        }
+        return play;
+    }
 
     /**
-     * player chooses a move
+     * player choose to move a hero a certain direction. The hero then land on the cell and prompt the corresponding
+     * scenarios
      *
      * @param
      * @return
      */
-//    public boolean makeMove(LOVGrid grid) {
+    public void makeMove(LOVGrid grid) {
+        grid.createMap();
+        System.out.println("Please choose a move:");
+        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
+        String move = ScannerParser.parseString();
+        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
+                move.equals("D") && move.equals("d")) {
+            move = ScannerParser.tryString();
+        }
+        while(!isValidMove(move, grid)){
+            move = ScannerParser.tryString();
+        }
+        switch (move) {
+            case "W":
+            case "w":
+                setRow(row - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "A":
+            case "a":
+                setCol(col - 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "S":
+            case "s":
+                setRow(row + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+
+            case "D":
+            case "d":
+                setCol(col + 1);
+                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                break;
+        }
 //        grid.printGrid(this);
-//        boolean play = true;
-//        System.out.println("Please choose your move:");
-//        System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\nQ/q: quit game\n" +
-//                "I/i: show information");
-//        String move = ScannerParser.parseString();
-//        while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
-//                move.equals("D") && move.equals("d") && move.equals("Q") && move.equals("q") && move.equals("I") && move.equals("i")) {
-//            move = ScannerParser.tryString();
-//        }
-//        switch (move) {
-//            case "W":
-//            case "w":
-//                setRow(row - 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "A":
-//            case "a":
-//                setCol(col - 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "S":
-//            case "s":
-//                setRow(row + 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "D":
-//            case "d":
-//                setCol(col + 1);
-//                grid.land(row, col, this, grid.getGrid()[row][col], move);
-//                break;
-//
-//            case "Q":
-//            case "q":
-//                System.out.println("Thanks for playing! Exiting program...");
-//                play = false;
-//                break;
-//
-//            case "I":
-//            case "i":
-//                Printer printer = new Printer();
-//           //     printer.printHeroes(getHeroes());
-//                break;
-//        }
-//        grid.printGrid(this);
-//        return play;
-//    }
+    }
+
+    public boolean isValidMove(String move, LOVGrid grid){
+        boolean isValid = true;
+        Cell[][] grids= grid.getGrid();
+        switch(move){
+            case "W":
+            case "w":
+                if(grids[row-1][col].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
+                if(row == currLane.getMaxMonsterRow()){
+                    System.out.println("You shall not bypass an monser without killing it! Please try again!");
+                    isValid = false;
+                }
+                break;
+
+            case "A":
+            case "a":
+                if(grids[row][col-1].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
+                break;
+
+            case "S":
+            case "s":
+                if(grids[row+1][col].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
+                break;
+
+            case "D":
+            case "d":
+                if(grids[row][col+1].isHashero()){
+                    System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                    isValid = false;
+                }
+                break;
+        }
+        return isValid;
+    }
+
+    // return boolean indicating whether there is a monster within the hero's attacking range
+    public boolean withinRange(LOVGrid grid){
+        Cell[][] grids= grid.getGrid();
+        if(grids[Math.max(row-1,0)][Math.max(col-1,0)].isHasmonster() || grids[Math.max(row-1,0)][col].isHasmonster()||grids[Math.max(row-1,0)][Math.min(col+1,7)].isHasmonster()||
+                grids[row][Math.min(col-1,0)].isHasmonster()||grids[row][col].isHasmonster()||grids[row][Math.min(col+1,7)].isHasmonster()||
+                grids[Math.min(row+1,7)][Math.max(col-1,0)].isHasmonster()||grids[Math.min(row+1,7)][col].isHasmonster() || grids[Math.min(row+1,7)][Math.min(col+1,7)].isHasmonster()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    // return the nearby monster of the hero
+    //TODO: implement
+    public Monster nearbyMonster(LOVGrid grid, LegendsOfValor lovgame){
+        return null;
+    }
     
     public void buy(Item item) {
         inventory.addItem(item);
@@ -112,11 +198,6 @@ public abstract class Hero extends Character {
     public void sell(Item item) {
         inventory.removeItem(item);
         money += item.getPrice();
-    }
-
-    //TODO: need to view hero stats at any moment of the game
-    public void viewHeroStats() {
-
     }
 
 
