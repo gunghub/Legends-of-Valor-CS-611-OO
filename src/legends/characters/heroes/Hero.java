@@ -65,12 +65,12 @@ public abstract class Hero extends Character {
                 if(withinRange(grid)){
 
                 }
-            case 2:
-                if()
-
-            case 3:
-                makeMove(grid);
-                break;
+//            case 2:
+//                if()
+//
+//            case 3:
+//                makeMove(grid);
+//                break;
 
             case 4:
             case 5:
@@ -90,7 +90,7 @@ public abstract class Hero extends Character {
      * @return
      */
     public void makeMove(LOVGrid grid) {
-        grid.createMap();
+//        grid.createMap();
         System.out.println("Please choose a move:");
         System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
         String move = ScannerParser.parseString();
