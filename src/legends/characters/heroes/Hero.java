@@ -17,6 +17,8 @@ import legends.utilities.Graphic;
 import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
 
+import java.util.ArrayList;
+
 public abstract class Hero extends Character {
     private int mana;
     private int strength;
@@ -34,9 +36,9 @@ public abstract class Hero extends Character {
     private int row;
     private int col;
     private Lane currLane;
-    private Lane initLnae;
+    private Lane initLane;
 
-    public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience) {
+    public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience, Lane initLane) {
         super(name, level, HP);
         this.mana = mana;
         this.strength = strength;
@@ -44,37 +46,95 @@ public abstract class Hero extends Character {
         this.dexterity = dexterity;
         this.money = money;
         this.experience = experience;
+        this.initLane = initLane;
         armedInventory = new Inventory();
         inventory = new Inventory();
+        currLane = initLane;
     }
 
     public abstract void levelUp();
 
 
     // hero chooses to attack, cast a spell, move, teleport, back, or quit game
-    public boolean takeAction(LOVGrid grid){
+    //return the play boolean which indicates whether player wants to quit the game
+    public boolean takeAction(LOVGrid grid, LegendsOfValor lovgame) {
         boolean play = true;
         System.out.println("Please choose an action:");
         System.out.println(" 1: Attack\n 2: Cast spell\n 3: Move\n 4: Teleport\n 5: Back\n 6: Quit game\n");
         int move = ScannerParser.parseInt();
-        while(move <1 || move>5){
+        while (move < 1 || move > 5) {
             move = ScannerParser.tryInt();
         }
-        switch(move){
+        switch (move) {
             case 1:
-                if(withinRange(grid)){
-
+                if (withinRange(grid)) {
+                    attack(nearbyMonster(grid, lovgame), null);
                 }
-//            case 2:
-//                if()
-//
-//            case 3:
-//                makeMove(grid);
-//                break;
+                break;
 
-            case 4:
-            case 5:
-            case 6:
+            case 2:
+                if (withinRange(grid)) {
+                    Printer printer = new Printer();
+                    ArrayList<Spell> spells = inventory.getSpells();
+                    if (spells.size() != 0) {
+                        System.out.println("Please choose a spell to cast (enter ID):");
+                        printer.printSpells(spells);
+                        int chosenSpell = ScannerParser.parseInt() - 1;
+                        while (chosenSpell > inventory.getSpells().size()) {
+                            chosenSpell = ScannerParser.tryInt() - 1;
+                        }
+                        attack(nearbyMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
+                    } else {
+                        System.out.println("Your hero does not have any spell in their inventory! Choose another move!\n");
+                        takeAction(grid, lovgame);
+                    }
+                }
+                break;
+
+            case 3:
+                makeMove(grid);
+                break;
+
+            case 4: //teleport
+                System.out.println("Please choose a lane you wish to teleport to :");
+                System.out.println(" 1: Top\n 2: Mid\n 3: Bot\n");
+                String input = ScannerParser.parseString();
+                while(input.equals("Top") || input.equals("Mid") || input.equals("Bot")){
+                    input = ScannerParser.tryString();
+                }
+                currLane.setName(input);
+                System.out.println("Which row would you like to land on?(Between 1~8. You shall not land on a row that surpass any monster" +
+                        "or land on the same cell as another hero)");
+                int currrow = ScannerParser.parseInt();
+                while(currrow>8 || currrow<1 || currLane.getMaxMonsterRow()>currrow || grid.getGrid()[currrow][2].getIcon().equals("I") ||grid.getGrid()[currrow][5].getIcon().equals("I")){
+                    if(grid.getGrid()[currrow][2].getIcon().equals("I") ||grid.getGrid()[currrow][5].getIcon().equals("I")){
+                        System.out.println("You shall not land on Inaccessible space!");
+                    }
+                    currrow = ScannerParser.tryInt();
+                }
+                row = currrow-1;
+                System.out.println("Would you like to land on left or right column?(Between 1~8. You shall not land on the same cell as another hero)");
+                int currcol = ScannerParser.parseInt();
+                while(currcol>8 || currcol<1 || grid.getGrid()[currrow][currcol].isHashero()){
+                    currcol = ScannerParser.tryInt();
+                }
+                col = currcol-1;
+                break;
+
+            case 5: //back
+                if(initLane.getName().equals("Top")){
+                    row = 0;
+                    col = 7;
+                }else if(initLane.getName().equals("Mid")){
+                    row = 3;
+                    col = 7;
+                }else{
+                    row = 6;
+                    col = 7;
+                }
+                break;
+
+            case 6: //quit
                 System.out.println("Thanks for playing! Exiting program...");
                 play = false;
                 break;
@@ -90,7 +150,7 @@ public abstract class Hero extends Character {
      * @return
      */
     public void makeMove(LOVGrid grid) {
-//        grid.createMap();
+        grid.display();
         System.out.println("Please choose a move:");
         System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
         String move = ScannerParser.parseString();
@@ -98,7 +158,7 @@ public abstract class Hero extends Character {
                 move.equals("D") && move.equals("d")) {
             move = ScannerParser.tryString();
         }
-        while(!isValidMove(move, grid)){
+        while (!isValidMove(move, grid)) {
             move = ScannerParser.tryString();
         }
         switch (move) {
@@ -129,17 +189,17 @@ public abstract class Hero extends Character {
 //        grid.printGrid(this);
     }
 
-    public boolean isValidMove(String move, LOVGrid grid){
+    public boolean isValidMove(String move, LOVGrid grid) {
         boolean isValid = true;
-        Cell[][] grids= grid.getGrid();
-        switch(move){
+        Cell[][] grids = grid.getGrid();
+        switch (move) {
             case "W":
             case "w":
-                if(grids[row-1][col].isHashero()){
+                if (grids[row - 1][col].isHashero()) {
                     System.out.println("You shall not land in the same cell with another hero! Please try again!");
                     isValid = false;
                 }
-                if(row == currLane.getMaxMonsterRow()){
+                if (row == currLane.getMaxMonsterRow()) {
                     System.out.println("You shall not bypass an monser without killing it! Please try again!");
                     isValid = false;
                 }
@@ -147,7 +207,7 @@ public abstract class Hero extends Character {
 
             case "A":
             case "a":
-                if(grids[row][col-1].isHashero()){
+                if (grids[row][col - 1].isHashero()) {
                     System.out.println("You shall not land in the same cell with another hero! Please try again!");
                     isValid = false;
                 }
@@ -155,7 +215,7 @@ public abstract class Hero extends Character {
 
             case "S":
             case "s":
-                if(grids[row+1][col].isHashero()){
+                if (grids[row + 1][col].isHashero()) {
                     System.out.println("You shall not land in the same cell with another hero! Please try again!");
                     isValid = false;
                 }
@@ -163,7 +223,7 @@ public abstract class Hero extends Character {
 
             case "D":
             case "d":
-                if(grids[row][col+1].isHashero()){
+                if (grids[row][col + 1].isHashero()) {
                     System.out.println("You shall not land in the same cell with another hero! Please try again!");
                     isValid = false;
                 }
@@ -242,24 +302,23 @@ public abstract class Hero extends Character {
     }
 
     // return boolean indicating whether there is a monster within the hero's attacking range
-    public boolean withinRange(LOVGrid grid){
-        Cell[][] grids= grid.getGrid();
-        if(grids[Math.max(row-1,0)][Math.max(col-1,0)].isHasmonster() || grids[Math.max(row-1,0)][col].isHasmonster()||grids[Math.max(row-1,0)][Math.min(col+1,7)].isHasmonster()||
-                grids[row][Math.min(col-1,0)].isHasmonster()||grids[row][col].isHasmonster()||grids[row][Math.min(col+1,7)].isHasmonster()||
-                grids[Math.min(row+1,7)][Math.max(col-1,0)].isHasmonster()||grids[Math.min(row+1,7)][col].isHasmonster() || grids[Math.min(row+1,7)][Math.min(col+1,7)].isHasmonster()){
+    public boolean withinRange(LOVGrid grid) {
+        Cell[][] grids = grid.getGrid();
+        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasmonster() || grids[Math.max(row - 1, 0)][col].isHasmonster() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasmonster() ||
+                grids[row][Math.min(col - 1, 0)].isHasmonster() || grids[row][col].isHasmonster() || grids[row][Math.min(col + 1, 7)].isHasmonster() ||
+                grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHasmonster() || grids[Math.min(row + 1, 7)][col].isHasmonster() || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].isHasmonster()) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     // return the nearby monster of the hero
     //TODO: implement
-    public Monster nearbyMonster(LOVGrid grid, LegendsOfValor lovgame){
+    public Monster nearbyMonster(LOVGrid grid, LegendsOfValor lovgame) {
         return null;
     }
-    
+
     public void buy(Item item) {
         inventory.addItem(item);
         money -= item.getPrice();
@@ -301,7 +360,7 @@ public abstract class Hero extends Character {
         setCurrentWeapon(wear);
     }
 
-    public void changeArmor(Armor orig, Armor wear){
+    public void changeArmor(Armor orig, Armor wear) {
         unequip(orig);
         equip(wear);
         setCurrentArmor(wear);
@@ -341,23 +400,23 @@ public abstract class Hero extends Character {
                 }
             }
             System.out.println("Hero" + getName() + " has dealt " + dmg + " damage to " + m.getName());
-            if(m.getHP() <=dmg){
+            if (m.getHP() <= dmg) {
                 m.setHP(0);
                 m.setFaint(true);
-                System.out.println("Monster "+ m.getName()+" fainted!");
+                System.out.println("Monster " + m.getName() + " fainted!");
 
-            }else{
-            newHP = m.getHP() - dmg;
-            m.setHP(newHP);
+            } else {
+                newHP = m.getHP() - dmg;
+                m.setHP(newHP);
             }
         } else {
             mana -= spell.getMana();
             dmg = spell.calcAttack(dexterity, m);
-            if(m.getHP() <=dmg){
+            if (m.getHP() <= dmg) {
                 m.setHP(0);
-                System.out.println("Monster "+ m.getName()+" fainted!");
+                System.out.println("Monster " + m.getName() + " fainted!");
                 m.setFaint(true);
-            }else{
+            } else {
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
             }
@@ -377,7 +436,7 @@ public abstract class Hero extends Character {
         if (getHP() <= actualdmg) {
             setHP(0);
             setFaint(true);
-            System.out.println("Hero "+ getName()+" fainted!");
+            System.out.println("Hero " + getName() + " fainted!");
 
         } else {
             setHP(getHP() - actualdmg);
