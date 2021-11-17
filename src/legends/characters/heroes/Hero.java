@@ -68,7 +68,7 @@ public abstract class Hero extends Character {
         switch (move) {
             case 1:
                 if (withinRange(grid)) {
-                    attack(nearbyMonster(grid, lovgame), null);
+                    attack(getNeighborMonster(grid, lovgame), null);
                 }
                 break;
 
@@ -83,7 +83,7 @@ public abstract class Hero extends Character {
                         while (chosenSpell > inventory.getSpells().size()) {
                             chosenSpell = ScannerParser.tryInt() - 1;
                         }
-                        attack(nearbyMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
+                        attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
                     } else {
                         System.out.println("Your hero does not have any spell in their inventory! Choose another move!\n");
                         takeAction(grid, lovgame);
@@ -313,11 +313,6 @@ public abstract class Hero extends Character {
         }
     }
 
-    // return the nearby monster of the hero
-    //TODO: implement
-    public Monster nearbyMonster(LOVGrid grid, LegendsOfValor lovgame) {
-        return null;
-    }
 
     public void buy(Item item) {
         inventory.addItem(item);
