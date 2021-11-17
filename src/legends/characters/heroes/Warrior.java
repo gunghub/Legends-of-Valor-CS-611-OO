@@ -1,13 +1,14 @@
 package legends.characters.heroes;
 
+import legends.grids.lanes.Lane;
 import legends.utilities.Colors;
 import legends.utilities.Graphic;
 
 public class Warrior extends Hero {
     private final String type = "Warrior";
 
-    public Warrior(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience){
-        super(name, level, HP, mana, strength, agility, dexterity, money, experience);
+    public Warrior(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience, Lane initLane){
+        super(name, level, HP, mana, strength, agility, dexterity, money, experience, initLane);
         graphic = new Graphic();
         colors = new Colors();
     }

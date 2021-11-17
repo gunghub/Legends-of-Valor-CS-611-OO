@@ -12,6 +12,7 @@ import legends.gameplay.Inventory;
 import legends.gameplay.Markets;
 import legends.gameplay.Round;
 import legends.grids.cells.InaccessibleCell;
+import legends.grids.lanes.Lane;
 import legends.items.Armor;
 import legends.items.Potion;
 import legends.items.Weapon;
@@ -50,16 +51,16 @@ public class Factory {
         return new FileParser();
     }
 
-    public Paladin newPaladin(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience){
-        return new Paladin(name, level, HP, mana, strength, agility, dexterity, money, experience);
+    public Paladin newPaladin(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience, Lane initLane){
+        return new Paladin(name, level, HP, mana, strength, agility, dexterity, money, experience, initLane);
     }
 
-    public Sorcerer newSorcerer(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience){
-        return new Sorcerer(name, level, HP, mana, strength, agility, dexterity, money, experience);
+    public Sorcerer newSorcerer(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience, Lane initLane){
+        return new Sorcerer(name, level, HP, mana, strength, agility, dexterity, money, experience, initLane);
     }
 
-    public Warrior newWarrior(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience){
-        return new Warrior(name, level, HP, mana, strength, agility, dexterity, money, experience);
+    public Warrior newWarrior(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience, Lane initLane){
+        return new Warrior(name, level, HP, mana, strength, agility, dexterity, money, experience, initLane);
     }
 
     public Exoskeleton newExoskeleton(String name, int level, int HP, int defense, int damage, int dodge){

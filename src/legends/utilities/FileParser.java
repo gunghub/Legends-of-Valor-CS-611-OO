@@ -151,7 +151,7 @@ public class FileParser {
             Hero h = new Paladin(string[0], 1,
                     100, parseint(string[1]),
                     parseint(string[2]),parseint(string[3]),parseint(string[4]),
-                    parseint(string[5]), parseint(string[6]));
+                    parseint(string[5]), parseint(string[6]), null);
             paladins.add(h);
 //            for(String s: string) {
 //                System.out.printf(s+" ");
@@ -167,7 +167,7 @@ public class FileParser {
             Hero h = new Sorcerer(string[0], 1,
                     100, parseint(string[1]),
                     parseint(string[2]),parseint(string[3]),parseint(string[4]),
-                    parseint(string[5]), parseint(string[6]));
+                    parseint(string[5]), parseint(string[6]), null);
             sorcerers.add(h);
         }
         return sorcerers;
@@ -180,7 +180,7 @@ public class FileParser {
             Hero h = new Warrior(string[0], 1,
                     100, parseint(string[1]),
                     parseint(string[2]),parseint(string[3]),parseint(string[4]),
-                    parseint(string[5]), parseint(string[6]));
+                    parseint(string[5]), parseint(string[6]), null);
 //            Hero h = new Warrior("A",1,2,3,4,5,6,7,8);
 
             warriors.add(h);
