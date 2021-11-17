@@ -4,6 +4,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.util.Scanner;
 
 /**
  * @author
@@ -17,33 +18,68 @@ public class AudioUtility {
     private static final String WORKING_DIRECTORY=System.getProperty("user.dir");
     private static final String PATH_TO_AUDIOS_FROM_WORKING_DIRECTORY =WORKING_DIRECTORY+"/audios/";
 
-    private static final String AUDIO_FILE_NAME ="mixkit-martial-arts-fast-punch-2047.wav";
+
+
+    public static final String DRAGON_ROAR ="dragon_roar.wav";
+    public static final String GAME_AWARD="F5YUGD6-game-award.wav";
 
     /**
-     * Test entry for this utility
+     * Background music
+     */
+    public static final String BGM_THE_GREAT_BATTLE="alexander-nakarada-the-great-battle.wav";
+
+
+    /**
+     * Demo entry for this utility
+     *
      * @param args
      */
     public static void main(String[] args) {
-        AudioUtility.playSoundOnce(AUDIO_FILE_NAME);
+        AudioUtility.playSound(DRAGON_ROAR); // DEMO play the dragon roar once.
+        //AudioUtility.playSound(GAME_AWARD);
+        AudioUtility.playSound(BGM_THE_GREAT_BATTLE,true); //DEMO play the bgm repeatedly.
+
+
+
+
+        Scanner scanner=new Scanner(System.in);
+        if(scanner.hasNext()){
+            scanner.next();
+        };
     }
 
-    
-
     /**
-     * @param audioFileName Name of the audio file e.g. "mixkit-martial-arts-fast-punch-2047.wav"
+     * @param audioFileName Name of the audio file e.g. "dragon_roar.wav".
+     * @param loop if you want to loop infinitely, set loop as true, otherwise false.
+     *
      */
-    public synchronized static void playSoundOnce(String audioFileName) {
-        try {
-            //System.out.println(PATH_TO_AUDIOS_FROM_WORKING_DIRECTORY+AUDIO_FILE_NAME);
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(PATH_TO_AUDIOS_FROM_WORKING_DIRECTORY + audioFileName));
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-            // If you want the playSoundOnce to loop infinitely, then put: clip.loop(Clip.LOOP_CONTINUOUSLY);
-            // If you want to stop the playSoundOnce, then use clip.stop();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+    public synchronized static void playSound(String audioFileName, boolean loop ) {
+        Thread thread=new Thread(new Runnable() {
+            public void run() {
+                try
+                {
+
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(PATH_TO_AUDIOS_FROM_WORKING_DIRECTORY + audioFileName));
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    if(loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    clip.start();
+
+                    // If you want the playSound to loop infinitely, then put: clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    // If you want to stop the playSoundOnce, then use clip.stop();
+
+                } catch (
+                        Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+    }
+
+    public static void playSound(String audioFileName){
+        playSound(audioFileName, false);
     }
 
 }
