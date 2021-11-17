@@ -14,6 +14,8 @@ public class LegendsOfValor extends RPGGame {
     private ArrayList<Monster> monsters;
     public void playGame(){
         //TODO
+        heroes = new ArrayList<Hero>();
+        monsters = new ArrayList<Monster>();
     }
 
     public ArrayList<Hero> getHeroes() {
