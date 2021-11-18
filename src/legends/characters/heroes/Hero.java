@@ -49,6 +49,7 @@ public abstract class Hero extends Character {
         this.initLane = initLane;
         armedInventory = new Inventory();
         inventory = new Inventory();
+        initLane = new Lane();
         currLane = initLane;
     }
 
@@ -539,5 +540,21 @@ public abstract class Hero extends Character {
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    public Lane getCurrLane() {
+        return currLane;
+    }
+
+    public void setCurrLane(Lane currLane) {
+        this.currLane = currLane;
+    }
+
+    public Lane getInitLane() {
+        return initLane;
+    }
+
+    public void setInitLane(Lane initLane) {
+        this.initLane = initLane;
     }
 }
