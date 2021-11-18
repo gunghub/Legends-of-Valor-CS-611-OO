@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Scanner;
 
 /**
- * @author
+ * @author Gung
  *
  * A utility for audios and sounds
  *
@@ -22,6 +22,8 @@ public class AudioUtility {
 
     public static final String DRAGON_ROAR ="dragon_roar.wav";
     public static final String GAME_AWARD="F5YUGD6-game-award.wav";
+    public static final String LIGHT_HIT="light_hit.wav";
+    public static final String EPIC_DAMAGE="epic_damage.wav";
 
     /**
      * Background music
@@ -35,11 +37,10 @@ public class AudioUtility {
      * @param args
      */
     public static void main(String[] args) {
-        AudioUtility.playSound(DRAGON_ROAR); // DEMO play the dragon roar once.
-        //AudioUtility.playSound(GAME_AWARD);
-        AudioUtility.playSound(BGM_THE_GREAT_BATTLE,true); //DEMO play the bgm repeatedly.
+        //AudioUtility.playSound(DRAGON_ROAR); // DEMO play the dragon roar once.
+        //AudioUtility.playSound(BGM_THE_GREAT_BATTLE,true); //DEMO play the bgm repeatedly.
 
-
+        AudioUtility.playSound(EPIC_DAMAGE);
 
 
         Scanner scanner=new Scanner(System.in);
@@ -49,8 +50,10 @@ public class AudioUtility {
     }
 
     /**
+     *
+     * Play a sound
      * @param audioFileName Name of the audio file e.g. "dragon_roar.wav".
-     * @param loop if you want to loop infinitely, set loop as true, otherwise false.
+     * @param loop if you want to loop infinitely, set loop as true, otherwise false as default.
      *
      */
     public synchronized static void playSound(String audioFileName, boolean loop ) {
@@ -58,15 +61,16 @@ public class AudioUtility {
             public void run() {
                 try
                 {
-
                     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(PATH_TO_AUDIOS_FROM_WORKING_DIRECTORY + audioFileName));
                     Clip clip = AudioSystem.getClip();
                     clip.open(audioInputStream);
-                    if(loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    if(loop) {
+                        clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    }
                     clip.start();
 
                     // If you want the playSound to loop infinitely, then put: clip.loop(Clip.LOOP_CONTINUOUSLY);
-                    // If you want to stop the playSoundOnce, then use clip.stop();
+                    // If you want to stop the playSound, then use clip.stop();
 
                 } catch (
                         Exception exception) {
