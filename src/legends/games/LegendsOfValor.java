@@ -94,6 +94,7 @@ public class LegendsOfValor extends RPGGame {
             type = ScannerParser.tryInt();
         }
         chooseHeroType(type);
+
         System.out.println("Please see your heroes below ----\n");
         Printer printer = new Printer();
         printer.printHeroes(heroes);
