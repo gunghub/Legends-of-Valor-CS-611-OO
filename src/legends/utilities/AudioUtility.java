@@ -24,12 +24,14 @@ public class AudioUtility {
     public static final String GAME_AWARD="F5YUGD6-game-award.wav";
     public static final String LIGHT_HIT="light_hit.wav";
     public static final String EPIC_DAMAGE="epic_damage.wav";
-    public static final String LEVEL_UP=""; //TODO
-    public static final String WIN="";//TODO
-    public static final String LOSE="mixkit-player-losing-or-failing-2042.wav";//TODO
-    public static final String GAME_BEGIN="";//TODO
+    public static final String LEVEL_UP="mixkit-completion-of-a-level-2063.wav";
+    public static final String WIN="win.wav";
+    public static final String LOSE="mixkit-player-losing-or-failing-2042.wav";
+    public static final String DODGE="mixkit-magic-glitter-shot-2353.wav";
+    public static final String MOVE="mixkit-player-jumping-in-a-video-game-2043.wav";
     public static final String NOTIFICATION ="mixkit-unlock-game-notification-253.wav";// played when showing the information/status
-
+    public static final String ERROR="error.wav";
+    public static final String GETTING_HIT="mixkit-boxer-getting-hit-2055.wav";
     /**
      * Background music
      */
@@ -45,7 +47,7 @@ public class AudioUtility {
         //AudioUtility.playSound(DRAGON_ROAR); // DEMO play the dragon roar once.
         AudioUtility.playSound(BGM_THE_GREAT_BATTLE,true); //DEMO play the bgm repeatedly.
 
-        AudioUtility.playSound(NOTIFICATION);
+        AudioUtility.playSound(WIN);
 
 
         Scanner scanner=new Scanner(System.in);
