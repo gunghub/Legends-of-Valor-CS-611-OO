@@ -36,12 +36,14 @@ public class LOVGrid extends Grid {
         createMap();
     }
 
-    private static String getOuterCellStr(String c){
+    private static String getOuterCellStr(String cellIcon){
+
+
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < 2; i++) {
-            str.append(c).append(" - ");
+            str.append(cellIcon).append(" - ");
         }
-        str.append(c).append("   ");
+        str.append(cellIcon).append("   ");
         return str.toString();
     }
 
@@ -163,7 +165,7 @@ public class LOVGrid extends Grid {
     }
 
     private void createMap(){
-        List<StringBuilder> printableMap = new ArrayList<StringBuilder>();
+        printableMap = new ArrayList<StringBuilder>();
         CellType [][]map = {
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
                 {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
