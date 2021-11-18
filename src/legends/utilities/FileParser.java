@@ -54,7 +54,7 @@ public class FileParser {
      * @param level
      * @return
      */
-    public Monster chooseRandMonster(int level) {
+    public Monster chooseRandMonster() {
         ArrayList<Monster> am = parseMonsters();
         Random r = new Random();
         int n = r.nextInt(am.size());

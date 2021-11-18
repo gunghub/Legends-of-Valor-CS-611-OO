@@ -540,4 +540,7 @@ public abstract class Hero extends Character {
     public void setCol(int col) {
         this.col = col;
     }
+
+
+
 }

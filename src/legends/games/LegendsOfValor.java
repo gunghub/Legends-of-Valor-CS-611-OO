@@ -55,8 +55,9 @@ public class LegendsOfValor extends RPGGame {
 //    }
 
     public void initMonsters(){
+        FileParser fp = new FileParser();
         for(int i=0; i<heroes.size(); i++){
-
+            addMonster(fp.chooseRandMonster());
         }
     }
 
