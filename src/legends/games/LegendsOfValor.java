@@ -33,6 +33,13 @@ public class LegendsOfValor extends RPGGame {
         initHeroes();
         initMonsters();
         grid.display();
+        while(play){
+            for(int i=0; i<heroes.size(); i++){
+                play = heroes.get(i).takeAction(grid, this);
+                monsters.get(i).makeMove(heroes.get(i), grid);
+            }
+        }
+
 
     }
 
@@ -55,8 +62,9 @@ public class LegendsOfValor extends RPGGame {
 //    }
 
     public void initMonsters(){
+        FileParser fp = new FileParser();
         for(int i=0; i<heroes.size(); i++){
-
+            addMonster(fp.chooseRandMonster());
         }
     }
 

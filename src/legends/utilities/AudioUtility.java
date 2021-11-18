@@ -24,6 +24,11 @@ public class AudioUtility {
     public static final String GAME_AWARD="F5YUGD6-game-award.wav";
     public static final String LIGHT_HIT="light_hit.wav";
     public static final String EPIC_DAMAGE="epic_damage.wav";
+    public static final String LEVEL_UP=""; //TODO
+    public static final String WIN="";//TODO
+    public static final String LOSE="mixkit-player-losing-or-failing-2042.wav";//TODO
+    public static final String GAME_BEGIN="";//TODO
+    public static final String NOTIFICATION ="mixkit-unlock-game-notification-253.wav";// played when showing the information/status
 
     /**
      * Background music
@@ -38,9 +43,9 @@ public class AudioUtility {
      */
     public static void main(String[] args) {
         //AudioUtility.playSound(DRAGON_ROAR); // DEMO play the dragon roar once.
-        //AudioUtility.playSound(BGM_THE_GREAT_BATTLE,true); //DEMO play the bgm repeatedly.
+        AudioUtility.playSound(BGM_THE_GREAT_BATTLE,true); //DEMO play the bgm repeatedly.
 
-        AudioUtility.playSound(EPIC_DAMAGE);
+        AudioUtility.playSound(NOTIFICATION);
 
 
         Scanner scanner=new Scanner(System.in);

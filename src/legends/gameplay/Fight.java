@@ -41,7 +41,7 @@ public class Fight {
         for (int i = 0; i < numHeroes; i++) {
             System.out.println("Choose your hero" + (i + 1) + " :");
             heroes.add(p.getHeroes().get(i));
-            monsters.add(fp.chooseRandMonster(p.getHeroes().get(i).getLevel()));
+            monsters.add(fp.chooseRandMonster());
         }
         while (!isOver) {
             Round r = new Round();
