@@ -9,4 +9,8 @@ public class PlainCell extends Cell {
         super("P", row, col);
     }
 
+    public void land(){
+        setHashero(true);
+    }
+
 }

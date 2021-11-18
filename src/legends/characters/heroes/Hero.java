@@ -164,24 +164,28 @@ public abstract class Hero extends Character {
         switch (move) {
             case "W":
             case "w":
+                grid.getGrid()[row][col].setHashero(false);
                 setRow(row - 1);
                 grid.land(row, col, this, grid.getGrid()[row][col], move);
                 break;
 
             case "A":
             case "a":
+                grid.getGrid()[row][col].setHashero(false);
                 setCol(col - 1);
                 grid.land(row, col, this, grid.getGrid()[row][col], move);
                 break;
 
             case "S":
             case "s":
+                grid.getGrid()[row][col].setHashero(false);
                 setRow(row + 1);
                 grid.land(row, col, this, grid.getGrid()[row][col], move);
                 break;
 
             case "D":
             case "d":
+                grid.getGrid()[row][col].setHashero(false);
                 setCol(col + 1);
                 grid.land(row, col, this, grid.getGrid()[row][col], move);
                 break;

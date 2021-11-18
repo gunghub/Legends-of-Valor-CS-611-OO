@@ -215,31 +215,56 @@ public class LOVGrid extends Grid {
         }
     }
 
-    public void land(int row, int col, Hero h, Cell cell, String move){
+
+    /**
+     * land on a cell. Prompt the corresponding scenarios after landing on the cell
+     * @param row row of the landed cell
+     * @param col column of the landed cell
+     * @param hero
+     * @param cell The
+     * @param move
+     */
+    public void land(int row, int col, Hero hero, Cell cell, String move){
 //        printGrid(p);
         String icon = grid[row][col].getIcon();
         switch(icon){
             case "I":
-                InaccessibleCell i = (InaccessibleCell) grid[row][col];
-                i.land(move, h);
-                h.makeMove(this);
+                InaccessibleCell inaccessiblecell = (InaccessibleCell) grid[row][col];
+                inaccessiblecell.land(move, hero);
+                hero.makeMove(this);
                 break;
 
             case "N":
-                NexusCell n = (NexusCell) grid[row][col];
-                n.land(h);
-                h.makeMove(this);
+                NexusCell nexuscell = (NexusCell) grid[row][col];
+                nexuscell.land(hero);
+                hero.makeMove(this);
                 break;
 
             case "P":
-//                CommonSpace c = (CommonSpace) cell;
-//                c.land(p);
-//                p.makeMove(this);
-                //todo
-//                CommonSpace c = (CommonSpace)grid[row][col];
-//                c.land(p);
-//                p.makeMove(this);
-//                break;
+                grid[row][col].setHashero(true);
+                hero.makeMove(this);
+                break;
+
+            case "B":
+                grid[row][col].setHashero(true);
+                BushCell bushcell = (BushCell) grid[row][col];
+                bushcell.land(hero);
+                hero.makeMove(this);
+                break;
+
+            case "C":
+                grid[row][col].setHashero(true);
+                CaveCell cavecell = (CaveCell) grid[row][col];
+                cavecell.land(hero);
+                hero.makeMove(this);
+                break;
+
+            case "K":
+                grid[row][col].setHashero(true);
+                KoulouCell kouloucell = (KoulouCell) grid[row][col];
+                kouloucell.land(hero);
+                hero.makeMove(this);
+                break;
 
         }
     }
