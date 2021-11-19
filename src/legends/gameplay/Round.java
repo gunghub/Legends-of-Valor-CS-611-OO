@@ -1,6 +1,6 @@
 package legends.gameplay;
 
-import legends.LOVGrid;
+import legends.LovMap;
 import legends.characters.heroes.Hero;
 import legends.games.LegendsOfValor;
 import legends.items.Potion;
@@ -28,7 +28,7 @@ public class Round {
      * @param game
      * @return
      */
-    public boolean playRound(ArrayList<Hero> heroes, ArrayList<Monster> monsters, boolean play, LOVGrid grid, LegendsOfValor game) {
+    public boolean playRound(ArrayList<Hero> heroes, ArrayList<Monster> monsters, boolean play, LovMap grid, LegendsOfValor game) {
         Printer printer = new Printer();
         while (play) {
             for (int i = 0; i < heroes.size(); i++) {

@@ -276,7 +276,6 @@ public abstract class Hero extends Character {
      * @param grid
      * @return
      */
-    public boolean isValidMove(String move, LOVGrid grid) {
     public boolean isValidMove(String move, LovMap grid) {
         boolean isValid = true;
         Cell[][] grids = grid.getGrid();
