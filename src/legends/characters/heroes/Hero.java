@@ -268,6 +268,7 @@ public abstract class Hero extends Character {
 //        grid.printGrid(this);
     }
 
+
     /**
      * check whether a hero move is valid. A hero can't land on the cell that has another hero, or
      * land outside the grid, or bypass any monster
