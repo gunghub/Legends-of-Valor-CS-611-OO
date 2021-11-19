@@ -16,6 +16,5 @@ public class Main {
         System.out.println("Hi, Player!");
         Game game = new LegendsOfValor();
         game.playGame();
-
     }
 }

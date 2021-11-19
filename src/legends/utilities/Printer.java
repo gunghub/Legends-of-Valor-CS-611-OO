@@ -29,7 +29,6 @@ public class Printer {
         }
     }
 
-    // TODO: print name of the lane in the end
     public void printHero(Hero h){
         System.out.println("\t  Name\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tAgility\t\tDexterity\t\tMoney\t\tExperience\t\tCurrent Lane");
         System.out.println("===================================================================================================================================");
