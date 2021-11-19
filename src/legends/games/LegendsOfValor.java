@@ -1,9 +1,7 @@
 package legends.games;
 
-import legends.LOVGrid;
+import legends.LovMap;
 import legends.characters.heroes.Hero;
-import legends.characters.heroes.Warrior;
-import legends.characters.monsters.Dragon;
 import legends.characters.monsters.Monster;
 import legends.gameplay.Round;
 import legends.grids.lanes.Lane;
@@ -30,7 +28,7 @@ public class LegendsOfValor extends RPGGame {
     public void playGame() {
         System.out.println("Welcome to Legends of Valor!");
         Factory fac = new Factory();
-        LOVGrid grid = new LOVGrid(8, 8, this);
+        LovMap grid = new LovMap(this);
         initHeroes();
         initMonsters();
         grid.display();

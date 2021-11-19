@@ -1,40 +1,63 @@
 package legends;
 
 import legends.characters.heroes.Hero;
-import legends.characters.heroes.Warrior;
-import legends.characters.monsters.Monster;
-import legends.characters.monsters.Spirit;
 import legends.games.LegendsOfValor;
 import legends.grids.Grid;
-import legends.grids.HeroNexus;
 import legends.grids.cells.*;
-import legends.characters.Character;
-import legends.utilities.Colors;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Grids of Legends of Valor
- * a.k.a. Map
+ * Legends of Valor Map
+ * It consists of 8 x 8 cells;
  */
-public class LOVGrid extends Grid {
+public class LovMap extends Grid {
+    private static final int LOV_MAP_SIZE_OF_CELLS = 8;
 
-    List<StringBuilder> printableMap;
-
-    protected static int size = 8;
     private LegendsOfValor legendsOfValor;
+    private CellType [][]cellTypes = {
+            {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
+            {generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom()},
+            {generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom()},
+            {generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom()},
+            {generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom()},
+            {generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom()},
+            {generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom(), CellType.INACCESSIBLE, generateCellTypeAtRandom(), generateCellTypeAtRandom()},
+            {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
+    };
 
-    public static void main(String[] args) {
-        LegendsOfValor legendsOfValor=new LegendsOfValor();
-        LOVGrid lovGrid = new LOVGrid(8, 8, legendsOfValor);
-    }
-
-
-    public LOVGrid(int numRows, int numCols, LegendsOfValor legendsOfValor) {
-        super(numRows, numCols);
+    public LovMap(LegendsOfValor legendsOfValor) {
+        super(LOV_MAP_SIZE_OF_CELLS, LOV_MAP_SIZE_OF_CELLS);
         this.legendsOfValor=legendsOfValor;
-        createMap();
+        display();
     }
+
+    /**
+     * generate a CellType at random
+     * @return a CellType
+     */
+    private CellType generateCellTypeAtRandom(){
+        final double CAVE_PROPORTION=0.2;
+        final double BUSH_PROPORTION=0.2;
+        final double KOULOU_PROPORTION=0.2;
+
+
+        double randomValue = Math.random();
+        if (randomValue <= CAVE_PROPORTION){
+            return CellType.CAVE;
+        }
+        else if (randomValue <= CAVE_PROPORTION+BUSH_PROPORTION){
+            return CellType.BUSH;
+        }
+        else if (randomValue <= CAVE_PROPORTION+BUSH_PROPORTION+KOULOU_PROPORTION){
+            return CellType.KOULOU;
+        }
+        else{
+            return CellType.PLAIN;
+        }
+    }
+
 
     private static String getOuterCellStr(String cellIcon){
 
@@ -47,7 +70,7 @@ public class LOVGrid extends Grid {
         return str.toString();
     }
 
-    private void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
+    private void createOuterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         int cellRow = row/3;
         switch (map[cellRow][col]){
             case NEXUS:
@@ -77,26 +100,7 @@ public class LOVGrid extends Grid {
         }
     }
 
-    /**
-     * generate a CellType at random
-     * @return a CellType
-     */
-    public CellType calculateCellType(){
 
-        double index = Math.random();
-        if (index <= 0.2){
-            return CellType.CAVE;
-        }
-        else if (index <= 0.4){
-            return CellType.BUSH;
-        }
-        else if (index <= 0.6){
-            return CellType.KOULOU;
-        }
-        else{
-            return CellType.PLAIN;
-        }
-    }
 
     private static String getInnerCellStr(String component){
         return "| " + component + " |   ";
@@ -109,12 +113,14 @@ public class LOVGrid extends Grid {
      * @return
      */
     private String getCellComponent(int row, int col){
+        final String HERO_ICON="H";
+        final String MONSTER_ICON="M";
 
         StringBuilder result=new StringBuilder();
         boolean hasHero=false;
         for (int i = 0; i < legendsOfValor.getHeroes().size(); i++){
             if (row == legendsOfValor.getHeroes().get(i).getRow() && col == legendsOfValor.getHeroes().get(i).getCol()){
-                 result.append("H" + (i + 1));
+                 result.append(HERO_ICON).append(i + 1);
                  hasHero=true;
                  break;
             }
@@ -125,7 +131,7 @@ public class LOVGrid extends Grid {
         boolean hasMonster=false;
         for (int j = 0; j < legendsOfValor.getMonsters().size(); j++){
             if (row == legendsOfValor.getMonsters().get(j).getRow() && col == legendsOfValor.getMonsters().get(j).getCol()){
-                result.append (" M" + (j + 1)+"");
+                result.append (" "+MONSTER_ICON + (j + 1)+"");
                 hasMonster=true;
                 break;
             }
@@ -139,24 +145,6 @@ public class LOVGrid extends Grid {
 
 
 
-//        if (row ==  && col == 1){
-//            return "H1   ";
-//        }else if (row == 1 && col == 3){
-//            return "H2   ";
-//        }else if (row == 3 && col == 1){
-//            return "   M1";
-//        }else if (row == 1 && col == 4){
-//            return "   M2";
-//        }else if (row == 3 && col == 6){
-//            return "H3 M3";
-//        }else{
-//            return "     ";
-//        }
-//    }
-
-
-
-
     private void createInnerCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         String component = getCellComponent(row/3, col);
         if (map[row/3][col] == CellType.INACCESSIBLE)
@@ -164,56 +152,49 @@ public class LOVGrid extends Grid {
         printableMap.get(row).append(getInnerCellStr(component));
     }
 
-    private void createMap(){
-        printableMap = new ArrayList<StringBuilder>();
-        CellType [][]map = {
-                {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType(), CellType.INACCESSIBLE, calculateCellType(), calculateCellType()},
-                {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
-        };
-        for (int row = 0; row < size * 3; row++) {
-            printableMap.add(new StringBuilder());
+
+
+    /**
+     *
+     * Display the map, heroes, and monsters.
+     * @author Gung
+     *
+     */
+    public void display(){
+
+        List<StringBuilder> printable = new ArrayList<>();
+        for (int row = 0; row < LOV_MAP_SIZE_OF_CELLS * 3; row++) {
+            printable.add(new StringBuilder());
             if ((row / 3) % 2 == 0){
-                for (int col = 0; col < size; col++) {
+                for (int col = 0; col < LOV_MAP_SIZE_OF_CELLS; col++) {
                     if (row % 2 == 0){
-                        createOutterCell(map, printableMap, row, col);
+                        createOuterCell(cellTypes, printable, row, col);
                     }else{
-                        createInnerCell(map, printableMap, row, col);
+                        createInnerCell(cellTypes, printable, row, col);
                     }
 
-                    if (col == size - 1)
-                        printableMap.get(row).append("\n");
+                    if (col == LOV_MAP_SIZE_OF_CELLS - 1)
+                        printable.get(row).append("\n");
                 }
             }else{
-                for (int col = 0; col < size; col++) {
+                for (int col = 0; col < LOV_MAP_SIZE_OF_CELLS; col++) {
                     if (row % 2 == 1){
-                        createOutterCell(map, printableMap, row, col);
+                        createOuterCell(cellTypes, printable, row, col);
                     }else{
-                        createInnerCell(map, printableMap, row, col);
+                        createInnerCell(cellTypes, printable, row, col);
                     }
 
-                    if (col == size - 1)
-                        printableMap.get(row).append("\n");
+                    if (col == LOV_MAP_SIZE_OF_CELLS - 1)
+                        printable.get(row).append("\n");
                 }
             }
 
             if (row % 3 == 2)
-                printableMap.get(row).append("\n");
+                printable.get(row).append("\n");
         }
 
-        for (int i = 0; i < size * 3; i++) {
-            System.out.print(printableMap.get(i));
-        }
-    }
-
-    public void display(){
-        for (int i = 0; i < size * 3; i++) {
-            System.out.print(printableMap.get(i));
+        for (int i = 0; i < LOV_MAP_SIZE_OF_CELLS * 3; i++) {
+            System.out.print(printable.get(i));
         }
     }
 
