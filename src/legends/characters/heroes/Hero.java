@@ -49,7 +49,6 @@ public abstract class Hero extends Character {
         this.initLane = initLane;
         armedInventory = new Inventory();
         inventory = new Inventory();
-        initLane = new Lane();
         currLane = initLane;
     }
 
@@ -60,10 +59,9 @@ public abstract class Hero extends Character {
     //return the play boolean which indicates whether player wants to quit the game
     public boolean takeAction(LOVGrid grid, LegendsOfValor lovgame) {
         boolean play = true;
-        System.out.println("Please choose an action:");
         System.out.println(" 1: Attack\n 2: Cast spell\n 3: Move\n 4: Teleport\n 5: Back\n 6: Quit game\n");
         int move = ScannerParser.parseInt();
-        while (move < 1 || move > 5) {
+        while (move < 1 || move > 6) {
             move = ScannerParser.tryInt();
         }
         switch (move) {
@@ -261,7 +259,7 @@ public abstract class Hero extends Character {
                 }
             }
         }
-        else if (grids[row][Math.min(col-1,0)].isHasmonster()){
+        else if (grids[row][Math.max(col-1,0)].isHasmonster()){
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
                 if (legendofvalor.getMonsters().get(i).getRow() == row && legendofvalor.getMonsters().get(i).getCol() == Math.min(col-1,0)){
                     return legendofvalor.getMonsters().get(i);
@@ -310,7 +308,7 @@ public abstract class Hero extends Character {
     public boolean withinRange(LOVGrid grid) {
         Cell[][] grids = grid.getGrid();
         if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasmonster() || grids[Math.max(row - 1, 0)][col].isHasmonster() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasmonster() ||
-                grids[row][Math.min(col - 1, 0)].isHasmonster() || grids[row][col].isHasmonster() || grids[row][Math.min(col + 1, 7)].isHasmonster() ||
+                grids[row][Math.max(col - 1, 0)].isHasmonster() || grids[row][col].isHasmonster() || grids[row][Math.min(col + 1, 7)].isHasmonster() ||
                 grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHasmonster() || grids[Math.min(row + 1, 7)][col].isHasmonster() || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].isHasmonster()) {
             return true;
         } else {
@@ -542,6 +540,13 @@ public abstract class Hero extends Character {
         this.col = col;
     }
 
+
+
+    public void setInitLane(Lane initLane) {
+        this.initLane = initLane;
+        this.currLane = initLane;
+    }
+
     public Lane getCurrLane() {
         return currLane;
     }
@@ -552,9 +557,5 @@ public abstract class Hero extends Character {
 
     public Lane getInitLane() {
         return initLane;
-    }
-
-    public void setInitLane(Lane initLane) {
-        this.initLane = initLane;
     }
 }

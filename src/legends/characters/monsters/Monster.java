@@ -32,7 +32,7 @@ public abstract class Monster extends Character {
     public boolean withinRange(LOVGrid grid) {
         Cell[][] grids = grid.getGrid();
         if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHashero() || grids[Math.max(row - 1, 0)][col].isHashero() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHashero() ||
-                grids[row][Math.min(col - 1, 0)].isHashero() || grids[row][col].isHashero() || grids[row][Math.min(col + 1, 7)].isHashero() ||
+                grids[row][Math.max(col - 1, 0)].isHashero() || grids[row][col].isHashero() || grids[row][Math.min(col + 1, 7)].isHashero() ||
                 grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHashero() || grids[Math.min(row + 1, 7)][col].isHashero() || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].isHashero()) {
             return true;
         } else {
