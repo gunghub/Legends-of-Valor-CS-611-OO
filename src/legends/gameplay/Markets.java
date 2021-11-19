@@ -23,6 +23,7 @@ public class Markets {
         System.out.println(colors.addColor("cyan", "You are at Nexus. Would you like to enter the market?(y/n)"));
         isShopping = ScannerParser.parseBoolean();
         while(isShopping) {
+                graphic.printMarket();
                 enterStore(h);
         }
         System.out.println(colors.addColor("cyan","Hero left the market.\n"));

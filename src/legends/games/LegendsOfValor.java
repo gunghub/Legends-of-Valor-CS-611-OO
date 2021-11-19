@@ -7,10 +7,7 @@ import legends.characters.monsters.Dragon;
 import legends.characters.monsters.Monster;
 import legends.gameplay.Round;
 import legends.grids.lanes.Lane;
-import legends.utilities.Factory;
-import legends.utilities.FileParser;
-import legends.utilities.Printer;
-import legends.utilities.ScannerParser;
+import legends.utilities.*;
 
 import java.util.ArrayList;
 
@@ -18,6 +15,7 @@ import java.util.ArrayList;
 public class LegendsOfValor extends RPGGame {
     private ArrayList<Hero> heroes;
     private ArrayList<Monster> monsters;
+    private Graphic graphic;
     private boolean play;
 
 
@@ -25,16 +23,17 @@ public class LegendsOfValor extends RPGGame {
         heroes = new ArrayList<Hero>();
         monsters = new ArrayList<Monster>();
         this.play = true;
+        graphic = new Graphic();
     }
 
     public void playGame() {
-        System.out.println("Welcome to Legends of Valor!");
+        graphic.printBanner();
+        System.out.println("Here is the game map you are going to play:");
         Factory fac = new Factory();
         LovMap grid = new LovMap( this);
         initHeroes();
         initMonsters();
         grid.display();
-
         Round round = new Round();
         round.playRound(heroes, monsters, play, grid, this);
 
@@ -107,20 +106,20 @@ public class LegendsOfValor extends RPGGame {
         switch(index){
             case 0:
                 lane.setName("Top");
-                hero.setRow(0);
-                hero.setCol(7);
+                hero.setRow(7);
+                hero.setCol(0);
                 break;
 
             case 1:
                 lane.setName("Mid");
-                hero.setRow(3);
-                hero.setCol(7);
+                hero.setRow(7);
+                hero.setCol(3);
                 break;
 
             case 2:
                 lane.setName("Bot");
-                hero.setRow(6);
-                hero.setCol(7);
+                hero.setRow(7);
+                hero.setCol(6);
                 break;
         }
         lane.setMaxMonsterRow(0);

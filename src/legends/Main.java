@@ -13,7 +13,7 @@ public class Main {
        // AudioUtility.playSound(AudioUtility.BGM_THE_GREAT_BATTLE);
 
 	// write your code here
-        System.out.println("Hi, Player!");
+//        System.out.println("Hi, Player!");
         Game game = new LegendsOfValor();
         game.playGame();
     }
