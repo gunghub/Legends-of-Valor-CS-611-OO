@@ -8,10 +8,7 @@ public class Lane {
     private int maxMonsterRow;
     private String name;
 
-    public Lane(){
-
-    }
-    public Lane(String name, int maxMonsterRow){
+    public Lane(String name){
         this.name = name;
         this.maxMonsterRow = maxMonsterRow;
 

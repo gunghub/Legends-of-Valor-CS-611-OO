@@ -5,6 +5,7 @@ import legends.characters.heroes.Hero;
 import legends.characters.heroes.Warrior;
 import legends.characters.monsters.Dragon;
 import legends.characters.monsters.Monster;
+import legends.grids.lanes.Lane;
 import legends.utilities.Factory;
 import legends.utilities.FileParser;
 import legends.utilities.Printer;
@@ -35,7 +36,11 @@ public class LegendsOfValor extends RPGGame {
         grid.display();
         while(play){
             for(int i=0; i<heroes.size(); i++){
+                System.out.println("Please choose an action for Hero "+ (i+1));
                 play = heroes.get(i).takeAction(grid, this);
+                if(play == false){
+                    break;
+                }
                 monsters.get(i).makeMove(heroes.get(i), grid);
             }
         }
@@ -64,13 +69,12 @@ public class LegendsOfValor extends RPGGame {
     public void initMonsters(){
         FileParser fp = new FileParser();
         for(int i=0; i<heroes.size(); i++){
-            addMonster(fp.chooseRandMonster());
+            Monster monster = fp.chooseRandMonster();
+            addMonster(monster);
         }
     }
 
     public void initHeroes() {
-        System.out.println("How many heroes would you like to add to your team? (between 1 and 3)");
-
         System.out.println("What type of hero is your top lane hero?");
         System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
         int type = ScannerParser.parseInt();
@@ -94,6 +98,18 @@ public class LegendsOfValor extends RPGGame {
             type = ScannerParser.tryInt();
         }
         chooseHeroType(type);
+
+        heroes.get(0).setInitLane(new Lane("Top"));
+        heroes.get(1).setInitLane(new Lane("Mid"));
+        heroes.get(2).setInitLane(new Lane("Bot"));
+        heroes.get(0).setRow(0);
+        heroes.get(0).setCol(7);
+        heroes.get(1).setRow(3);
+        heroes.get(1).setCol(7);
+        heroes.get(2).setRow(6);
+        heroes.get(2).setCol(7);
+
+
         System.out.println("Please see your heroes below ----\n");
         Printer printer = new Printer();
         printer.printHeroes(heroes);
