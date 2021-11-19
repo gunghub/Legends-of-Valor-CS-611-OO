@@ -7,12 +7,19 @@ public class Lane {
 
     private int maxMonsterRow;
     private String name;
+    private int maxExplored;
 
-    public Lane(String name){
-        this.name = name;
-        this.maxMonsterRow = maxMonsterRow;
+    public Lane(){
 
     }
+    public Lane(String name){
+        this.name = name;
+        maxMonsterRow = 0;
+        maxExplored = 7;
+
+    }
+
+
 
     public int getMaxMonsterRow() {
         return maxMonsterRow;

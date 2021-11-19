@@ -24,7 +24,10 @@ public abstract class Monster extends Character {
         if(withinRange(grid)){
             hero.takeDamage(damage);
         }else{
+            grid.getGrid()[row][col].setHasmonster(false);
             row++;
+            grid.getGrid()[row][col].setHasmonster(true);
+            System.out.println("Monster moved forward.");
         }
     }
 

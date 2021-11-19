@@ -233,39 +233,39 @@ public class LOVGrid extends Grid {
             case "I":
                 InaccessibleCell inaccessiblecell = (InaccessibleCell) grid[row][col];
                 inaccessiblecell.land(move, hero);
-                hero.makeMove(this);
+//                hero.makeMove(this);
                 break;
 
             case "N":
                 NexusCell nexuscell = (NexusCell) grid[row][col];
                 nexuscell.land(hero);
-                hero.makeMove(this);
+//                hero.makeMove(this);
                 break;
 
             case "P":
                 grid[row][col].setHashero(true);
-                hero.makeMove(this);
+//                hero.makeMove(this);
                 break;
 
             case "B":
                 grid[row][col].setHashero(true);
                 BushCell bushcell = (BushCell) grid[row][col];
                 bushcell.land(hero);
-                hero.makeMove(this);
+//                hero.makeMove(this);
                 break;
 
             case "C":
                 grid[row][col].setHashero(true);
                 CaveCell cavecell = (CaveCell) grid[row][col];
                 cavecell.land(hero);
-                hero.makeMove(this);
+//                hero.makeMove(this);
                 break;
 
             case "K":
                 grid[row][col].setHashero(true);
                 KoulouCell kouloucell = (KoulouCell) grid[row][col];
                 kouloucell.land(hero);
-                hero.makeMove(this);
+//                hero.makeMove(this);
                 break;
 
         }

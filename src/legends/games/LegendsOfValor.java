@@ -5,6 +5,7 @@ import legends.characters.heroes.Hero;
 import legends.characters.heroes.Warrior;
 import legends.characters.monsters.Dragon;
 import legends.characters.monsters.Monster;
+import legends.gameplay.Round;
 import legends.grids.lanes.Lane;
 import legends.utilities.Factory;
 import legends.utilities.FileParser;
@@ -12,7 +13,6 @@ import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class LegendsOfValor extends RPGGame {
@@ -34,16 +34,9 @@ public class LegendsOfValor extends RPGGame {
         initHeroes();
         initMonsters();
         grid.display();
-        while(play){
-            for(int i=0; i<heroes.size(); i++){
-                System.out.println("Please choose an action for Hero "+ (i+1));
-                play = heroes.get(i).takeAction(grid, this);
-                if(play == false){
-                    break;
-                }
-                monsters.get(i).makeMove(heroes.get(i), grid);
-            }
-        }
+
+        Round round = new Round();
+        round.playRound(heroes, monsters, play, grid, this);
 
 
     }
@@ -99,21 +92,41 @@ public class LegendsOfValor extends RPGGame {
         }
         chooseHeroType(type);
 
-        heroes.get(0).setInitLane(new Lane("Top"));
-        heroes.get(1).setInitLane(new Lane("Mid"));
-        heroes.get(2).setInitLane(new Lane("Bot"));
-        heroes.get(0).setRow(0);
-        heroes.get(0).setCol(7);
-        heroes.get(1).setRow(3);
-        heroes.get(1).setCol(7);
-        heroes.get(2).setRow(6);
-        heroes.get(2).setCol(7);
-
-
+        for(int i=0; i<heroes.size(); i++){
+            initNewHero(heroes.get(i), i);
+        }
         System.out.println("Please see your heroes below ----\n");
         Printer printer = new Printer();
         printer.printHeroes(heroes);
         System.out.println("Now start your journey!");
+    }
+
+
+    public void initNewHero(Hero hero, int index){
+        Lane lane = new Lane(null);
+        switch(index){
+            case 0:
+                lane.setName("Top");
+                hero.setRow(0);
+                hero.setCol(7);
+                break;
+
+            case 1:
+                lane.setName("Mid");
+                hero.setRow(3);
+                hero.setCol(7);
+                break;
+
+            case 2:
+                lane.setName("Bot");
+                hero.setRow(6);
+                hero.setCol(7);
+                break;
+        }
+        lane.setMaxMonsterRow(0);
+        hero.setInitLane(lane);
+        hero.setCurrLane(lane);
+
     }
 
     public void chooseHeroType(int type){
