@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        AudioUtility.playSound(AudioUtility.BGM_THE_GREAT_BATTLE);
+       // AudioUtility.playSound(AudioUtility.BGM_THE_GREAT_BATTLE);
 
 	// write your code here
         System.out.println("Hi, Player!");

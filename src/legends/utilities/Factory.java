@@ -1,13 +1,11 @@
 package legends.utilities;
 
-import legends.LOVGrid;
 import legends.characters.heroes.Paladin;
 import legends.characters.heroes.Sorcerer;
 import legends.characters.heroes.Warrior;
 import legends.characters.monsters.Dragon;
 import legends.characters.monsters.Exoskeleton;
 import legends.characters.monsters.Spirit;
-import legends.gameplay.Fight;
 import legends.gameplay.Inventory;
 import legends.gameplay.Markets;
 import legends.gameplay.Round;
@@ -35,9 +33,9 @@ public class Factory {
         return new Markets();
     }
 
-    public Fight newFight(){
-        return new Fight();
-    }
+//    public Fight newFight(){
+//        return new Fight();
+//    }
 
     public Round newRound(){
         return new Round();
