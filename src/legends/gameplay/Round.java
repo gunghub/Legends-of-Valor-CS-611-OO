@@ -1,6 +1,6 @@
 package legends.gameplay;
 
-import legends.grids.LovMap;
+import legends.LOVGrid;
 import legends.characters.heroes.Hero;
 import legends.games.LegendsOfValor;
 import legends.items.Potion;
