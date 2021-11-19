@@ -1,6 +1,6 @@
 package legends.characters.heroes;
 
-import legends.LOVGrid;
+import legends.grids.LovMap;
 import legends.characters.Character;
 import legends.gameplay.Inventory;
 import legends.gameplay.Markets;
