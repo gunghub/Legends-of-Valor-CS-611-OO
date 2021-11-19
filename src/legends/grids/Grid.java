@@ -13,7 +13,7 @@ public abstract class Grid {
 
 
     public Grid(){}
-    public Grid(int numRows, int numCols){
+    public Grid(int numCols,int numRows){
         this.numRows = numRows;
         this.numCols = numCols;
         grid = new Cell[numRows][numCols];

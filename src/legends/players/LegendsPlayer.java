@@ -1,10 +1,9 @@
 package legends.players;
 
-import legends.LOVGrid;
+import legends.LovMap;
 import legends.characters.heroes.Hero;
 
 import legends.utilities.Printer;
-import legends.utilities.ScannerParser;
 
 import java.util.ArrayList;
 
@@ -81,7 +80,7 @@ public class LegendsPlayer extends Player {
 //    }
 
 
-    public boolean isValidMove(LOVGrid grid, int row, int col){
+    public boolean isValidMove(LovMap grid, int row, int col){
         boolean isValid = false;
         return false;
     }

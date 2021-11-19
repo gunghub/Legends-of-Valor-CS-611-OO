@@ -1,6 +1,6 @@
 package legends.characters.heroes;
 
-import legends.LOVGrid;
+import legends.LovMap;
 import legends.characters.Character;
 import legends.gameplay.Inventory;
 import legends.games.LegendsOfValor;
@@ -57,7 +57,7 @@ public abstract class Hero extends Character {
 
     // hero chooses to attack, cast a spell, move, teleport, back, or quit game
     //return the play boolean which indicates whether player wants to quit the game
-    public boolean takeAction(LOVGrid grid, LegendsOfValor lovgame) {
+    public boolean takeAction(LovMap grid, LegendsOfValor lovgame) {
         boolean play = true;
         System.out.println(" 1: Attack\n 2: Cast spell\n 3: Move\n 4: Teleport\n 5: Back\n 6: Quit game\n");
         int move = ScannerParser.parseInt();
@@ -148,7 +148,7 @@ public abstract class Hero extends Character {
      * @param
      * @return
      */
-    public void makeMove(LOVGrid grid) {
+    public void makeMove(LovMap grid) {
         grid.display();
         System.out.println("Please choose a move:");
         System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
@@ -192,7 +192,7 @@ public abstract class Hero extends Character {
 //        grid.printGrid(this);
     }
 
-    public boolean isValidMove(String move, LOVGrid grid) {
+    public boolean isValidMove(String move, LovMap grid) {
         boolean isValid = true;
         Cell[][] grids = grid.getGrid();
         switch (move) {
@@ -235,7 +235,7 @@ public abstract class Hero extends Character {
         return isValid;
     }
 
-    public Monster getNeighborMonster(LOVGrid grid, LegendsOfValor legendofvalor){
+    public Monster getNeighborMonster(LovMap grid, LegendsOfValor legendofvalor){
         Cell[][] grids = grid.getGrid();
         if (grids[Math.max(row - 1, 0)][Math.max(col-1,0)].isHasmonster()){
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++){
@@ -305,7 +305,7 @@ public abstract class Hero extends Character {
     }
 
     // return boolean indicating whether there is a monster within the hero's attacking range
-    public boolean withinRange(LOVGrid grid) {
+    public boolean withinRange(LovMap grid) {
         Cell[][] grids = grid.getGrid();
         if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasmonster() || grids[Math.max(row - 1, 0)][col].isHasmonster() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasmonster() ||
                 grids[row][Math.max(col - 1, 0)].isHasmonster() || grids[row][col].isHasmonster() || grids[row][Math.min(col + 1, 7)].isHasmonster() ||
@@ -549,6 +549,11 @@ public abstract class Hero extends Character {
 
     public Lane getCurrLane() {
         return currLane;
+    }
+
+    public void setPosition(int row, int column){
+        setRow(row);
+        setCol(column);
     }
 
     public void setCurrLane(Lane currLane) {

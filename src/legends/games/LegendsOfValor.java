@@ -1,9 +1,7 @@
 package legends.games;
 
-import legends.LOVGrid;
+import legends.LovMap;
 import legends.characters.heroes.Hero;
-import legends.characters.heroes.Warrior;
-import legends.characters.monsters.Dragon;
 import legends.characters.monsters.Monster;
 import legends.grids.lanes.Lane;
 import legends.utilities.Factory;
@@ -12,7 +10,6 @@ import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class LegendsOfValor extends RPGGame {
@@ -30,7 +27,7 @@ public class LegendsOfValor extends RPGGame {
     public void playGame() {
         System.out.println("Welcome to Legends of Valor!");
         Factory fac = new Factory();
-        LOVGrid grid = new LOVGrid(8, 8, this);
+        LovMap grid = new LovMap(this);
         initHeroes();
         initMonsters();
         grid.display();
@@ -102,12 +99,9 @@ public class LegendsOfValor extends RPGGame {
         heroes.get(0).setInitLane(new Lane("Top"));
         heroes.get(1).setInitLane(new Lane("Mid"));
         heroes.get(2).setInitLane(new Lane("Bot"));
-        heroes.get(0).setRow(0);
-        heroes.get(0).setCol(7);
-        heroes.get(1).setRow(3);
-        heroes.get(1).setCol(7);
-        heroes.get(2).setRow(6);
-        heroes.get(2).setCol(7);
+        heroes.get(0).setPosition(7,0);
+        heroes.get(1).setPosition(7,3);
+        heroes.get(2).setPosition(7,6);
 
 
         System.out.println("Please see your heroes below ----\n");
