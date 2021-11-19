@@ -1,6 +1,6 @@
 package legends.characters.monsters;
 
-import legends.LOVGrid;
+import legends.LovMap;
 import legends.characters.Character;
 import legends.characters.heroes.Hero;
 import legends.games.LegendsOfValor;
@@ -20,7 +20,7 @@ public abstract class Monster extends Character {
         this.dodge = dodge;
     }
 
-    public void makeMove(Hero hero, LOVGrid grid){
+    public void makeMove(Hero hero, LovMap grid){
         if(withinRange(grid)){
             hero.takeDamage(damage);
         }else{
@@ -32,7 +32,7 @@ public abstract class Monster extends Character {
     }
 
     // return boolean indicating whether there is a hero within the monster's attacking range
-    public boolean withinRange(LOVGrid grid) {
+    public boolean withinRange(LovMap grid) {
         Cell[][] grids = grid.getGrid();
         if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHashero() || grids[Math.max(row - 1, 0)][col].isHashero() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHashero() ||
                 grids[row][Math.max(col - 1, 0)].isHashero() || grids[row][col].isHashero() || grids[row][Math.min(col + 1, 7)].isHashero() ||
@@ -44,7 +44,7 @@ public abstract class Monster extends Character {
     }
 
 
-    public Hero getNeighborHero(LOVGrid grid, LegendsOfValor legendofvalor){
+    public Hero getNeighborHero(LovMap grid, LegendsOfValor legendofvalor){
         Cell[][] grids = grid.getGrid();
         if (grids[Math.max(row - 1, 0)][Math.max(col-1,0)].isHashero()){
             for (int i = 0; i < legendofvalor.getHeroes().size(); i++){

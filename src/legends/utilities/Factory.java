@@ -1,6 +1,5 @@
 package legends.utilities;
 
-import legends.LOVGrid;
 import legends.characters.heroes.Paladin;
 import legends.characters.heroes.Sorcerer;
 import legends.characters.heroes.Warrior;
