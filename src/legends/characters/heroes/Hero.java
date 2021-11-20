@@ -274,9 +274,7 @@ public abstract class Hero extends Character {
 
             int destinationRow=getRow()+MOVEMENT_DIRECTIONS.get(inputString)[0];
             int destinationColumn=getCol()+MOVEMENT_DIRECTIONS.get(inputString)[1];
-            if(lovMap.moveToCell(destinationRow,destinationColumn,this)){
-            //if(!lovMap.landOnMap(destinationRow,destinationColumn,this,null,null)){
-                setPosition(destinationRow,destinationColumn);
+            if(lovMap.makeHeroToCell(destinationRow,destinationColumn,this)){
                 break;
             }
         }
