@@ -71,9 +71,8 @@ public abstract class Hero extends Character {
     public boolean takeAction(LovMap grid, LegendsOfValor lovgame) {
 
         boolean play = true;
-        while(true) {
-            boolean thisActionFinished=true;
-
+        while (true) {
+            boolean thisActionFinished = true;
 
 
             if (row == 7) {
@@ -96,7 +95,7 @@ public abstract class Hero extends Character {
                         attack(getNeighborMonster(grid, lovgame), null);
                     } else {
                         System.out.println("No monster is within your attacking range. Please try another move!\n");
-                        thisActionFinished=false;
+                        thisActionFinished = false;
                     }
                     break;
 
@@ -114,19 +113,19 @@ public abstract class Hero extends Character {
                             attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
                         } else {
                             System.out.println("Your hero does not have any spell in their inventory! Choose another move!\n");
-                            thisActionFinished=false;
+                            thisActionFinished = false;
                         }
                     } else {
                         System.out.println("No monster is within your attacking range. Please try another move!\n");
-                        thisActionFinished=false;
+                        thisActionFinished = false;
                     }
                     break;
 
                 case 3: //change weapon/armor
 
-                    if(currentArmor==null){
+                    if (currentArmor == null) {
                         System.out.println("Sorry, you don't have a armor in your hand.");
-                        thisActionFinished=false;
+                        thisActionFinished = false;
                         break;
                     }
 
@@ -139,40 +138,65 @@ public abstract class Hero extends Character {
                     }
                     switch (type) {
                         case 1:
-                            System.out.println("Your current armor is:" + currentArmor.getName());
-                            unequip(currentArmor);
-                            System.out.println("Current armor is taken off.");
-                            System.out.println("Which armor would you like to wear now?");
-                            printer.printArmors(inventory.getArmors());
-                            int newarmor = ScannerParser.parseInt() - 1;
-                            while (newarmor > inventory.getArmors().size()) {
-                                System.out.println("Please input a number within the given range:");
-                                newarmor = ScannerParser.parseInt() - 1;
-                            }
+                            if (currentArmor == null) {
+                                System.out.println("Hero doesn't have an armor armed. Try another move!");
+                                thisActionFinished = false;
+                                break;
+                            } else {
+                                if (inventory.getArmors().size() < 2) {
+                                    System.out.println("Hero doesn't have an armor to switch to. Try another move!");
+                                    thisActionFinished = false;
+                                    break;
+                                } else {
+                                    System.out.println("Your current armor is:" + currentArmor.getName());
+                                    unequip(currentArmor);
+                                    System.out.println("Current armor is taken off.");
+                                    System.out.println("Which armor would you like to wear now?");
+                                    printer.printArmors(inventory.getArmors());
+                                    int newarmor = ScannerParser.parseInt() - 1;
+                                    while (newarmor > inventory.getArmors().size()) {
+                                        System.out.println("Please input a number within the given range:");
+                                        newarmor = ScannerParser.parseInt() - 1;
+                                    }
 //                        h.equip(h.getInventory().getArmors().get(newarmor));
-                            changeArmor(currentArmor, inventory.getArmors().get(newarmor));
-                            System.out.println("Armor " + currentArmor.getName() + " is equipped now");
-                            break;
+                                    changeArmor(currentArmor, inventory.getArmors().get(newarmor));
+                                    System.out.println("Armor " + currentArmor.getName() + " is equipped now");
+                                    break;
+                                }
+                            }
 
                         case 2:
-                            System.out.println("Your current weapon is:" + currentWeapon.getName());
-                            unequip(currentWeapon);
-                            System.out.println("Current weapon is unarmed now.");
-                            System.out.println("Which weapon would you like to arm now?");
-                            printer.printWeapons(inventory.getWeapons());
-                            int newWeapon = ScannerParser.parseInt() - 1;
-                            while (newWeapon > inventory.getWeapons().size()) {
-                                System.out.println("Please input a number within the given range:");
-                                newWeapon = ScannerParser.parseInt() - 1;
-                            }
+                            if (currentWeapon == null) {
+                                System.out.println("Hero doesn't have a weapon armed. Try another move1");
+                                thisActionFinished = false;
+                                break;
+                            } else {
+                                if (inventory.getWeapons().size() < 2) {
+                                    System.out.println("Hero doesn't have a weapon to switch to. Try another move!");
+                                    thisActionFinished = false;
+                                    break;
+                                } else {
+                                    System.out.println("Your current weapon is:" + currentWeapon.getName());
+                                    unequip(currentWeapon);
+                                    System.out.println("Current weapon is unarmed now.");
+                                    System.out.println("Which weapon would you like to arm now?");
+                                    printer.printWeapons(inventory.getWeapons());
+                                    int newWeapon = ScannerParser.parseInt() - 1;
+                                    while (newWeapon > inventory.getWeapons().size()) {
+                                        System.out.println("Please input a number within the given range:");
+                                        newWeapon = ScannerParser.parseInt() - 1;
+                                    }
 //                      h.equip(h.getInventory().getWeapons().get(newWeapon));
-                            changeWeapon(currentWeapon, inventory.getWeapons().get(newWeapon));
-                            System.out.println("Weapon " + currentWeapon.getName() + " is equipped now");
-                            break;
+                                    changeWeapon(currentWeapon, inventory.getWeapons().get(newWeapon));
+                                    System.out.println("Weapon " + currentWeapon.getName() + " is equipped now");
+                                    break;
+                                }
+                            }
                     }
                     break;
 
                 case 4: // use potion
+
                     HashMap<Potion, Integer> potions = inventory.getPotions();
                     if (potions.size() != 0) {
                         System.out.println("Please choose a potion to use (enter ID):");
@@ -187,7 +211,7 @@ public abstract class Hero extends Character {
                         use(keys[chosenPotion]);
                     } else {
                         System.out.println("You hero does not have any potion in their inventory! Choose another move!\n");
-                        thisActionFinished=false;
+                        thisActionFinished = false;
                     }
                     break;
 
@@ -254,15 +278,14 @@ public abstract class Hero extends Character {
             }
 
 
-            if(thisActionFinished)break;
-            
+            if (thisActionFinished) break;
+
 
         }
 //        System.out.println(row+" "+col);
         return play;
 
     }
-
 
 
     /**
@@ -365,7 +388,6 @@ public abstract class Hero extends Character {
 
 
     /**
-     *
      * check whether a hero move is valid. A hero can't land on the cell that has another hero, or
      * land outside the grid, or bypass any monster
      *
@@ -503,9 +525,9 @@ public abstract class Hero extends Character {
     // return boolean indicating whether there is a monster within the hero's attacking range
     public boolean withinRange(LovMap grid) {
         Cell[][] grids = grid.getCells();
-        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasMonster() || grids[Math.max(row - 1, 0)][col].isHasMonster()|| grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasMonster() ||
-                grids[row][Math.max(col - 1, 0)].isHasMonster()|| grids[row][col].isHasMonster() || grids[row][Math.min(col + 1, 7)].isHasMonster() ||
-                grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHasMonster()|| grids[Math.min(row + 1, 7)][col].isHasMonster() || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].isHasMonster()) {
+        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasMonster() || grids[Math.max(row - 1, 0)][col].isHasMonster() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasMonster() ||
+                grids[row][Math.max(col - 1, 0)].isHasMonster() || grids[row][col].isHasMonster() || grids[row][Math.min(col + 1, 7)].isHasMonster() ||
+                grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHasMonster() || grids[Math.min(row + 1, 7)][col].isHasMonster() || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].isHasMonster()) {
             return true;
         } else {
             return false;
@@ -606,8 +628,8 @@ public abstract class Hero extends Character {
                 m.setHP(0);
                 m.setFaint(true);
                 System.out.println("Monster " + m.getName() + " fainted!");
-                experience+=2;
-                money+=m.getLevel()*100;
+                experience += 2;
+                money += m.getLevel() * 100;
             } else {
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
@@ -618,8 +640,8 @@ public abstract class Hero extends Character {
             if (m.getHP() <= dmg) {
                 m.setHP(0);
                 System.out.println("Monster " + m.getName() + " fainted!");
-                experience+=2;
-                money+=m.getLevel()*100;
+                experience += 2;
+                money += m.getLevel() * 100;
                 m.setFaint(true);
 
             } else {
@@ -628,7 +650,6 @@ public abstract class Hero extends Character {
             }
         }
     }
-
 
 
     public void takeDamage(int dmg) {
@@ -645,7 +666,7 @@ public abstract class Hero extends Character {
             setFaint(true);
             System.out.println("Hero " + getName() + " fainted!");
             setCurrLane(initLane);
-            setPosition(7,initLane.getLeftCol());
+            setPosition(7, initLane.getLeftCol());
         } else {
             setHP(getHP() - actualdmg);
         }
