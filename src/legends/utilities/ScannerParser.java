@@ -33,7 +33,7 @@ public class ScannerParser {
                 i = sc.nextInt();
                 break;
             }catch (Exception e){
-                System.out.println("Input not valid! Please try again and input your option as an integer given in the list:");
+                System.out.println("Input not valid! Please try again:");
             }
         }
         return i;
@@ -60,7 +60,7 @@ public class ScannerParser {
     }
 
     public static int tryInt(){
-        System.out.println("Input not valid! Please try again and input your option as an integer given in the list:");
+        System.out.println("Input not valid! Please try again:");
         int newint = parseInt();
         return newint;
     }
@@ -72,7 +72,7 @@ public class ScannerParser {
                 newString = parseString();
                 break;
             }catch (Exception e){
-                System.out.println("Input not valid! Please try again and input your option as an character given in the list:");
+                System.out.println("Input not valid! Please try again:");
             }
         }
         return newString;

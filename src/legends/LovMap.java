@@ -231,26 +231,26 @@ public class LovMap extends Grid {
                 break;
 
             case "P":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
 //                hero.makeMove(this);
                 break;
 
             case "B":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
                 BushCell bushcell = (BushCell) cells[row][col];
                 bushcell.land(hero);
 //                hero.makeMove(this);
                 break;
 
             case "C":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
                 CaveCell cavecell = (CaveCell) cells[row][col];
                 cavecell.land(hero);
 //                hero.makeMove(this);
                 break;
 
             case "K":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
                 KoulouCell kouloucell = (KoulouCell) cells[row][col];
                 kouloucell.land(hero);
 //                hero.makeMove(this);
@@ -260,47 +260,52 @@ public class LovMap extends Grid {
         return inaccessible;
     }
 
+    /**
+     *
+     * @param cellRow destination cell row
+     * @param cellColumn destination cell row
+     * @param heroToMove heroToMove
+     * @return if this move valid.
+     */
+    public boolean makeHeroToCell(int cellRow, int cellColumn, Hero heroToMove){
 
-
-    public boolean moveToCell(int cellRow, int cellColumn, Hero hero){
-
-        boolean allowed;
-
+        boolean allowed=true;
         //Check the boundary
         if(cellRow>LOV_MAP_SIZE_OF_CELLS-1||cellColumn>LOV_MAP_SIZE_OF_CELLS-1||cellRow<0||cellColumn<0){
             System.out.println("You cannot step out of the map");
             return false;
         }
 
-        
+        //Check if there is a hero in the cell;
+        for (Hero heroInGame:legendsOfValor.getHeroes()
+             ) {
+            if (heroInGame.getRow()==cellRow&&heroInGame.getCol()==cellColumn){
+                System.out.println("Sorry, there has already been a hero in the destination cell.");
+                return false;
+            }
+        }
 
         Cell destinationCell=cells[cellRow][cellColumn];
         String cellIcon = destinationCell.getIcon();
-
         if (cellIcon.equals("I")){//Inaccessible Cell
-            System.out.println("This space is inaccassible. Please try move another direction!\n");
+            System.out.println("This space is inaccessible. Please try move another direction!\n");
             return false;
-
         }else if(cellIcon.equals("N")){//Nexus Cell
-
-
             if(destinationCell.getRow()==0) {
                 System.out.println("A hero landed on monster's cell! Hero won the game!");
             }
-
-            return true;
-
+            allowed=true;
         }else if(cellIcon.equals("P")){ // Plain Cell
-
-            return true;
+            allowed=true;
         }else if(cellIcon.equals("B")||cellIcon.equals("C")||cellIcon.equals("K")){
-            destinationCell.increaseHeroCount();
-            destinationCell.land(hero);
-            return true;
-
+            destinationCell.setHasHero(true);
+            destinationCell.land(heroToMove);
+            allowed =true;
         }else{
+            System.err.println("There must be something wrong.");
             return false;
         }
-
+        if(allowed) heroToMove.setPosition(cellRow,cellColumn) ;
+        return true;
     }
 }
