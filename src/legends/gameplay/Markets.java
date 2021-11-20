@@ -45,8 +45,8 @@ public class Markets {
         Factory fac = new Factory();
         Printer printer = new Printer();
         initMarket();
-        System.out.println("Welcome to the market!");
-        graphic.printMarket();
+//        System.out.println("Welcome to the market!");
+//        graphic.printMarket();
 //        System.out.println(colors.addColor("green", "Please choose an hero from your list to enter the store:"));
 //        h.p();
 //        int input = ScannerParser.parseInt();

@@ -198,11 +198,11 @@ public abstract class Hero extends Character {
 
             case 7: //back
                 if (initLane.getName().equals("Top")) {
-                    setPosition(0,7);
+                    setPosition(7,0);
                 } else if (initLane.getName().equals("Mid")) {
-                    setPosition(3,7);
+                    setPosition(7,3);
                 } else {
-                    setPosition(6,7);
+                    setPosition(7,6);
                 }
                 break;
 
