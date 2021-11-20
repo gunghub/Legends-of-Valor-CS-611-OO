@@ -35,6 +35,7 @@ public class Printer {
         System.out.println("===================================================================================================================================");
         System.out.format("%24s%7d%8d%8d%12d%11d%13d%18d%12d%17s",h.getName(),h.getLevel(),h.getHP(),h.getMana(),h.getStrength(),h.getAgility()
                 ,h.getDexterity(),h.getMoney(),h.getExperience(), h.getCurrLane().getName());
+        System.out.println("\n");
         if(h.getCurrentWeapon()!=null && h.getCurrentArmor()!=null) {
             System.out.println("Hero's current armor is " + h.getCurrentArmor().getName() + " ------ gives " + h.getCurrentArmor().getReduction() + " extra reduction");
             System.out.println("Hero's current weapon is " + h.getCurrentArmor().getName() + " ------ gives " + h.getCurrentWeapon().getDamage() + " extra damages");
