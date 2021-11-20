@@ -297,14 +297,14 @@ public abstract class Hero extends Character {
     }
 
 
-    /**
+ /*   *//**
      * @deprecated
      * player choose to move a hero a certain direction. The hero then land on the cell and prompt the corresponding
      * scenarios
      *
      * @param
      * @return
-     */
+     *//*
     @Deprecated
     public void makeMove(LovMap grid) {
         grid.display();
@@ -361,7 +361,7 @@ public abstract class Hero extends Character {
         }
 //        grid.printGrid(this);
 //        System.out.println(row+" "+col);
-    }
+    }*/
 
 
     /**
