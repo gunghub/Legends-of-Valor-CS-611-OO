@@ -19,8 +19,7 @@ import legends.utilities.Graphic;
 import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public abstract class Hero extends Character {
     private int mana;
@@ -40,6 +39,14 @@ public abstract class Hero extends Character {
     private int col;
     private Lane currLane;
     private Lane initLane;
+
+
+    private static final Map<String, Integer[]> MOVEMENT_DIRECTIONS =new HashMap<String, Integer[]>(){{
+        put("w",new Integer[]{-1,0});
+        put("a", new Integer[]{0, -1});
+        put("s", new Integer[]{1, 0});
+        put("d",new Integer[]{0,1});
+    }};
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience, Lane initLane) {
         super(name, level, HP);
@@ -71,7 +78,8 @@ public abstract class Hero extends Character {
                 "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
         int move = ScannerParser.parseInt();
         while (move < 1 || move > 8) {
-            move = ScannerParser.tryInt();
+            System.out.println("Please input a number within the given range:");
+            move = ScannerParser.parseInt();
         }
         Printer printer = new Printer();
         switch (move) {
@@ -92,7 +100,8 @@ public abstract class Hero extends Character {
                         printer.printSpells(spells);
                         int chosenSpell = ScannerParser.parseInt() - 1;
                         while (chosenSpell > inventory.getSpells().size()) {
-                            chosenSpell = ScannerParser.tryInt() - 1;
+                            System.out.println("Please input a number within the given range:");
+                            chosenSpell = ScannerParser.parseInt() - 1;
                         }
                         attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
                     } else {
@@ -110,7 +119,8 @@ public abstract class Hero extends Character {
                 System.out.println(" 1: Armor\n 2: Weapon");
                 int type = ScannerParser.parseInt();
                 while (type != 1 && type != 2) {
-                    type = ScannerParser.tryInt();
+                    System.out.println("Please input a number within the given range:");
+                    type = ScannerParser.parseInt();
                 }
                 switch (type) {
                     case 1:
@@ -121,7 +131,8 @@ public abstract class Hero extends Character {
                         printer.printArmors(inventory.getArmors());
                         int newarmor = ScannerParser.parseInt() - 1;
                         while (newarmor > inventory.getArmors().size()) {
-                            newarmor = ScannerParser.tryInt() - 1;
+                            System.out.println("Please input a number within the given range:");
+                            newarmor = ScannerParser.parseInt() - 1;
                         }
 //                        h.equip(h.getInventory().getArmors().get(newarmor));
                         changeArmor(currentArmor, inventory.getArmors().get(newarmor));
@@ -136,7 +147,8 @@ public abstract class Hero extends Character {
                         printer.printWeapons(inventory.getWeapons());
                         int newWeapon = ScannerParser.parseInt() - 1;
                         while (newWeapon > inventory.getWeapons().size()) {
-                            newWeapon = ScannerParser.tryInt() - 1;
+                            System.out.println("Please input a number within the given range:");
+                            newWeapon = ScannerParser.parseInt() - 1;
                         }
 //                      h.equip(h.getInventory().getWeapons().get(newWeapon));
                         changeWeapon(currentWeapon, inventory.getWeapons().get(newWeapon));
@@ -154,7 +166,8 @@ public abstract class Hero extends Character {
                     printer.printPotions(potions);
                     int chosenPotion = ScannerParser.parseInt() - 1;
                     while (chosenPotion > inventory.getPotions().size()) {
-                        chosenPotion = ScannerParser.tryInt() - 1;
+                        System.out.println("Please input a number within the given range:");
+                        chosenPotion = ScannerParser.parseInt() - 1;
                     }
                     use(keys[chosenPotion]);
                 } else {
@@ -164,7 +177,8 @@ public abstract class Hero extends Character {
                 break;
 
             case 5: //make move
-                makeMove(grid);
+                //makeMove(grid);
+                makeMoveNewVersion(grid);
                 break;
 
             case 6: //teleport
@@ -232,6 +246,41 @@ public abstract class Hero extends Character {
 
         }
     }
+
+
+    /**
+     *
+     */
+    public void makeMoveNewVersion(LovMap lovMap){
+        Scanner scanner=new Scanner(System.in);
+        while(true){
+
+            lovMap.display();
+            System.out.println("Please choose a move:");
+            System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
+
+            String inputString="";
+            while (true) {
+                boolean valid=false;
+                if (scanner.hasNext()) {
+                    inputString = scanner.next().toLowerCase();
+                    if (MOVEMENT_DIRECTIONS.containsKey(inputString)){
+                        valid=true;
+                    }
+                }
+                if (valid) break;
+            }
+
+            int destinationRow=getRow()+MOVEMENT_DIRECTIONS.get(inputString)[0];
+            int destinationColumn=getCol()+MOVEMENT_DIRECTIONS.get(inputString)[1];
+            //if(lovMap.inquireIsMoveAllowed(destinationRow,destinationColumn)){
+            if(!lovMap.landOnMap(destinationRow,destinationColumn,this,null,null)){
+                setPosition(destinationRow,destinationColumn);
+                break;
+            }
+        }
+    }
+
 
     /**
      * player choose to move a hero a certain direction. The hero then land on the cell and prompt the corresponding
