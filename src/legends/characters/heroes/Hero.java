@@ -6,7 +6,6 @@ import legends.gameplay.Inventory;
 import legends.gameplay.Markets;
 import legends.games.LegendsOfValor;
 import legends.grids.cells.Cell;
-import legends.grids.cells.InaccessibleCell;
 import legends.grids.lanes.Lane;
 import legends.items.Armor;
 import legends.items.Item;
@@ -242,7 +241,7 @@ public abstract class Hero extends Character {
 
     public void respawn(LovMap grid) {
         if (getHP() <= 0) {
-            grid.getGrid()[row][col].decreaseHeroCount();
+            grid.getCells()[row][col].decreaseHeroCount();
 
         }
     }
@@ -273,8 +272,8 @@ public abstract class Hero extends Character {
 
             int destinationRow=getRow()+MOVEMENT_DIRECTIONS.get(inputString)[0];
             int destinationColumn=getCol()+MOVEMENT_DIRECTIONS.get(inputString)[1];
-            //if(lovMap.inquireIsMoveAllowed(destinationRow,destinationColumn)){
-            if(!lovMap.landOnMap(destinationRow,destinationColumn,this,null,null)){
+            if(lovMap.moveToCell(destinationRow,destinationColumn,this)){
+            //if(!lovMap.landOnMap(destinationRow,destinationColumn,this,null,null)){
                 setPosition(destinationRow,destinationColumn);
                 break;
             }
@@ -309,10 +308,10 @@ public abstract class Hero extends Character {
 //                }
 //                grid.getGrid()[row][col].increaseHeroCount();
 //                setRow(row - 1);
-                grid.getGrid()[row][col].decreaseHeroCount();
-                grid.landOnMap(row - 1, col, this, grid.getGrid()[row][col], move);
+                grid.getCells()[row][col].decreaseHeroCount();
+                grid.landOnMap(row - 1, col, this, grid.getCells()[row][col], move);
                 setRow(row - 1);
-                grid.getGrid()[row][col].increaseHeroCount();
+                grid.getCells()[row][col].increaseHeroCount();
                 break;
 
             case "A":
@@ -320,26 +319,26 @@ public abstract class Hero extends Character {
 //                grid.getGrid()[row][col].increaseHeroCount();
 //                setCol(col - 1);
 //                grid.landOnMap(row, col, this, grid.getGrid()[row][col], move);
-                grid.getGrid()[row][col].decreaseHeroCount();
-                grid.landOnMap(row, col - 1, this, grid.getGrid()[row][col], move);
+                grid.getCells()[row][col].decreaseHeroCount();
+                grid.landOnMap(row, col - 1, this, grid.getCells()[row][col], move);
                 setCol(col - 1);
-                grid.getGrid()[row][col].increaseHeroCount();
+                grid.getCells()[row][col].increaseHeroCount();
                 break;
 
             case "S":
             case "s":
-                grid.getGrid()[row][col].decreaseHeroCount();
-                grid.landOnMap(row + 1, col, this, grid.getGrid()[row][col], move);
+                grid.getCells()[row][col].decreaseHeroCount();
+                grid.landOnMap(row + 1, col, this, grid.getCells()[row][col], move);
                 setRow(row + 1);
-                grid.getGrid()[row][col].increaseHeroCount();
+                grid.getCells()[row][col].increaseHeroCount();
                 break;
 
             case "D":
             case "d":
-                grid.getGrid()[row][col].decreaseHeroCount();
-                grid.landOnMap(row, col + 1, this, grid.getGrid()[row][col], move);
+                grid.getCells()[row][col].decreaseHeroCount();
+                grid.landOnMap(row, col + 1, this, grid.getCells()[row][col], move);
                 setCol(col + 1);
-                grid.getGrid()[row][col].increaseHeroCount();
+                grid.getCells()[row][col].increaseHeroCount();
                 break;
         }
 //        grid.printGrid(this);
@@ -357,7 +356,7 @@ public abstract class Hero extends Character {
      */
     public boolean isValidMove(String move, LovMap grid) {
         boolean isValid = true;
-        Cell[][] grids = grid.getGrid();
+        Cell[][] grids = grid.getCells();
 
         switch (move) {
             case "W":
@@ -421,7 +420,7 @@ public abstract class Hero extends Character {
     }
 
     public Monster getNeighborMonster(LovMap grid, LegendsOfValor legendofvalor) {
-        Cell[][] grids = grid.getGrid();
+        Cell[][] grids = grid.getCells();
         if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == Math.max(row - 1, 0) && legendofvalor.getMonsters().get(i).getCol() == Math.max(col - 1, 0)) {
@@ -483,7 +482,7 @@ public abstract class Hero extends Character {
 
     // return boolean indicating whether there is a monster within the hero's attacking range
     public boolean withinRange(LovMap grid) {
-        Cell[][] grids = grid.getGrid();
+        Cell[][] grids = grid.getCells();
         if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].getMonsterCount() > 0 || grids[Math.max(row - 1, 0)][col].getMonsterCount() > 0 || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].getMonsterCount() > 0 ||
                 grids[row][Math.max(col - 1, 0)].getMonsterCount() > 0 || grids[row][col].getMonsterCount() > 0 || grids[row][Math.min(col + 1, 7)].getMonsterCount() > 0 ||
                 grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].getMonsterCount() > 0 || grids[Math.min(row + 1, 7)][col].getMonsterCount() > 0 || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].getMonsterCount() > 0) {

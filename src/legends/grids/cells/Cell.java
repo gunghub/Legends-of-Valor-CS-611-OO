@@ -1,5 +1,6 @@
 package legends.grids.cells;
 
+import legends.characters.heroes.Hero;
 import legends.utilities.Colors;
 
 /**
@@ -14,6 +15,10 @@ public abstract class Cell {
     protected int heroCount;
     protected int monsterCount;
 
+
+    public void land(Hero hero){
+
+    }
 
     public Cell(String icon, int row, int col){
         this.icon = icon;

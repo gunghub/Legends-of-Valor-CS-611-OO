@@ -6,7 +6,7 @@ import legends.grids.cells.Cell;
  * Grid for the game.
  */
 public abstract class Grid {
-    protected Cell[][] grid; //cells
+    protected Cell[][] cells; //cells
     protected int numRows;
     protected int numCols;
     protected String symbol;
@@ -16,17 +16,17 @@ public abstract class Grid {
     public Grid(int numCols,int numRows){
         this.numRows = numRows;
         this.numCols = numCols;
-        grid = new Cell[numRows][numCols];
+        cells = new Cell[numRows][numCols];
 //        grid = new Cell[numRows][numCols];
 //        grid = new legends.LOVCell[numRows][numCols];
     }
 
-    public Cell[][] getGrid() {
-        return grid;
+    public Cell[][] getCells() {
+        return cells;
     }
 
-    public void setGrid(Cell[][] grid) {
-        this.grid = grid;
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
     }
 
     public int getNumRows() {
