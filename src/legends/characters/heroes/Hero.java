@@ -205,7 +205,8 @@ public abstract class Hero extends Character {
                     if(currLane.getMaxExplored()>currrow-1){
                         System.out.println("You shall not exceed the max explored row of this lane!");
                     }
-                    currrow = ScannerParser.tryInt();
+                    System.out.println("Please input a number within the given range:");
+                    currrow = ScannerParser.parseInt();
                 }
                 row = currrow - 1;
                 System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
@@ -215,7 +216,8 @@ public abstract class Hero extends Character {
                     if (grid.getGrid()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
                         System.out.println("You shall not land on the same cell with another hero!");
                     }
-                    leftorright = ScannerParser.tryInt();
+                    System.out.println("Please input a number within the given range:");
+                    leftorright = ScannerParser.parseInt();
                 }
                 col = currLane.getLeftCol()+(leftorright-1);
                 break;
