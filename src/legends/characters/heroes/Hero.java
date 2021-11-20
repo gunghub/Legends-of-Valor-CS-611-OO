@@ -69,175 +69,193 @@ public abstract class Hero extends Character {
     // hero chooses to attack, cast a spell, move, teleport, back, or quit game
     //return the play boolean which indicates whether player wants to quit the game
     public boolean takeAction(LovMap grid, LegendsOfValor lovgame) {
+
         boolean play = true;
-        if (row == 7) {
-            Markets market = new Markets();
-            market.storeConsole(this);
-            System.out.println("Please choose another action for your hero.");
-        }
-        System.out.println(" 1: Attack\n 2: Cast spell\n 3: Change Weapon/Armor\n 4: Use a potion\n " +
-                "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
-        int move = ScannerParser.parseInt();
-        while (move < 1 || move > 8) {
-            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-            move = ScannerParser.parseInt();
-        }
-        Printer printer = new Printer();
-        switch (move) {
-            case 1: //attack
-                if (withinRange(grid)) {
-                    graphic.printFight();
-                    attack(getNeighborMonster(grid, lovgame), null);
-                } else {
-                    System.out.println(colors.addColor("red", "No monster is within your attacking range. Please try another move!\n"));
-                    takeAction(grid, lovgame);
-                }
-                break;
+        while(true) {
+            boolean thisActionFinished=true;
 
-            case 2: //cast spell
-                if (withinRange(grid)) {
-                    ArrayList<Spell> spells = inventory.getSpells();
-                    if (spells.size() != 0) {
-                        System.out.println("Please choose a spell to cast (enter ID):");
-                        printer.printSpells(spells);
-                        int chosenSpell = ScannerParser.parseInt() - 1;
-                        while (chosenSpell > inventory.getSpells().size()) {
-                            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                            chosenSpell = ScannerParser.parseInt() - 1;
-                        }
-                        attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
+
+
+            if (row == 7) {
+                Markets market = new Markets();
+                market.storeConsole(this);
+                System.out.println("Please choose another action for your hero.");
+            }
+            System.out.println(" 1: Attack\n 2: Cast spell\n 3: Change Weapon/Armor\n 4: Use a potion\n " +
+                    "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
+            int move = ScannerParser.parseInt();
+            while (move < 1 || move > 8) {
+                System.out.println(colors.addColor("red", "Please input a number within the given range:"));
+                move = ScannerParser.parseInt();
+            }
+            Printer printer = new Printer();
+            switch (move) {
+                case 1: //attack
+                    if (withinRange(grid)) {
+                        graphic.printFight();
+                        attack(getNeighborMonster(grid, lovgame), null);
                     } else {
-                        System.out.println(colors.addColor("red", "Your hero does not have any spell in their inventory! Choose another move!\n"));
-                        takeAction(grid, lovgame);
+                        System.out.println(colors.addColor("red", "No monster is within your attacking range. Please try another move!\n"));
+                        thisActionFinished=false;
                     }
-                } else {
-                    System.out.println(colors.addColor("red", "No monster is within your attacking range. Please try another move!\n"));
-                    takeAction(grid, lovgame);
-                }
-                break;
+                    break;
 
-            case 3: //change weapon/armor
-                System.out.println(colors.addColor("purple", "What would you like to change?"));
-                System.out.println(" 1: Armor\n 2: Weapon");
-                int type = ScannerParser.parseInt();
-                while (type != 1 && type != 2) {
-                    System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                    type = ScannerParser.parseInt();
-                }
-                switch (type) {
-                    case 1:
-                        System.out.println("Your current armor is:" + currentArmor.getName());
-                        unequip(currentArmor);
-                        System.out.println("Current armor is taken off.");
-                        System.out.println("Which armor would you like to wear now?");
-                        printer.printArmors(inventory.getArmors());
-                        int newarmor = ScannerParser.parseInt() - 1;
-                        while (newarmor > inventory.getArmors().size()) {
-                            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                            newarmor = ScannerParser.parseInt() - 1;
+                case 2: //cast spell
+                    if (withinRange(grid)) {
+                        ArrayList<Spell> spells = inventory.getSpells();
+                        if (spells.size() != 0) {
+                            System.out.println("Please choose a spell to cast (enter ID):");
+                            printer.printSpells(spells);
+                            int chosenSpell = ScannerParser.parseInt() - 1;
+                            while (chosenSpell > inventory.getSpells().size()) {
+                                System.out.println(colors.addColor("red", "Please input a number within the given range:"));
+                                chosenSpell = ScannerParser.parseInt() - 1;
+                            }
+                            attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
+                        } else {
+                            System.out.println(colors.addColor("red", "Your hero does not have any spell in their inventory! Choose another move!\n"));
+                            thisActionFinished=false;
                         }
-//                        h.equip(h.getInventory().getArmors().get(newarmor));
-                        changeArmor(currentArmor, inventory.getArmors().get(newarmor));
-                        System.out.println("Armor " + currentArmor.getName() + " is equipped now");
+                    } else {
+                        System.out.println(colors.addColor("red", "No monster is within your attacking range. Please try another move!\n"));
+                        thisActionFinished=false;
+                    }
+                    break;
+
+                case 3: //change weapon/armor
+
+                    if(currentArmor==null){
+                        System.out.println("Sorry, you don't have a armor in your hand.");
+                        thisActionFinished=false;
                         break;
+                    }
 
-                    case 2:
-                        System.out.println("Your current weapon is:" + currentWeapon.getName());
-                        unequip(currentWeapon);
-                        System.out.println("Current weapon is unarmed now.");
-                        System.out.println("Which weapon would you like to arm now?");
-                        printer.printWeapons(inventory.getWeapons());
-                        int newWeapon = ScannerParser.parseInt() - 1;
-                        while (newWeapon > inventory.getWeapons().size()) {
-                            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                            newWeapon = ScannerParser.parseInt() - 1;
-                        }
-//                      h.equip(h.getInventory().getWeapons().get(newWeapon));
-                        changeWeapon(currentWeapon, inventory.getWeapons().get(newWeapon));
-                        System.out.println("Weapon " + currentWeapon.getName() + " is equipped now");
-                        break;
-                }
-                break;
-
-            case 4: // use potion
-                HashMap<Potion, Integer> potions = inventory.getPotions();
-                if (potions.size() != 0) {
-                    System.out.println("Please choose a potion to use (enter ID):");
-
-                    Potion[] keys = (Potion[]) potions.keySet().toArray();
-                    printer.printPotions(potions);
-                    int chosenPotion = ScannerParser.parseInt() - 1;
-                    while (chosenPotion > inventory.getPotions().size()) {
+                    System.out.println(colors.addColor("purple", "What would you like to change?"));
+                    System.out.println(" 1: Armor\n 2: Weapon");
+                    int type = ScannerParser.parseInt();
+                    while (type != 1 && type != 2) {
                         System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                        chosenPotion = ScannerParser.parseInt() - 1;
+                        type = ScannerParser.parseInt();
                     }
-                    use(keys[chosenPotion]);
-                } else {
-                    System.out.println(colors.addColor("red", "You hero does not have any potion in their inventory! Choose another move!\n"));
-                    takeAction(grid, lovgame);
-                }
-                break;
+                    switch (type) {
+                        case 1:
+                            System.out.println("Your current armor is:" + currentArmor.getName());
+                            unequip(currentArmor);
+                            System.out.println("Current armor is taken off.");
+                            System.out.println("Which armor would you like to wear now?");
+                            printer.printArmors(inventory.getArmors());
+                            int newarmor = ScannerParser.parseInt() - 1;
+                            while (newarmor > inventory.getArmors().size()) {
+                                System.out.println(colors.addColor("red", "Please input a number within the given range:"));
+                                newarmor = ScannerParser.parseInt() - 1;
+                            }
+//                        h.equip(h.getInventory().getArmors().get(newarmor));
+                            changeArmor(currentArmor, inventory.getArmors().get(newarmor));
+                            System.out.println("Armor " + currentArmor.getName() + " is equipped now");
+                            break;
 
-            case 5: //make move
-                //makeMove(grid);
-                makeMoveNewVersion(grid);
-                break;
+                        case 2:
+                            System.out.println("Your current weapon is:" + currentWeapon.getName());
+                            unequip(currentWeapon);
+                            System.out.println("Current weapon is unarmed now.");
+                            System.out.println("Which weapon would you like to arm now?");
+                            printer.printWeapons(inventory.getWeapons());
+                            int newWeapon = ScannerParser.parseInt() - 1;
+                            while (newWeapon > inventory.getWeapons().size()) {
+                                System.out.println("Please input a number within the given range:");
+                                newWeapon = ScannerParser.parseInt() - 1;
+                            }
+//                      h.equip(h.getInventory().getWeapons().get(newWeapon));
+                            changeWeapon(currentWeapon, inventory.getWeapons().get(newWeapon));
+                            System.out.println("Weapon " + currentWeapon.getName() + " is equipped now");
+                            break;
+                    }
+                    break;
 
-            case 6: //teleport
-                System.out.println(colors.addColor("red", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
-                        " 2. You shall not land on the same cell as another hero\n" +
-                        " 3. You must teleport to a different lane than your current lane\n" +
-                        " 4. You shall not go further than the max explored row in this lane"));
-                System.out.println(colors.addColor("purple","Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):"));
-                String input = ScannerParser.parseString();
-                while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot") || currLane.getName().equals(input)) {
-                    if(currLane.getName().equals(input)){
-                        System.out.println(colors.addColor("red", "You must teleport to a different lane!"));
-                    }
-                    input = ScannerParser.tryString();
-                }
-                setCurrLane(lovgame.getLane(input));
+                case 4: // use potion
+                    HashMap<Potion, Integer> potions = inventory.getPotions();
+                    if (potions.size() != 0) {
+                        System.out.println("Please choose a potion to use (enter ID):");
 
-                System.out.println("Which row would you like to land on?(Between 1~8)");
-                int currrow = ScannerParser.parseInt();
-                while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1 || currLane.getMaxExplored()>currrow-1) {
-                    if(currLane.getMaxMonsterRow() > currrow - 1){
-                        System.out.println(colors.addColor("red", "You shall not bypass any monster!"));
+                        Potion[] keys = (Potion[]) potions.keySet().toArray();
+                        printer.printPotions(potions);
+                        int chosenPotion = ScannerParser.parseInt() - 1;
+                        while (chosenPotion > inventory.getPotions().size()) {
+                            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
+                            chosenPotion = ScannerParser.parseInt() - 1;
+                        }
+                        use(keys[chosenPotion]);
+                    } else {
+                        System.out.println(colors.addColor("red", "You hero does not have any potion in their inventory! Choose another move!\n"));
+                        thisActionFinished=false;
                     }
-                    if(currLane.getMaxExplored()>currrow-1){
-                        System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane!"));
+                    break;
+
+                case 5: //make move
+                    //makeMove(grid);
+                    makeMoveNewVersion(grid);
+                    break;
+
+                case 6: //teleport
+                    System.out.println(colors.addColor("red", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
+                            " 2. You shall not land on the same cell as another hero\n" +
+                            " 3. You must teleport to a different lane than your current lane\n" +
+                            " 4. You shall not go further than the max explored row in this lane"));
+                    System.out.println(colors.addColor("purple","Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):"));
+                    String input = ScannerParser.parseString();
+                    while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot") || currLane.getName().equals(input)) {
+                        if (currLane.getName().equals(input)) {
+                            System.out.println(colors.addColor("red", "You must teleport to a different lane!"));
+                        }
+                        input = ScannerParser.tryString();
                     }
-                    System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                    currrow = ScannerParser.parseInt();
-                }
-                row = currrow - 1;
-                System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
-                int leftorright = ScannerParser.parseInt();
+                    setCurrLane(lovgame.getLane(input));
+
+                    System.out.println("Which row would you like to land on?(Between 1~8)");
+                    int currrow = ScannerParser.parseInt();
+                    while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1 || currLane.getMaxExplored() > currrow - 1) {
+                        if (currLane.getMaxMonsterRow() > currrow - 1) {
+                            System.out.println(colors.addColor("red", "You shall not bypass any monster!"));
+                        }
+                        if (currLane.getMaxExplored() > currrow - 1) {
+                            System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane!"));
+                        }
+                        System.out.println(colors.addColor("red", "Please input a number within the given range:"));
+                        currrow = ScannerParser.parseInt();
+                    }
+                    row = currrow - 1;
+                    System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
+                    int leftorright = ScannerParser.parseInt();
                     //check if lands on a cell that has a already hero
-                while ((leftorright != 1 && leftorright!=2) || grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].isHasHero()) {
-                    if (grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].isHasHero()) {
-                        System.out.println(colors.addColor("red", "You shall not land on the same cell with another hero!"));
+                    while ((leftorright != 1 && leftorright != 2) || grid.getCells()[row][currLane.getLeftCol() + (leftorright - 1)].isHasHero()) {
+                        if (grid.getCells()[row][currLane.getLeftCol() + (leftorright - 1)].isHasHero()) {
+                            System.out.println(colors.addColor("red", "You shall not land on the same cell with another hero!"));
+                        }
+                        System.out.println(colors.addColor("red", "Please input a number within the given range:"));
+                        leftorright = ScannerParser.parseInt();
                     }
-                    System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                    leftorright = ScannerParser.parseInt();
-                }
-                col = currLane.getLeftCol()+(leftorright-1);
-                break;
+                    col = currLane.getLeftCol() + (leftorright - 1);
+                    break;
 
-            case 7: //back
-                if (initLane.getName().equals("Top")) {
-                    setCurrLane(lovgame.getLane("Top"));
-                } else if (initLane.getName().equals("Mid")) {
-                    setCurrLane(lovgame.getLane("Mid"));
-                } else {
-                    setCurrLane(lovgame.getLane("Bot"));
-                }
-                break;
+                case 7: //back
+                    if (initLane.getName().equals("Top")) {
+                        setCurrLane(lovgame.getLane("Top"));
+                    } else if (initLane.getName().equals("Mid")) {
+                        setCurrLane(lovgame.getLane("Mid"));
+                    } else {
+                        setCurrLane(lovgame.getLane("Bot"));
+                    }
+                    break;
 
-            case 8: //quit
-                System.out.println(colors.addColor("red", "Thanks for playing! Exiting program..."));
-                play = false;
-                break;
+                case 8: //quit
+                    System.out.println(colors.addColor("red", "Thanks for playing! Exiting program..."));
+                    play = false;
+                    break;
+            }
+
+
+            if(thisActionFinished)break;
+
         }
 //        System.out.println(row+" "+col);
         return play;
@@ -285,7 +303,7 @@ public abstract class Hero extends Character {
      *
      * @param
      * @return
-     */
+     *//*
     @Deprecated
     public void makeMove(LovMap grid) {
         grid.display();
@@ -342,7 +360,7 @@ public abstract class Hero extends Character {
         }
 //        grid.printGrid(this);
 //        System.out.println(row+" "+col);
-    }
+    }*/
 
 
     /**
