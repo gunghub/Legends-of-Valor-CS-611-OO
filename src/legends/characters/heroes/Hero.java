@@ -40,11 +40,11 @@ public abstract class Hero extends Character {
     private Lane initLane;
 
 
-    private static final Map<String, Integer[]> MOVEMENT_DIRECTIONS =new HashMap<String, Integer[]>(){{
-        put("w",new Integer[]{-1,0});
+    private static final Map<String, Integer[]> MOVEMENT_DIRECTIONS = new HashMap<String, Integer[]>() {{
+        put("w", new Integer[]{-1, 0});
         put("a", new Integer[]{0, -1});
         put("s", new Integer[]{1, 0});
-        put("d",new Integer[]{0,1});
+        put("d", new Integer[]{0, 1});
     }};
 
     public Hero(String name, int level, int HP, int mana, int strength, int agility, int dexterity, int money, int experience, Lane initLane) {
@@ -188,7 +188,7 @@ public abstract class Hero extends Character {
                 System.out.println("Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):");
                 String input = ScannerParser.parseString();
                 while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot") || currLane.getName().equals(input)) {
-                    if(currLane.getName().equals(input)){
+                    if (currLane.getName().equals(input)) {
                         System.out.println("You must teleport to a different lane!");
                     }
                     input = ScannerParser.tryString();
@@ -197,11 +197,11 @@ public abstract class Hero extends Character {
 
                 System.out.println("Which row would you like to land on?(Between 1~8)");
                 int currrow = ScannerParser.parseInt();
-                while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1 || currLane.getMaxExplored()>currrow-1) {
-                    if(currLane.getMaxMonsterRow() > currrow - 1){
+                while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1 || currLane.getMaxExplored() > currrow - 1) {
+                    if (currLane.getMaxMonsterRow() > currrow - 1) {
                         System.out.println("You shall not bypass any monster!");
                     }
-                    if(currLane.getMaxExplored()>currrow-1){
+                    if (currLane.getMaxExplored() > currrow - 1) {
                         System.out.println("You shall not exceed the max explored row of this lane!");
                     }
                     System.out.println("Please input a number within the given range:");
@@ -210,15 +210,15 @@ public abstract class Hero extends Character {
                 row = currrow - 1;
                 System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
                 int leftorright = ScannerParser.parseInt();
-                    //check if lands on a cell that has a already hero
-                while ((leftorright != 1 && leftorright!=2) || grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
-                    if (grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
+                //check if lands on a cell that has a already hero
+                while ((leftorright != 1 && leftorright != 2) || grid.getCells()[row][currLane.getLeftCol() + (leftorright - 1)].getHeroCount() > 0) {
+                    if (grid.getCells()[row][currLane.getLeftCol() + (leftorright - 1)].getHeroCount() > 0) {
                         System.out.println("You shall not land on the same cell with another hero!");
                     }
                     System.out.println("Please input a number within the given range:");
                     leftorright = ScannerParser.parseInt();
                 }
-                col = currLane.getLeftCol()+(leftorright-1);
+                col = currLane.getLeftCol() + (leftorright - 1);
                 break;
 
             case 7: //back
@@ -252,31 +252,31 @@ public abstract class Hero extends Character {
     /**
      *
      */
-    public void makeMoveNewVersion(LovMap lovMap){
-        Scanner scanner=new Scanner(System.in);
-        while(true){
+    public void makeMoveNewVersion(LovMap lovMap) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
 
             lovMap.display();
             System.out.println("Please choose a move:");
             System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
 
-            String inputString="";
+            String inputString = "";
             while (true) {
-                boolean valid=false;
+                boolean valid = false;
                 if (scanner.hasNext()) {
                     inputString = scanner.next().toLowerCase();
-                    if (MOVEMENT_DIRECTIONS.containsKey(inputString)){
-                        valid=true;
+                    if (MOVEMENT_DIRECTIONS.containsKey(inputString)) {
+                        valid = true;
                     }
                 }
                 if (valid) break;
             }
 
-            int destinationRow=getRow()+MOVEMENT_DIRECTIONS.get(inputString)[0];
-            int destinationColumn=getCol()+MOVEMENT_DIRECTIONS.get(inputString)[1];
-            if(lovMap.moveToCell(destinationRow,destinationColumn,this)){
-            //if(!lovMap.landOnMap(destinationRow,destinationColumn,this,null,null)){
-                setPosition(destinationRow,destinationColumn);
+            int destinationRow = getRow() + MOVEMENT_DIRECTIONS.get(inputString)[0];
+            int destinationColumn = getCol() + MOVEMENT_DIRECTIONS.get(inputString)[1];
+            if (lovMap.moveToCell(destinationRow, destinationColumn, this)) {
+                //if(!lovMap.landOnMap(destinationRow,destinationColumn,this,null,null)){
+                setPosition(destinationRow, destinationColumn);
                 break;
             }
         }
@@ -509,18 +509,26 @@ public abstract class Hero extends Character {
     public void equip(Item i) {
         if (i instanceof Weapon) {
             for (Weapon w : inventory.getWeapons()) {
-                if (i.getName().equals(w.getName())) {
-                    w.equipItem();
-                    currentWeapon = w;
-                    return;
+                if (i.getMinLevel() < getLevel()) {
+                    System.out.println("Hero level doesn't meet the minimum level requirement to use this weapon");
+                } else {
+                    if (i.getName().equals(w.getName())) {
+                        w.equipItem();
+                        currentWeapon = w;
+                        return;
+                    }
                 }
             }
         } else if (i instanceof Armor) {
             for (Armor a : inventory.getArmors()) {
-                if (i.getName().equals(a.getName())) {
-                    a.equipItem();
-                    currentArmor = a;
-                    return;
+                if (i.getMinLevel() < getLevel()) {
+                    System.out.println("Hero level doesn't meet the minimum level requirement to use this weapon");
+                } else {
+                    if (i.getName().equals(a.getName())) {
+                        a.equipItem();
+                        currentArmor = a;
+                        return;
+                    }
                 }
             }
 

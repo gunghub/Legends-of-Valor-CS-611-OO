@@ -44,7 +44,11 @@ public class Round {
                 if (play == false) {
                     break;
                 }
-                monsters.get(i).makeMove(heroes.get(i), grid,i);
+                if(monsters.get(i).isFaint()){
+                    monsters.remove(i);
+                }else {
+                    monsters.get(i).makeMove(heroes.get(i), grid, i);
+                }
             }
         }
         if (isOver(heroes, monsters)) {
