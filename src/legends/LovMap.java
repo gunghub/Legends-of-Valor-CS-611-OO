@@ -191,7 +191,9 @@ public class LovMap extends Grid {
     }
 
 
-    /**
+
+
+/**
      * land on a cell. Prompt the corresponding scenarios after landing on the cell
      *
      * @param row  row of the landed cell
@@ -200,6 +202,7 @@ public class LovMap extends Grid {
      * @param cell
      * @param move
      */
+
     public boolean landOnMap(int row, int col, Hero hero, Cell cell, String move) {
 //        printGrid(p);
         boolean inaccessible = false;
@@ -252,42 +255,43 @@ public class LovMap extends Grid {
     }
 
 
+
     public boolean moveToCell(int cellRow, int cellColumn, Hero hero){
 
         boolean allowed;
 
+        //Check the boundary
         if(cellRow>LOV_MAP_SIZE_OF_CELLS-1||cellColumn>LOV_MAP_SIZE_OF_CELLS-1||cellRow<0||cellColumn<0){
             System.out.println("You cannot step out of the map");
             return false;
         }
 
+        
 
         Cell destinationCell=cells[cellRow][cellColumn];
         String cellIcon = destinationCell.getIcon();
 
-        if (cellIcon.equals("I")){//inaccessible
-            InaccessibleCell inaccessibleCell = (InaccessibleCell) destinationCell;
-            inaccessibleCell.land();
+        if (cellIcon.equals("I")){//Inaccessible Cell
+            System.out.println("This space is inaccassible. Please try move another direction!\n");
             return false;
 
-        }else if(cellIcon.equals("N")){//nexus
-            //destinationCell.increaseHeroCount();
+        }else if(cellIcon.equals("N")){//Nexus Cell
 
-            NexusCell nexusCell = (NexusCell) destinationCell;
 
-            if(nexusCell.getRow()==0){
-                System.out.println("A hero landed on monster's cell! You won the game!");
+            if(destinationCell.getRow()==0) {
+                System.out.println("A hero landed on monster's cell! Hero won the game!");
             }
 
             return true;
 
-        }else if(cellIcon.equals("P")){
-            //destinationCell.increaseHeroCount();
+        }else if(cellIcon.equals("P")){ // Plain Cell
+
             return true;
         }else if(cellIcon.equals("B")||cellIcon.equals("C")||cellIcon.equals("K")){
             destinationCell.increaseHeroCount();
             destinationCell.land(hero);
             return true;
+
         }else{
             return false;
         }
