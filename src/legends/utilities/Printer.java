@@ -7,18 +7,18 @@ import legends.items.Potion;
 import legends.items.Weapon;
 import legends.characters.monsters.Monster;
 import legends.items.spells.Spell;
-
+import legends.utilities.Colors;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Printer {
-
+    private Colors colors = new Colors();
     public Printer(){}
 
     // TODO: Print hero type and monster types when printing!!!
 
     public void printHeroes(ArrayList<Hero> heroes){
-        System.out.println("\tID\t\t\t\tName\t\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tAgility\t\tDexterity\t\tMoney\t\tExperience\t\tCurrent lane");
+        System.out.println(colors.addColor("blue", "\tID\t\t\t\tName\t\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tAgility\t\tDexterity\t\tMoney\t\tExperience\t\tCurrent lane"));
         System.out.println("============================================================================================================================================================================");
         int id = 1;
         for(Hero h: heroes){
@@ -31,7 +31,7 @@ public class Printer {
 
 
     public void printHero(Hero h){
-        System.out.println("\t  Name\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tAgility\t\tDexterity\t\tMoney\t\tExperience\t\tCurrent Lane");
+        System.out.println(colors.addColor("blue", "\t  Name\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tAgility\t\tDexterity\t\tMoney\t\tExperience\t\tCurrent Lane"));
         System.out.println("===================================================================================================================================");
         System.out.format("%24s%7d%8d%8d%12d%11d%13d%18d%12d%17s",h.getName(),h.getLevel(),h.getHP(),h.getMana(),h.getStrength(),h.getAgility()
                 ,h.getDexterity(),h.getMoney(),h.getExperience(), h.getCurrLane().getName());
@@ -51,7 +51,7 @@ public class Printer {
 
     //TODO: print name of the lane in the end
     public void printMonsters(ArrayList<Monster> monsters){
-        System.out.println("\t ID  \t  Name\t\tLevel\t  Damage\t  Defense\t  Dodge Chance");
+        System.out.println(colors.addColor("blue", "\t ID  \t  Name\t\tLevel\t  Damage\t  Defense\t  Dodge Chance"));
         System.out.println("=================================================================================================================");
         int id = 1;
         for(Monster m: monsters){
@@ -67,7 +67,7 @@ public class Printer {
         switch(type){
             case 0:
                 ArrayList<Weapon> weapons = inventory.getWeapons();
-                System.out.println("Shop Weapons:");
+                System.out.println(colors.addColor("green", "Shop Weapons:"));
                 printWeapons(weapons);
                 break;
 
@@ -100,7 +100,7 @@ public class Printer {
     }
 
     public void printArmors(ArrayList<Armor> armors){
-        System.out.println("\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage Reduction");
+        System.out.println(colors.addColor("blue", "\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage Reduction"));
         System.out.println("=======================================================================================");
         int id = 1;
         for(Armor a: armors){
@@ -112,7 +112,7 @@ public class Printer {
 
     public void printPotions(HashMap<Potion, Integer> potions){
         Potion[] keys = (Potion[])potions.keySet().toArray();
-        System.out.println("\t ID  \t  Name\t\tRequired Level\t  Attribute Increase\t  Attributes Affected");
+        System.out.println(colors.addColor("blue","\t ID  \t  Name\t\tRequired Level\t  Attribute Increase\t  Attributes Affected"));
         System.out.println("=======================================================================================");
         int id = 1;
         for(Potion p: keys){
@@ -123,7 +123,7 @@ public class Printer {
     }
 
     public void printSpells(ArrayList<Spell> spells){
-        System.out.println("\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage\t Mana Cost");
+        System.out.println(colors.addColor("blue","\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage\t Mana Cost"));
         System.out.println("=========================================================================================");
         int id = 1;
         for(Spell s: spells){
@@ -134,7 +134,7 @@ public class Printer {
     }
 
     public void printWeapons(ArrayList<Weapon> weapons){
-        System.out.println("\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage Reduction");
+        System.out.println(colors.addColor("blue","\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage Reduction"));
         System.out.println("=======================================================================================");
         int id = 1;
         for(Weapon w: weapons){

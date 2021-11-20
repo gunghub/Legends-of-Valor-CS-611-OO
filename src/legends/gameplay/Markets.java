@@ -24,13 +24,13 @@ public class Markets {
      * @param h
      */
     public void storeConsole(Hero h) {
-        System.out.println(colors.addColor("cyan", "You are at Nexus. Would you like to enter the market?(y/n)"));
+        System.out.println(colors.addColor("purple", "You are at Nexus. Would you like to enter the market?(y/n)"));
         isShopping = ScannerParser.parseBoolean();
         while(isShopping) {
                 graphic.printMarket();
                 enterStore(h);
         }
-        System.out.println(colors.addColor("cyan","Hero left the market.\n"));
+        System.out.println(colors.addColor("red","Hero left the market.\n"));
     }
 
     public void initMarket(){
@@ -53,7 +53,7 @@ public class Markets {
 //        Hero chosenHero = p.getHeroes().get(input - 1);
         System.out.println(colors.addColor("green","Hero entered the store. View hero stats below ---"));
         printer.printHero(hero);
-        System.out.println(colors.addColor("blue", "Would you like to buy or sell an item?"));
+        System.out.println(colors.addColor("green", "Would you like to buy or sell an item?"));
         System.out.println(" 1: Buy\n 2: Sell\n 3: Exit market");
         int input = ScannerParser.parseInt();
         chooseBuySell(input, hero);
@@ -90,7 +90,7 @@ public class Markets {
         int input = ScannerParser.parseInt();
         Printer printer = new Printer();
         printer.printShop(market, input);
-        System.out.println(colors.addColor("cyan", "Which item would you like to purchase?"));
+        System.out.println(colors.addColor("green", "Which item would you like to purchase?"));
         int id = ScannerParser.parseInt()-1;
         switch(input){
             case 0:
@@ -135,12 +135,12 @@ public class Markets {
     // TODO: need to finish this method!!
 
     public void heroSell(Hero h) {
-        System.out.println("What would you like to sell?");
+        System.out.println(colors.addColor("green", "What would you like to sell?"));
         System.out.println("0: Weapon\n1: Armor\n2: Potion\n3: Spell");
         int input = ScannerParser.parseInt();
         Printer printer = new Printer();
         printer.printShop(market, input);
-        System.out.println("Which item would you like to sell?");
+        System.out.println(colors.addColor("green", "Which item would you like to sell?"));
         int id = ScannerParser.parseInt()-1;
         switch(input){
             case 0:

@@ -1,10 +1,11 @@
 package legends.utilities;
 
+import legends.utilities.Colors;
 import java.util.Random;
 import java.util.Scanner;
 
 public class ScannerParser {
-
+    private static Colors colors = new Colors();
     private static Scanner sc = new Scanner(System.in);
 
     public ScannerParser(){
@@ -19,7 +20,7 @@ public class ScannerParser {
                 s = sc.next();
                 break;
             }catch (Exception e){
-                System.out.println("Please choose the given option to make your choice: ");
+                System.out.println(colors.addColor("red", "Please choose the given option to make your choice: "));
             }
         }
         return s;
@@ -33,7 +34,7 @@ public class ScannerParser {
                 i = sc.nextInt();
                 break;
             }catch (Exception e){
-                System.out.println("Input not valid! Please try again:");
+                System.out.println(colors.addColor("red", "Input not valid! Please try again:"));
             }
         }
         return i;
@@ -53,14 +54,14 @@ public class ScannerParser {
             break;
         }
         else {
-            System.out.println("Please input Y/y or N/n to make your choice: ");
+            System.out.println(colors.addColor("red", "Please input Y/y or N/n to make your choice: "));
             s = parseString();
         }}
         return b;
     }
 
     public static int tryInt(){
-        System.out.println("Input not valid! Please try again:");
+        System.out.println(colors.addColor("red", "Input not valid! Please try again:"));
         int newint = parseInt();
         return newint;
     }
@@ -72,7 +73,7 @@ public class ScannerParser {
                 newString = parseString();
                 break;
             }catch (Exception e){
-                System.out.println("Input not valid! Please try again:");
+                System.out.println(colors.addColor("red", "Input not valid! Please try again:"));
             }
         }
         return newString;

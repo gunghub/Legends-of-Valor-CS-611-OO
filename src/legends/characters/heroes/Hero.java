@@ -79,7 +79,7 @@ public abstract class Hero extends Character {
                 "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
         int move = ScannerParser.parseInt();
         while (move < 1 || move > 8) {
-            System.out.println("Please input a number within the given range:");
+            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
             move = ScannerParser.parseInt();
         }
         Printer printer = new Printer();
@@ -89,7 +89,7 @@ public abstract class Hero extends Character {
                     graphic.printFight();
                     attack(getNeighborMonster(grid, lovgame), null);
                 } else {
-                    System.out.println("No monster is within your attacking range. Please try another move!\n");
+                    System.out.println(colors.addColor("red", "No monster is within your attacking range. Please try another move!\n"));
                     takeAction(grid, lovgame);
                 }
                 break;
@@ -102,26 +102,26 @@ public abstract class Hero extends Character {
                         printer.printSpells(spells);
                         int chosenSpell = ScannerParser.parseInt() - 1;
                         while (chosenSpell > inventory.getSpells().size()) {
-                            System.out.println("Please input a number within the given range:");
+                            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                             chosenSpell = ScannerParser.parseInt() - 1;
                         }
                         attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
                     } else {
-                        System.out.println("Your hero does not have any spell in their inventory! Choose another move!\n");
+                        System.out.println(colors.addColor("red", "Your hero does not have any spell in their inventory! Choose another move!\n"));
                         takeAction(grid, lovgame);
                     }
                 } else {
-                    System.out.println("No monster is within your attacking range. Please try another move!\n");
+                    System.out.println(colors.addColor("red", "No monster is within your attacking range. Please try another move!\n"));
                     takeAction(grid, lovgame);
                 }
                 break;
 
             case 3: //change weapon/armor
-                System.out.println("What would you like to change?");
+                System.out.println(colors.addColor("purple", "What would you like to change?"));
                 System.out.println(" 1: Armor\n 2: Weapon");
                 int type = ScannerParser.parseInt();
                 while (type != 1 && type != 2) {
-                    System.out.println("Please input a number within the given range:");
+                    System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                     type = ScannerParser.parseInt();
                 }
                 switch (type) {
@@ -133,7 +133,7 @@ public abstract class Hero extends Character {
                         printer.printArmors(inventory.getArmors());
                         int newarmor = ScannerParser.parseInt() - 1;
                         while (newarmor > inventory.getArmors().size()) {
-                            System.out.println("Please input a number within the given range:");
+                            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                             newarmor = ScannerParser.parseInt() - 1;
                         }
 //                        h.equip(h.getInventory().getArmors().get(newarmor));
@@ -149,7 +149,7 @@ public abstract class Hero extends Character {
                         printer.printWeapons(inventory.getWeapons());
                         int newWeapon = ScannerParser.parseInt() - 1;
                         while (newWeapon > inventory.getWeapons().size()) {
-                            System.out.println("Please input a number within the given range:");
+                            System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                             newWeapon = ScannerParser.parseInt() - 1;
                         }
 //                      h.equip(h.getInventory().getWeapons().get(newWeapon));
@@ -168,12 +168,12 @@ public abstract class Hero extends Character {
                     printer.printPotions(potions);
                     int chosenPotion = ScannerParser.parseInt() - 1;
                     while (chosenPotion > inventory.getPotions().size()) {
-                        System.out.println("Please input a number within the given range:");
+                        System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                         chosenPotion = ScannerParser.parseInt() - 1;
                     }
                     use(keys[chosenPotion]);
                 } else {
-                    System.out.println("You hero does not have any potion in their inventory! Choose another move!\n");
+                    System.out.println(colors.addColor("red", "You hero does not have any potion in their inventory! Choose another move!\n"));
                     takeAction(grid, lovgame);
                 }
                 break;
@@ -184,15 +184,15 @@ public abstract class Hero extends Character {
                 break;
 
             case 6: //teleport
-                System.out.println("Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
+                System.out.println(colors.addColor("red", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
                         " 2. You shall not land on the same cell as another hero\n" +
                         " 3. You must teleport to a different lane than your current lane\n" +
-                        " 4. You shall not go further than the max explored row in this lane");
-                System.out.println("Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):");
+                        " 4. You shall not go further than the max explored row in this lane"));
+                System.out.println(colors.addColor("purple","Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):"));
                 String input = ScannerParser.parseString();
                 while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot") || currLane.getName().equals(input)) {
                     if(currLane.getName().equals(input)){
-                        System.out.println("You must teleport to a different lane!");
+                        System.out.println(colors.addColor("red", "You must teleport to a different lane!"));
                     }
                     input = ScannerParser.tryString();
                 }
@@ -202,12 +202,12 @@ public abstract class Hero extends Character {
                 int currrow = ScannerParser.parseInt();
                 while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1 || currLane.getMaxExplored()>currrow-1) {
                     if(currLane.getMaxMonsterRow() > currrow - 1){
-                        System.out.println("You shall not bypass any monster!");
+                        System.out.println(colors.addColor("red", "You shall not bypass any monster!"));
                     }
                     if(currLane.getMaxExplored()>currrow-1){
-                        System.out.println("You shall not exceed the max explored row of this lane!");
+                        System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane!"));
                     }
-                    System.out.println("Please input a number within the given range:");
+                    System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                     currrow = ScannerParser.parseInt();
                 }
                 row = currrow - 1;
@@ -216,9 +216,9 @@ public abstract class Hero extends Character {
                     //check if lands on a cell that has a already hero
                 while ((leftorright != 1 && leftorright!=2) || grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].isHasHero()) {
                     if (grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].isHasHero()) {
-                        System.out.println("You shall not land on the same cell with another hero!");
+                        System.out.println(colors.addColor("red", "You shall not land on the same cell with another hero!"));
                     }
-                    System.out.println("Please input a number within the given range:");
+                    System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                     leftorright = ScannerParser.parseInt();
                 }
                 col = currLane.getLeftCol()+(leftorright-1);
@@ -235,7 +235,7 @@ public abstract class Hero extends Character {
                 break;
 
             case 8: //quit
-                System.out.println("Thanks for playing! Exiting program...");
+                System.out.println(colors.addColor("red", "Thanks for playing! Exiting program..."));
                 play = false;
                 break;
         }
@@ -254,7 +254,7 @@ public abstract class Hero extends Character {
         while(true){
 
             lovMap.display();
-            System.out.println("Please choose a move:");
+            System.out.println(colors.addColor("purple", "Please choose a move:"));
             System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
 
             String inputString="";
@@ -289,7 +289,7 @@ public abstract class Hero extends Character {
     @Deprecated
     public void makeMove(LovMap grid) {
         grid.display();
-        System.out.println("Please choose a move:");
+        System.out.println(colors.addColor("purple", "Please choose a move:"));
         System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
         String move = ScannerParser.parseString();
         while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
@@ -363,16 +363,16 @@ public abstract class Hero extends Character {
             case "W":
             case "w":
                 if (row - 1 < 0) {
-                    System.out.println("You shall not land outside the map!");
+                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
                     isValid = false;
                 } else {
                     if (grids[row - 1][col].isHasHero()) {
-                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
                         isValid = false;
                     }
                 }
                 if (row == currLane.getMaxMonsterRow()) {
-                    System.out.println("You shall not bypass an monster without killing it! Please try again!");
+                    System.out.println(colors.addColor("red", "You shall not bypass an monster without killing it! Please try again!"));
                     isValid = false;
                 }
 
@@ -381,11 +381,11 @@ public abstract class Hero extends Character {
             case "A":
             case "a":
                 if (col - 1 < 0) {
-                    System.out.println("You shall not land outside the map!");
+                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
                     isValid = false;
                 } else {
                     if (grids[row][col - 1].isHasHero()) {
-                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
                         isValid = false;
                     }
                 }
@@ -394,11 +394,11 @@ public abstract class Hero extends Character {
             case "S":
             case "s":
                 if (row + 1 > 7) {
-                    System.out.println("You shall not land outside the map!");
+                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
                     isValid = false;
                 } else {
                     if (grids[row + 1][col].isHasHero()) {
-                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
                         isValid = false;
                     }
                 }
@@ -407,11 +407,11 @@ public abstract class Hero extends Character {
             case "D":
             case "d":
                 if (col + 1 > 7) {
-                    System.out.println("You shall not land outside the map!");
+                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
                     isValid = false;
                 } else {
                     if (grids[row][col + 1].isHasHero()) {
-                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
+                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
                         isValid = false;
                     }
                 }

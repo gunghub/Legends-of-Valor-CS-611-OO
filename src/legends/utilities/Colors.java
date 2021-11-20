@@ -15,9 +15,13 @@ public class Colors {
         colors.put("cyan", "\033[0;36m");
         colors.put("white", "\033[0;37m");
         colors.put("original", "\033[0m");
+        colors.put("magenta","\033[0;35m");
     }
 
     public String addColor(String color, String message){
         return colors.get(color) + message;
+    }
+    public String addColorHOrM(String color, String message, String color2){
+        return colors.get(color) + message + colors.get("cyan");
     }
 }

@@ -47,7 +47,7 @@ public class Round {
                 printer.printHero(heroes.get(i));
                 heroes.get(i).setHP((int)1.1*heroes.get(i).getHP());
                 heroes.get(i).setMana((int)1.1*heroes.get(i).getMana());
-                System.out.println(colors.addColor("cyan", "Please choose an action for H" + (i + 1)+"----"));
+                System.out.println(colors.addColor("purple", "Please choose an action for H" + (i + 1)+"----"));
                 play = heroes.get(i).takeAction(grid, game);
                 if (play == false) {
                     break;

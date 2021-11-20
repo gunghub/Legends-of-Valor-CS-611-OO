@@ -105,10 +105,10 @@ public class LegendsOfValor extends RPGGame {
         for (int i = 0; i < heroes.size(); i++) {
             heroNexus.spawn(heroes.get(i), i);
         }
-        System.out.println("Please see your heroes below ----\n");
+        System.out.println(colors.addColor("blue", "Please see your heroes below ----\n"));
         Printer printer = new Printer();
         printer.printHeroes(heroes);
-        System.out.println("Now start your journey!");
+        System.out.println(colors.addColor("cyan", "Now start your journey!"));
     }
 
 
