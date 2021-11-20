@@ -3,6 +3,8 @@ package legends.gameplay;
 import legends.LovMap;
 import legends.characters.heroes.Hero;
 import legends.games.LegendsOfValor;
+import legends.grids.HeroNexus;
+import legends.grids.MonsterNexus;
 import legends.items.Potion;
 import legends.characters.monsters.Monster;
 import legends.items.spells.Spell;
@@ -29,31 +31,40 @@ public class Round {
      * @return
      */
     public boolean playRound(ArrayList<Hero> heroes, ArrayList<Monster> monsters, boolean play, LovMap grid, LegendsOfValor game) {
+       int numRound = 0;
         while (play) {
+            if(numRound==8){
+                System.out.println("New monsters are spawned!");
+                game.initMonsters();
+            }
             for (int i = 0; i < heroes.size(); i++) {
                 grid.display();
 //                if(heroes.get(i).getRow()==7){
 //                    Markets market = new Markets();
 //                    market.storeConsole(heroes.get(i));
 //                }
+                Printer printer = new Printer();
+                printer.printHero(heroes.get(i));
                 heroes.get(i).setHP((int)1.1*heroes.get(i).getHP());
                 heroes.get(i).setMana((int)1.1*heroes.get(i).getMana());
-                Printer printer = new Printer();
                 System.out.println(colors.addColor("cyan", "Please choose an action for H" + (i + 1)+"----"));
                 play = heroes.get(i).takeAction(grid, game);
                 if (play == false) {
                     break;
                 }
                 if(monsters.get(i).isFaint()){
-                    monsters.remove(i);
+                    grid.getCells()[monsters.get(i).getRow()][monsters.get(i).getCol()].setHasMonster(false);
+
                 }else {
                     monsters.get(i).makeMove(heroes.get(i), grid, i);
                 }
+                heroes.get(i).levelUp();
+                if (isOver(heroes, monsters)) {
+                    winOrLose(heroes, monsters);
+                    play = false;
+                }
             }
-        }
-        if (isOver(heroes, monsters)) {
-            winOrLose(heroes, monsters);
-            play = false;
+            numRound++;
         }
         return play;
     }

@@ -59,6 +59,8 @@ public abstract class Hero extends Character {
         armedInventory = new Inventory();
         inventory = new Inventory();
         currLane = initLane;
+        currentWeapon = null;
+        currentArmor = null;
     }
 
     public abstract void levelUp();
@@ -581,7 +583,8 @@ public abstract class Hero extends Character {
                 m.setHP(0);
                 m.setFaint(true);
                 System.out.println("Monster " + m.getName() + " fainted!");
-
+                experience+=2;
+                money+=m.getLevel()*100;
             } else {
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
@@ -592,7 +595,10 @@ public abstract class Hero extends Character {
             if (m.getHP() <= dmg) {
                 m.setHP(0);
                 System.out.println("Monster " + m.getName() + " fainted!");
+                experience+=2;
+                money+=m.getLevel()*100;
                 m.setFaint(true);
+
             } else {
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
@@ -614,7 +620,8 @@ public abstract class Hero extends Character {
             setHP(0);
             setFaint(true);
             System.out.println("Hero " + getName() + " fainted!");
-
+            setCurrLane(initLane);
+            setPosition(7,initLane.getLeftCol());
         } else {
             setHP(getHP() - actualdmg);
         }
