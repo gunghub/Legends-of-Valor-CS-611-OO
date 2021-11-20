@@ -66,7 +66,8 @@ public class LegendsOfValor extends RPGGame {
         System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
         int type = ScannerParser.parseInt();
         while (type != 1 && type != 2 && type != 3) {
-            type = ScannerParser.tryInt();
+            System.out.println("Please input a number within the given range:");
+            type = ScannerParser.parseInt();
         }
         Hero hero = chooseHeroType(type);
         hero.setInitLane(topLane);
@@ -76,7 +77,8 @@ public class LegendsOfValor extends RPGGame {
         System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
         type = ScannerParser.parseInt();
         while (type != 1 && type != 2 && type != 3) {
-            type = ScannerParser.tryInt();
+            System.out.println("Please input a number within the given range:");
+            type = ScannerParser.parseInt();
         }
         hero = chooseHeroType(type);
         hero.setInitLane(midLane);
@@ -86,7 +88,8 @@ public class LegendsOfValor extends RPGGame {
         System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
         type = ScannerParser.parseInt();
         while (type != 1 && type != 2 && type != 3) {
-            type = ScannerParser.tryInt();
+            System.out.println("Please input a number within the given range:");
+            type = ScannerParser.parseInt();
         }
         hero = chooseHeroType(type);
         hero.setInitLane(botLane);

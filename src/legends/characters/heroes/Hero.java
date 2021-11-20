@@ -71,7 +71,8 @@ public abstract class Hero extends Character {
                 "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
         int move = ScannerParser.parseInt();
         while (move < 1 || move > 8) {
-            move = ScannerParser.tryInt();
+            System.out.println("Please input a number within the given range:");
+            move = ScannerParser.parseInt();
         }
         Printer printer = new Printer();
         switch (move) {
@@ -92,7 +93,8 @@ public abstract class Hero extends Character {
                         printer.printSpells(spells);
                         int chosenSpell = ScannerParser.parseInt() - 1;
                         while (chosenSpell > inventory.getSpells().size()) {
-                            chosenSpell = ScannerParser.tryInt() - 1;
+                            System.out.println("Please input a number within the given range:");
+                            chosenSpell = ScannerParser.parseInt() - 1;
                         }
                         attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
                     } else {
@@ -110,7 +112,8 @@ public abstract class Hero extends Character {
                 System.out.println(" 1: Armor\n 2: Weapon");
                 int type = ScannerParser.parseInt();
                 while (type != 1 && type != 2) {
-                    type = ScannerParser.tryInt();
+                    System.out.println("Please input a number within the given range:");
+                    type = ScannerParser.parseInt();
                 }
                 switch (type) {
                     case 1:
@@ -121,7 +124,8 @@ public abstract class Hero extends Character {
                         printer.printArmors(inventory.getArmors());
                         int newarmor = ScannerParser.parseInt() - 1;
                         while (newarmor > inventory.getArmors().size()) {
-                            newarmor = ScannerParser.tryInt() - 1;
+                            System.out.println("Please input a number within the given range:");
+                            newarmor = ScannerParser.parseInt() - 1;
                         }
 //                        h.equip(h.getInventory().getArmors().get(newarmor));
                         changeArmor(currentArmor, inventory.getArmors().get(newarmor));
@@ -136,7 +140,8 @@ public abstract class Hero extends Character {
                         printer.printWeapons(inventory.getWeapons());
                         int newWeapon = ScannerParser.parseInt() - 1;
                         while (newWeapon > inventory.getWeapons().size()) {
-                            newWeapon = ScannerParser.tryInt() - 1;
+                            System.out.println("Please input a number within the given range:");
+                            newWeapon = ScannerParser.parseInt() - 1;
                         }
 //                      h.equip(h.getInventory().getWeapons().get(newWeapon));
                         changeWeapon(currentWeapon, inventory.getWeapons().get(newWeapon));
@@ -154,7 +159,8 @@ public abstract class Hero extends Character {
                     printer.printPotions(potions);
                     int chosenPotion = ScannerParser.parseInt() - 1;
                     while (chosenPotion > inventory.getPotions().size()) {
-                        chosenPotion = ScannerParser.tryInt() - 1;
+                        System.out.println("Please input a number within the given range:");
+                        chosenPotion = ScannerParser.parseInt() - 1;
                     }
                     use(keys[chosenPotion]);
                 } else {
@@ -171,7 +177,8 @@ public abstract class Hero extends Character {
                 System.out.println("Please enter the lane you wish to teleport to :");
                 System.out.println(" Top\n Mid\n Bot\n");
                 String input = ScannerParser.parseString();
-                while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot")) {
+                while (!input.equalsIgnoreCase("Top") && !input.equalsIgnoreCase("Mid") && !input.equalsIgnoreCase("Bot")) {
+                    System.out.println("Input not valid! Please try again and input your option as an character given in the list:");
                     input = ScannerParser.tryString();
                 }
                 currLane.setName(input);
@@ -179,7 +186,8 @@ public abstract class Hero extends Character {
                         "or land on the same cell as another hero)");
                 int currrow = ScannerParser.parseInt();
                 while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1) {
-                    currrow = ScannerParser.tryInt();
+                    System.out.println("Please input a number within the given range:");
+                    currrow = ScannerParser.parseInt();
                 }
                 row = currrow - 1;
                 System.out.println("Would you like to land on left or right column of this lane?(Between 1~8. You shall not land on the same cell as another hero)");
@@ -191,7 +199,8 @@ public abstract class Hero extends Character {
                     if (grid.getGrid()[row][currcol - 1].getIcon().equals("I")) {
                         System.out.println("You shall not land on Inaccessible space! Try again");
                     }
-                    currcol = ScannerParser.tryInt();
+                    System.out.println("Please input a number within the given range:");
+                    currcol = ScannerParser.parseInt();
                 }
                 col = currcol - 1;
                 break;
