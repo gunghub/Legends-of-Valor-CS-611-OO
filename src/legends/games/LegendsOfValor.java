@@ -19,6 +19,9 @@ public class LegendsOfValor extends RPGGame {
     private ArrayList<Monster> monsters;
     private Graphic graphic;
     private boolean play;
+    private Lane topLane;
+    private Lane midLane;
+    private Lane botLane;
 
 
     public LegendsOfValor() {
@@ -26,6 +29,9 @@ public class LegendsOfValor extends RPGGame {
         monsters = new ArrayList<Monster>();
         this.play = true;
         graphic = new Graphic();
+        topLane = new Lane("Top");
+        midLane = new Lane("Mid");
+        botLane = new Lane("Bot");
     }
 
     public void playGame() {
@@ -62,7 +68,9 @@ public class LegendsOfValor extends RPGGame {
         while (type != 1 && type != 2 && type != 3) {
             type = ScannerParser.tryInt();
         }
-        chooseHeroType(type);
+        Hero hero = chooseHeroType(type);
+        hero.setInitLane(topLane);
+        addHero(hero);
 
         System.out.println("What type of hero is your middle lane hero?");
         System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
@@ -70,7 +78,9 @@ public class LegendsOfValor extends RPGGame {
         while (type != 1 && type != 2 && type != 3) {
             type = ScannerParser.tryInt();
         }
-        chooseHeroType(type);
+        hero = chooseHeroType(type);
+        hero.setInitLane(midLane);
+        addHero(hero);
 
         System.out.println("What type of hero is your bottom lane hero?");
         System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
@@ -78,7 +88,9 @@ public class LegendsOfValor extends RPGGame {
         while (type != 1 && type != 2 && type != 3) {
             type = ScannerParser.tryInt();
         }
-        chooseHeroType(type);
+        hero = chooseHeroType(type);
+        hero.setInitLane(botLane);
+        addHero(hero);
 
         for(int i=0; i<heroes.size(); i++){
             initNewHero(heroes.get(i), i);
@@ -117,29 +129,30 @@ public class LegendsOfValor extends RPGGame {
     }
 
 
-    public void chooseHeroType(int type){
+    public Hero chooseHeroType(int type){
         FileParser fp = new FileParser();
-        Hero h;
+        Hero h = null;
         switch(type){
             case 1:
                 ArrayList<Hero> paladins = fp.parsePaladins();
                 h = paladins.get(ScannerParser.getRandNum(paladins.size()));
-                addHero(h);
+//                addHero(h);
                 break;
 
             case 2:
                 ArrayList<Hero> sorcerers = fp.parseSorcerers();
                 h = sorcerers.get(ScannerParser.getRandNum(sorcerers.size()));
-                addHero(h);
+//                addHero(h);
                 break;
 
             case 3:
                 ArrayList<Hero> warriors = fp.parseWarriors();
                 h = warriors.get(ScannerParser.getRandNum(warriors.size()));
-                addHero(h);
+//                addHero(h);
                 break;
 
         }
+        return h;
     }
 
 

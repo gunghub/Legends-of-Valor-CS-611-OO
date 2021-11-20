@@ -316,6 +316,7 @@ public abstract class Hero extends Character {
                     System.out.println("You shall not bypass an monster without killing it! Please try again!");
                     isValid = false;
                 }
+
                 break;
 
             case "A":

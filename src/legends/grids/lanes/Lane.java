@@ -19,6 +19,13 @@ public class Lane {
 
     }
 
+    public void increaseMaxMonsterRow(){
+        maxMonsterRow++;
+    }
+
+    public void increaseMaxExplored(){
+        maxExplored++;
+    }
 
 
     public int getMaxMonsterRow() {
