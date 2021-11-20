@@ -23,9 +23,9 @@ public abstract class Monster extends Character {
         if(withinRange(grid)){
             hero.takeDamage(damage);
         }else{
-            grid.getCells()[row][col].decreaseMonsterCount();
+            grid.getCells()[row][col].setHasMonster(false);
             row++;
-            grid.getCells()[row][col].increaseMonsterCount();
+            grid.getCells()[row][col].setHasMonster(true);
             System.out.println("Monster's turn ---\nM" +(index+1)+" moved forward.");
         }
     }
@@ -33,9 +33,9 @@ public abstract class Monster extends Character {
     // return boolean indicating whether there is a hero within the monster's attacking range
     public boolean withinRange(LovMap grid) {
         Cell[][] grids = grid.getCells();
-        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].getHeroCount()>0 || grids[Math.max(row - 1, 0)][col].getHeroCount()>0 || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].getHeroCount()>0 ||
-                grids[row][Math.max(col - 1, 0)].getHeroCount()>0 || grids[row][col].getHeroCount()>0|| grids[row][Math.min(col + 1, 7)].getHeroCount()>0 ||
-                grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].getHeroCount()>0 || grids[Math.min(row + 1, 7)][col].getHeroCount()>0|| grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].getHeroCount()>0) {
+        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasHero() || grids[Math.max(row - 1, 0)][col].isHasHero() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasHero() ||
+                grids[row][Math.max(col - 1, 0)].isHasHero()|| grids[row][col].isHasHero()|| grids[row][Math.min(col + 1, 7)].isHasHero() ||
+                grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHasHero() || grids[Math.min(row + 1, 7)][col].isHasHero()|| grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].isHasHero()) {
             return true;
         } else {
             return false;

@@ -12,8 +12,8 @@ public abstract class Cell {
     private int col;
 
     protected Colors colors;
-    protected int heroCount;
-    protected int monsterCount;
+    protected boolean hasHero;
+    protected boolean hasMonster;
 
 
     public void land(Hero hero){
@@ -24,8 +24,8 @@ public abstract class Cell {
         this.icon = icon;
         this.row = row;
         this.col = col;
-        heroCount = 0;
-        monsterCount = 0;
+        hasHero = false;
+        hasMonster = false;
     }
 
     private static String getOuterCellStr(char c){
@@ -61,35 +61,19 @@ public abstract class Cell {
         this.col = col;
     }
 
-    public int getHeroCount() {
-        return heroCount;
+    public boolean isHasMonster() {
+        return hasMonster;
     }
 
-    public void setHeroCount(int heroCount) {
-        this.heroCount = heroCount;
+    public void setHasMonster(boolean hasMonster) {
+        this.hasMonster = hasMonster;
     }
 
-    public int getMonsterCount() {
-        return monsterCount;
+    public boolean isHasHero() {
+        return hasHero;
     }
 
-    public void setMonsterCount(int monsterCount) {
-        this.monsterCount = monsterCount;
-    }
-
-    public void increaseHeroCount(){
-        this.heroCount++;
-    }
-
-    public void decreaseHeroCount(){
-        this.heroCount--;
-    }
-
-    public void increaseMonsterCount(){
-        this.monsterCount++;
-    }
-
-    public void decreaseMonsterCount(){
-        this.monsterCount--;
+    public void setHasHero(boolean hasHero) {
+        this.hasHero = hasHero;
     }
 }

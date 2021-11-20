@@ -225,26 +225,26 @@ public class LovMap extends Grid {
                 break;
 
             case "P":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
 //                hero.makeMove(this);
                 break;
 
             case "B":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
                 BushCell bushcell = (BushCell) cells[row][col];
                 bushcell.land(hero);
 //                hero.makeMove(this);
                 break;
 
             case "C":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
                 CaveCell cavecell = (CaveCell) cells[row][col];
                 cavecell.land(hero);
 //                hero.makeMove(this);
                 break;
 
             case "K":
-                cells[row][col].increaseHeroCount();
+                cells[row][col].setHasHero(true);
                 KoulouCell kouloucell = (KoulouCell) cells[row][col];
                 kouloucell.land(hero);
 //                hero.makeMove(this);
@@ -292,7 +292,7 @@ public class LovMap extends Grid {
         }else if(cellIcon.equals("P")){ // Plain Cell
             allowed=true;
         }else if(cellIcon.equals("B")||cellIcon.equals("C")||cellIcon.equals("K")){
-            destinationCell.increaseHeroCount();
+            destinationCell.setHasHero(true);
             destinationCell.land(heroToMove);
             allowed =true;
         }else{
