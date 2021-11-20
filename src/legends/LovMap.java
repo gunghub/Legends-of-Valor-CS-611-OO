@@ -213,57 +213,57 @@ public class LovMap extends Grid {
  * @param move
  */
 
-    @Deprecated
-    public boolean landOnMap(int row, int col, Hero hero, Cell cell, String move) {
-//        printGrid(p);
-        boolean inaccessible = false;
-        String icon = cells[row][col].getIcon();
-        switch (icon) {
-            case "I":
-                InaccessibleCell inaccessiblecell = (InaccessibleCell) cells[row][col];
-                inaccessiblecell.land();
-                hero.makeMove(this);
-                inaccessible = true;
-                break;
-
-            case "N":
-                NexusCell nexuscell = (NexusCell) cells[row][col];
-//                nexuscell.land(hero);
+//    @Deprecated
+//    public boolean landOnMap(int row, int col, Hero hero, Cell cell, String move) {
+////        printGrid(p);
+//        boolean inaccessible = false;
+//        String icon = cells[row][col].getIcon();
+//        switch (icon) {
+//            case "I":
+//                InaccessibleCell inaccessiblecell = (InaccessibleCell) cells[row][col];
+//                inaccessiblecell.land();
 //                hero.makeMove(this);
-                if(nexuscell.getRow()==0){
-                    System.out.println("A hero landed on monster's cell! You won the game!");
-                }
-                break;
-
-            case "P":
-                cells[row][col].setHasHero(true);
-//                hero.makeMove(this);
-                break;
-
-            case "B":
-                cells[row][col].setHasHero(true);
-                BushCell bushcell = (BushCell) cells[row][col];
-                bushcell.land(hero);
-//                hero.makeMove(this);
-                break;
-
-            case "C":
-                cells[row][col].setHasHero(true);
-                CaveCell cavecell = (CaveCell) cells[row][col];
-                cavecell.land(hero);
-//                hero.makeMove(this);
-                break;
-
-            case "K":
-                cells[row][col].setHasHero(true);
-                KoulouCell kouloucell = (KoulouCell) cells[row][col];
-                kouloucell.land(hero);
-//                hero.makeMove(this);
-                break;
-
-        }
-        return inaccessible;
-    }
+//                inaccessible = true;
+//                break;
+//
+//            case "N":
+//                NexusCell nexuscell = (NexusCell) cells[row][col];
+////                nexuscell.land(hero);
+////                hero.makeMove(this);
+//                if(nexuscell.getRow()==0){
+//                    System.out.println("A hero landed on monster's cell! You won the game!");
+//                }
+//                break;
+//
+//            case "P":
+//                cells[row][col].setHasHero(true);
+////                hero.makeMove(this);
+//                break;
+//
+//            case "B":
+//                cells[row][col].setHasHero(true);
+//                BushCell bushcell = (BushCell) cells[row][col];
+//                bushcell.land(hero);
+////                hero.makeMove(this);
+//                break;
+//
+//            case "C":
+//                cells[row][col].setHasHero(true);
+//                CaveCell cavecell = (CaveCell) cells[row][col];
+//                cavecell.land(hero);
+////                hero.makeMove(this);
+//                break;
+//
+//            case "K":
+//                cells[row][col].setHasHero(true);
+//                KoulouCell kouloucell = (KoulouCell) cells[row][col];
+//                kouloucell.land(hero);
+////                hero.makeMove(this);
+//                break;
+//
+//        }
+//        return inaccessible;
+//    }
 
     /**
      *
