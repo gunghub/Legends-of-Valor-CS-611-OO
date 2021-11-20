@@ -210,8 +210,8 @@ public abstract class Hero extends Character {
                 System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
                 int leftorright = ScannerParser.parseInt();
                     //check if lands on a cell that has a already hero
-                while ((leftorright != 1 && leftorright!=2) || grid.getGrid()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
-                    if (grid.getGrid()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
+                while ((leftorright != 1 && leftorright!=2) || grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
+                    if (grid.getCells()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
                         System.out.println("You shall not land on the same cell with another hero!");
                     }
                     leftorright = ScannerParser.tryInt();

@@ -59,11 +59,11 @@ public class ScannerParser {
         return b;
     }
 
-//    public static int tryInt(){
-//        System.out.println("Input not valid! Please try again and input your option as an integer given in the list:");
-//        int newint = parseInt();
-//        return newint;
-//    }
+    public static int tryInt(){
+        System.out.println("Input not valid! Please try again and input your option as an integer given in the list:");
+        int newint = parseInt();
+        return newint;
+    }
 
     public static String tryString(){
         String newString;
