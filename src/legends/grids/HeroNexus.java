@@ -18,10 +18,23 @@ public class HeroNexus extends Nexus{
     }
 
     /**
-     * create a new hero
-     * @param game
+     * initialize hero position
      */
-    public void spawn(){
+    public void spawn(Character character, int index){
+            switch(index){
+                case 0:
+                    ((Hero)character).setPosition(7,0);
+                    break;
+
+                case 1:
+                    ((Hero)character).setPosition(7,3);
+                    break;
+
+                case 2:
+                    ((Hero)character).setPosition(7,6);
+                    break;
+            }
+
     }
 //        // set index to the index of the nexusCell
 //        System.out.println("What type of hero is your top lane hero?");

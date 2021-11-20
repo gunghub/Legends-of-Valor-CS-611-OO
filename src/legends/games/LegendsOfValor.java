@@ -32,6 +32,9 @@ public class LegendsOfValor extends RPGGame {
         topLane = new Lane("Top");
         midLane = new Lane("Mid");
         botLane = new Lane("Bot");
+        topLane.setLeftCol(0);
+        midLane.setLeftCol(3);
+        botLane.setLeftCol(6);
     }
 
     public void playGame() {
@@ -44,14 +47,15 @@ public class LegendsOfValor extends RPGGame {
         Round round = new Round();
         round.playRound(heroes, monsters, play, grid, this);
 
-
     }
 
     public void initMonsters(){
         FileParser fp = new FileParser();
         for(int i=0; i<heroes.size(); i++){
             Monster monster = fp.chooseRandMonster();
-            monster.setPosition(0,i*3+1);
+//            monster.setPosition(0,i*3+1);
+            MonsterNexus monsterNexus = new MonsterNexus();
+            monsterNexus.spawn(monster, i);
             addMonster(monster);
         }
 //        MonsterNexus monsterNexus = new MonsterNexus();
@@ -92,8 +96,9 @@ public class LegendsOfValor extends RPGGame {
         hero.setInitLane(botLane);
         addHero(hero);
 
+        HeroNexus heroNexus =  new HeroNexus();
         for(int i=0; i<heroes.size(); i++){
-            initNewHero(heroes.get(i), i);
+            heroNexus.spawn(heroes.get(i), i);
         }
         System.out.println("Please see your heroes below ----\n");
         Printer printer = new Printer();
@@ -101,32 +106,7 @@ public class LegendsOfValor extends RPGGame {
         System.out.println("Now start your journey!");
     }
 
-    public void initNewHero(Hero hero, int index){
-        Lane lane = new Lane(null);
-        switch(index){
-            case 0:
-                lane.setName("Top");
-                hero.setRow(7);
-                hero.setCol(0);
-                break;
 
-            case 1:
-                lane.setName("Mid");
-                hero.setRow(7);
-                hero.setCol(3);
-                break;
-
-            case 2:
-                lane.setName("Bot");
-                hero.setRow(7);
-                hero.setCol(6);
-                break;
-        }
-        lane.setMaxMonsterRow(0);
-        hero.setInitLane(lane);
-        hero.setCurrLane(lane);
-
-    }
 
 
     public Hero chooseHeroType(int type){
@@ -178,5 +158,39 @@ public class LegendsOfValor extends RPGGame {
 
     public void addMonster(Monster monster){
         monsters.add(monster);
+    }
+
+    public Lane getTopLane() {
+        return topLane;
+    }
+
+    public void setTopLane(Lane topLane) {
+        this.topLane = topLane;
+    }
+
+    public Lane getMidLane() {
+        return midLane;
+    }
+
+    public void setMidLane(Lane midLane) {
+        this.midLane = midLane;
+    }
+
+    public Lane getBotLane() {
+        return botLane;
+    }
+
+    public void setBotLane(Lane botLane) {
+        this.botLane = botLane;
+    }
+
+    public Lane getLane(String name){
+        if(name.equals(topLane.getName())){
+            return topLane;
+        }else if(name.equals(midLane.getName())){
+            return midLane;
+        }else{
+            return botLane;
+        }
     }
 }

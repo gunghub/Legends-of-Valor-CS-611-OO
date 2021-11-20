@@ -14,13 +14,14 @@ public class MonsterNexus extends Nexus{
     }
 
 
-    public void spawn(){
+    public void spawn(Character character, int index){
         // set index to the index of the nexusCell
 //        FileParser fp = new FileParser();
 //        for(int i=0; i<game.getHeroes().size(); i++){
 //            Monster monster = fp.chooseRandMonster();
 //            monster.setPosition(0,i*3+1);
 //        }
+        ((Monster) character).setPosition(0,index*3+1);
 
 
     }

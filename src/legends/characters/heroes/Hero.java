@@ -168,41 +168,51 @@ public abstract class Hero extends Character {
                 break;
 
             case 6: //teleport
-                System.out.println("Please enter the lane you wish to teleport to :");
-                System.out.println(" Top\n Mid\n Bot\n");
+                System.out.println("Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
+                        " 2. You shall not land on the same cell as another hero\n" +
+                        " 3. You must teleport to a different lane than your current lane\n" +
+                        " 4. You shall not go further than the max explored row in this lane");
+                System.out.println("Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):");
                 String input = ScannerParser.parseString();
-                while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot")) {
+                while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot") || currLane.getName().equals(input)) {
+                    if(currLane.getName().equals(input)){
+                        System.out.println("You must teleport to a different lane!");
+                    }
                     input = ScannerParser.tryString();
                 }
-                currLane.setName(input);
-                System.out.println("Which row would you like to land on?(Between 1~8. You shall not land on a row that surpass any monster" +
-                        "or land on the same cell as another hero)");
+                setCurrLane(lovgame.getLane(input));
+
+                System.out.println("Which row would you like to land on?(Between 1~8)");
                 int currrow = ScannerParser.parseInt();
-                while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1) {
+                while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1 || currLane.getMaxExplored()>currrow-1) {
+                    if(currLane.getMaxMonsterRow() > currrow - 1){
+                        System.out.println("You shall not bypass any monster!");
+                    }
+                    if(currLane.getMaxExplored()>currrow-1){
+                        System.out.println("You shall not exceed the max explored row of this lane!");
+                    }
                     currrow = ScannerParser.tryInt();
                 }
                 row = currrow - 1;
-                System.out.println("Would you like to land on left or right column of this lane?(Between 1~8. You shall not land on the same cell as another hero)");
-                int currcol = ScannerParser.parseInt();
-                while (currcol > 8 || currcol < 1 || grid.getGrid()[row][currcol - 1].getHeroCount() > 0 || grid.getGrid()[row][currcol - 1].getIcon().equals("I")) {
-                    if (grid.getGrid()[row][currcol - 1].getHeroCount() > 0) {
+                System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
+                int leftorright = ScannerParser.parseInt();
+                    //check if lands on a cell that has a already hero
+                while ((leftorright != 1 && leftorright!=2) || grid.getGrid()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
+                    if (grid.getGrid()[row][currLane.getLeftCol()+(leftorright-1)].getHeroCount() > 0) {
                         System.out.println("You shall not land on the same cell with another hero!");
                     }
-                    if (grid.getGrid()[row][currcol - 1].getIcon().equals("I")) {
-                        System.out.println("You shall not land on Inaccessible space! Try again");
-                    }
-                    currcol = ScannerParser.tryInt();
+                    leftorright = ScannerParser.tryInt();
                 }
-                col = currcol - 1;
+                col = currLane.getLeftCol()+(leftorright-1);
                 break;
 
             case 7: //back
                 if (initLane.getName().equals("Top")) {
-                    setPosition(7,0);
+                    setCurrLane(lovgame.getLane("Top"));
                 } else if (initLane.getName().equals("Mid")) {
-                    setPosition(7,3);
+                    setCurrLane(lovgame.getLane("Mid"));
                 } else {
-                    setPosition(7,6);
+                    setCurrLane(lovgame.getLane("Bot"));
                 }
                 break;
 

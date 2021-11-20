@@ -8,6 +8,7 @@ public class Lane {
     private int maxMonsterRow;
     private String name;
     private int maxExplored;
+    private int leftCol;
 
     public Lane(){
 
@@ -16,6 +17,7 @@ public class Lane {
         this.name = name;
         maxMonsterRow = 0;
         maxExplored = 7;
+        leftCol = 0;
 
     }
 
@@ -42,5 +44,21 @@ public class Lane {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getMaxExplored() {
+        return maxExplored;
+    }
+
+    public void setMaxExplored(int maxExplored) {
+        this.maxExplored = maxExplored;
+    }
+
+    public int getLeftCol() {
+        return leftCol;
+    }
+
+    public void setLeftCol(int leftCol) {
+        this.leftCol = leftCol;
     }
 }

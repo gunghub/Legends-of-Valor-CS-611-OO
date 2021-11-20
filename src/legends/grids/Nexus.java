@@ -13,5 +13,5 @@ public abstract class Nexus {
     }
 
     // spawn a monster or hero to the given NexusCell
-    abstract void spawn();
+    abstract void spawn(Character character, int index);
 }
