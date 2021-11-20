@@ -209,7 +209,7 @@ public class LovMap extends Grid {
             case "I":
                 InaccessibleCell inaccessiblecell = (InaccessibleCell) grid[row][col];
                 inaccessiblecell.land();
-                hero.makeMove(this);
+                //hero.makeMove(this);
                 inaccessible = true;
                 break;
 
@@ -250,5 +250,12 @@ public class LovMap extends Grid {
 
         }
         return inaccessible;
+    }
+
+
+    public boolean inquireIsMoveAllowed(int cellRow, int cellColumn){
+
+
+        return true;
     }
 }
