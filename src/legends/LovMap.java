@@ -4,7 +4,6 @@ import legends.characters.heroes.Hero;
 import legends.games.LegendsOfValor;
 import legends.grids.Grid;
 import legends.grids.cells.*;
-import legends.utilities.ScannerParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,28 +72,28 @@ public class LovMap extends Grid {
         int cellRow = row / 3;
         switch (map[cellRow][col]) {
             case NEXUS:
-                grid[cellRow][col] = new NexusCell(cellRow, col);
-                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
+                cells[cellRow][col] = new NexusCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case PLAIN:
-                grid[cellRow][col] = new PlainCell(cellRow, col);
-                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
+                cells[cellRow][col] = new PlainCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case KOULOU:
-                grid[cellRow][col] = new KoulouCell(cellRow, col);
-                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
+                cells[cellRow][col] = new KoulouCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case CAVE:
-                grid[cellRow][col] = new CaveCell(cellRow, col);
-                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
+                cells[cellRow][col] = new CaveCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case BUSH:
-                grid[cellRow][col] = new BushCell(cellRow, col);
-                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
+                cells[cellRow][col] = new BushCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case INACCESSIBLE:
-                grid[cellRow][col] = new InaccessibleCell(cellRow, col);
-                printableMap.get(row).append(getOuterCellStr(grid[cellRow][col].getIcon()));
+                cells[cellRow][col] = new InaccessibleCell(cellRow, col);
+                printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
         }
     }
@@ -204,17 +203,17 @@ public class LovMap extends Grid {
     public boolean landOnMap(int row, int col, Hero hero, Cell cell, String move) {
 //        printGrid(p);
         boolean inaccessible = false;
-        String icon = grid[row][col].getIcon();
+        String icon = cells[row][col].getIcon();
         switch (icon) {
             case "I":
-                InaccessibleCell inaccessiblecell = (InaccessibleCell) grid[row][col];
+                InaccessibleCell inaccessiblecell = (InaccessibleCell) cells[row][col];
                 inaccessiblecell.land();
-                //hero.makeMove(this);
+                hero.makeMove(this);
                 inaccessible = true;
                 break;
 
             case "N":
-                NexusCell nexuscell = (NexusCell) grid[row][col];
+                NexusCell nexuscell = (NexusCell) cells[row][col];
 //                nexuscell.land(hero);
 //                hero.makeMove(this);
                 if(nexuscell.getRow()==0){
@@ -223,27 +222,27 @@ public class LovMap extends Grid {
                 break;
 
             case "P":
-                grid[row][col].increaseHeroCount();
+                cells[row][col].increaseHeroCount();
 //                hero.makeMove(this);
                 break;
 
             case "B":
-                grid[row][col].increaseHeroCount();
-                BushCell bushcell = (BushCell) grid[row][col];
+                cells[row][col].increaseHeroCount();
+                BushCell bushcell = (BushCell) cells[row][col];
                 bushcell.land(hero);
 //                hero.makeMove(this);
                 break;
 
             case "C":
-                grid[row][col].increaseHeroCount();
-                CaveCell cavecell = (CaveCell) grid[row][col];
+                cells[row][col].increaseHeroCount();
+                CaveCell cavecell = (CaveCell) cells[row][col];
                 cavecell.land(hero);
 //                hero.makeMove(this);
                 break;
 
             case "K":
-                grid[row][col].increaseHeroCount();
-                KoulouCell kouloucell = (KoulouCell) grid[row][col];
+                cells[row][col].increaseHeroCount();
+                KoulouCell kouloucell = (KoulouCell) cells[row][col];
                 kouloucell.land(hero);
 //                hero.makeMove(this);
                 break;
@@ -253,9 +252,45 @@ public class LovMap extends Grid {
     }
 
 
-    public boolean inquireIsMoveAllowed(int cellRow, int cellColumn){
+    public boolean moveToCell(int cellRow, int cellColumn, Hero hero){
+
+        boolean allowed;
+
+        if(cellRow>LOV_MAP_SIZE_OF_CELLS-1||cellColumn>LOV_MAP_SIZE_OF_CELLS-1||cellRow<0||cellColumn<0){
+            System.out.println("You cannot step out of the map");
+            return false;
+        }
 
 
-        return true;
+        Cell destinationCell=cells[cellRow][cellColumn];
+        String cellIcon = destinationCell.getIcon();
+
+        if (cellIcon.equals("I")){//inaccessible
+            InaccessibleCell inaccessibleCell = (InaccessibleCell) destinationCell;
+            inaccessibleCell.land();
+            return false;
+
+        }else if(cellIcon.equals("N")){//nexus
+            //destinationCell.increaseHeroCount();
+
+            NexusCell nexusCell = (NexusCell) destinationCell;
+
+            if(nexusCell.getRow()==0){
+                System.out.println("A hero landed on monster's cell! You won the game!");
+            }
+
+            return true;
+
+        }else if(cellIcon.equals("P")){
+            //destinationCell.increaseHeroCount();
+            return true;
+        }else if(cellIcon.equals("B")||cellIcon.equals("C")||cellIcon.equals("K")){
+            destinationCell.increaseHeroCount();
+            destinationCell.land(hero);
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }

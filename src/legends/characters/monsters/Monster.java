@@ -3,7 +3,6 @@ package legends.characters.monsters;
 import legends.LovMap;
 import legends.characters.Character;
 import legends.characters.heroes.Hero;
-import legends.games.LegendsOfValor;
 import legends.grids.cells.Cell;
 
 public abstract class Monster extends Character {
@@ -24,16 +23,16 @@ public abstract class Monster extends Character {
         if(withinRange(grid)){
             hero.takeDamage(damage);
         }else{
-            grid.getGrid()[row][col].decreaseMonsterCount();
+            grid.getCells()[row][col].decreaseMonsterCount();
             row++;
-            grid.getGrid()[row][col].increaseMonsterCount();
+            grid.getCells()[row][col].increaseMonsterCount();
             System.out.println("Monster's turn ---\nM" +(index+1)+" moved forward.");
         }
     }
 
     // return boolean indicating whether there is a hero within the monster's attacking range
     public boolean withinRange(LovMap grid) {
-        Cell[][] grids = grid.getGrid();
+        Cell[][] grids = grid.getCells();
         if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].getHeroCount()>0 || grids[Math.max(row - 1, 0)][col].getHeroCount()>0 || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].getHeroCount()>0 ||
                 grids[row][Math.max(col - 1, 0)].getHeroCount()>0 || grids[row][col].getHeroCount()>0|| grids[row][Math.min(col + 1, 7)].getHeroCount()>0 ||
                 grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].getHeroCount()>0 || grids[Math.min(row + 1, 7)][col].getHeroCount()>0|| grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].getHeroCount()>0) {
