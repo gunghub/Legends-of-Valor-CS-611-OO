@@ -9,6 +9,7 @@ public class Graphic {
     private final StringBuilder banner;
     private final StringBuilder market;
     private final StringBuilder levelUp;
+    private final StringBuilder fight;
     public static final String red = "\u001B[31m";
     public static final String green = "\u001B[32m";
     public static final String purple = "\u001B[35m";
@@ -20,7 +21,9 @@ public class Graphic {
         levelUp = readGraphic("./inputs/LevelUp.txt");
         levelUp.insert(0, cyan);
         market = readGraphic("./inputs/Market.txt");
-        market.insert(0, green); //Market sigh is white.
+        market.insert(0, green);
+        fight = readGraphic("./inputs/Fight.txt");
+        fight.insert(0, red);
     }
 
     public StringBuilder readGraphic(String pathname) {
@@ -51,6 +54,10 @@ public class Graphic {
         return market;
     }
 
+    public StringBuilder getFight() {
+        return fight;
+    }
+
     public void printBanner(){
         System.out.println(getBanner());
     }
@@ -61,6 +68,10 @@ public class Graphic {
 
     public void printMarket(){
         System.out.println(getMarket());
+    }
+
+    public void printFight(){
+        System.out.println(getFight());
     }
 
 }

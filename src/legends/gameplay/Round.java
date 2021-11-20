@@ -8,12 +8,12 @@ import legends.characters.monsters.Monster;
 import legends.items.spells.Spell;
 import legends.utilities.Printer;
 import legends.utilities.ScannerParser;
-
+import legends.utilities.Colors;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Round {
-
+    Colors colors = new Colors();
     public Round() {
 
     }
@@ -39,7 +39,7 @@ public class Round {
                 heroes.get(i).setHP((int)1.1*heroes.get(i).getHP());
                 heroes.get(i).setMana((int)1.1*heroes.get(i).getMana());
                 Printer printer = new Printer();
-                System.out.println("Please choose an action for H" + (i + 1)+"----");
+                System.out.println(colors.addColor("cyan", "Please choose an action for H" + (i + 1)+"----"));
                 play = heroes.get(i).takeAction(grid, game);
                 if (play == false) {
                     break;

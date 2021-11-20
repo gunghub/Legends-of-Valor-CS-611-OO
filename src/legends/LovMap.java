@@ -4,7 +4,7 @@ import legends.characters.heroes.Hero;
 import legends.games.LegendsOfValor;
 import legends.grids.Grid;
 import legends.grids.cells.*;
-
+import legends.utilities.Colors;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class LovMap extends Grid {
     private static final int LOV_MAP_SIZE_OF_CELLS = 8;
-
+    private Colors colors;
     private LegendsOfValor legendsOfValor;
     private CellType[][] cellTypes = {
             {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
@@ -30,6 +30,7 @@ public class LovMap extends Grid {
     public LovMap(LegendsOfValor legendsOfValor) {
         super(LOV_MAP_SIZE_OF_CELLS, LOV_MAP_SIZE_OF_CELLS);
         this.legendsOfValor = legendsOfValor;
+        colors = new Colors();
         display();
     }
 
@@ -155,8 +156,11 @@ public class LovMap extends Grid {
     public void display() {
 
         List<StringBuilder> printable = new ArrayList<>();
-        for (int row = 0; row < LOV_MAP_SIZE_OF_CELLS * 3; row++) {
+        for (int row = 0; row < (LOV_MAP_SIZE_OF_CELLS + 1) * 3; row++) {
             printable.add(new StringBuilder());
+            if (row >= (LOV_MAP_SIZE_OF_CELLS * 3)){
+                continue;
+            }
             if ((row / 3) % 2 == 0) {
                 for (int col = 0; col < LOV_MAP_SIZE_OF_CELLS; col++) {
                     if (row % 2 == 0) {
@@ -184,8 +188,10 @@ public class LovMap extends Grid {
             if (row % 3 == 2)
                 printable.get(row).append("\n");
         }
-
-        for (int i = 0; i < LOV_MAP_SIZE_OF_CELLS * 3; i++) {
+        printable.get(24).append(colors.addColor("yellow", "\t   Top Lane\t\t    "));
+        printable.get(25).append(colors.addColor("yellow","\t\t\t\t   Mid Lane\t\t\t\t"));
+        printable.get(26).append(colors.addColor("yellow","\t\t\t   Bot Lane\t\t\t\n\n"));
+        for (int i = 0; i < (LOV_MAP_SIZE_OF_CELLS + 1) * 3; i++) {
             System.out.print(printable.get(i));
         }
     }

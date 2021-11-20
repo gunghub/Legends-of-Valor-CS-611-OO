@@ -84,6 +84,7 @@ public abstract class Hero extends Character {
         switch (move) {
             case 1: //attack
                 if (withinRange(grid)) {
+                    graphic.printFight();
                     attack(getNeighborMonster(grid, lovgame), null);
                 } else {
                     System.out.println("No monster is within your attacking range. Please try another move!\n");

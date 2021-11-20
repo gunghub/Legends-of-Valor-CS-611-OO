@@ -22,13 +22,14 @@ public class LegendsOfValor extends RPGGame {
     private Lane topLane;
     private Lane midLane;
     private Lane botLane;
-
+    private Colors colors;
 
     public LegendsOfValor() {
         heroes = new ArrayList<Hero>();
         monsters = new ArrayList<Monster>();
         this.play = true;
         graphic = new Graphic();
+        colors = new Colors();
         topLane = new Lane("Top");
         midLane = new Lane("Mid");
         botLane = new Lane("Bot");
@@ -39,7 +40,7 @@ public class LegendsOfValor extends RPGGame {
 
     public void playGame() {
         graphic.printBanner();
-        System.out.println("Here is the game map you are going to play:");
+        System.out.println(colors.addColor("cyan", "Here is the game map you are going to play:"));
         Factory fac = new Factory();
         LovMap grid = new LovMap( this);
         initHeroes();
@@ -66,7 +67,7 @@ public class LegendsOfValor extends RPGGame {
     }
 
     public void initHeroes() {
-        System.out.println("What type of hero is your top lane hero?");
+        System.out.println(colors.addColor("purple", "What type of hero is your top lane hero?"));
         System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
         int type = ScannerParser.parseInt();
         while (type != 1 && type != 2 && type != 3) {
