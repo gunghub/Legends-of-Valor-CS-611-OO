@@ -4,7 +4,7 @@ import legends.characters.heroes.Hero;
 import legends.utilities.Colors;
 
 /**
- * abstratct class for a Cell. Extends to three types of cells.
+ * abstract class for a Cell. Extends to three types of cells.
  */
 public abstract class Cell {
     private String icon;
