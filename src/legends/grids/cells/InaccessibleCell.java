@@ -16,29 +16,30 @@ public class InaccessibleCell extends Cell {
         return type;
     }
 
-    public void land(String move, Hero hero){
-        switch(move){
-            case "W":
-            case "w":
-                hero.setRow(hero.getRow() + 1);
-                break;
-
-            case "A":
-            case "a":
-                hero.setCol(hero.getCol() + 1);
-                break;
-
-            case "S":
-            case "s":
-                hero.setRow(hero.getRow() - 1);
-                break;
-
-            case "D":
-            case "d":
-                hero.setCol(hero.getCol() - 1);
-                break;
-
-        }
+    public void land(){
         System.out.println("This space is inaccassible. Please try move another direction!\n");
+
+//        switch(move){
+//            case "W":
+//            case "w":
+//                hero.setRow(hero.getRow() + 1);
+//                break;
+//
+//            case "A":
+//            case "a":
+//                hero.setCol(hero.getCol() + 1);
+//                break;
+//
+//            case "S":
+//            case "s":
+//                hero.setRow(hero.getRow() - 1);
+//                break;
+//
+//            case "D":
+//            case "d":
+//                hero.setCol(hero.getCol() - 1);
+//                break;
+//
+//        }
     }
 }

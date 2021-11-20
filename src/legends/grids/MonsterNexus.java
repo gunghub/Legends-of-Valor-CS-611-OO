@@ -2,8 +2,10 @@ package legends.grids;
 
 import legends.characters.monsters.Monster;
 
+import legends.games.LegendsOfValor;
 import legends.grids.cells.NexusCell;
 import legends.characters.Character;
+import legends.utilities.FileParser;
 
 
 public class MonsterNexus extends Nexus{
@@ -12,11 +14,15 @@ public class MonsterNexus extends Nexus{
     }
 
 
-    public void spawn(Character c, NexusCell nc){
+    public void spawn(){
         // set index to the index of the nexusCell
-        Monster m = (Monster) c;
-        m.setRow(nc.getRow());
-        m.setCol(nc.getCol());
+//        FileParser fp = new FileParser();
+//        for(int i=0; i<game.getHeroes().size(); i++){
+//            Monster monster = fp.chooseRandMonster();
+//            monster.setPosition(0,i*3+1);
+//        }
+
+
     }
 
 

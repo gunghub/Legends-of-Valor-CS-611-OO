@@ -6,6 +6,8 @@ import legends.characters.heroes.Warrior;
 import legends.characters.monsters.Dragon;
 import legends.characters.monsters.Monster;
 import legends.gameplay.Round;
+import legends.grids.HeroNexus;
+import legends.grids.MonsterNexus;
 import legends.grids.lanes.Lane;
 import legends.utilities.*;
 
@@ -33,37 +35,24 @@ public class LegendsOfValor extends RPGGame {
         LovMap grid = new LovMap( this);
         initHeroes();
         initMonsters();
-        grid.display();
         Round round = new Round();
         round.playRound(heroes, monsters, play, grid, this);
 
 
     }
 
-    //    public void playGame(){
-////        System.out.println("Welcome to Legends!");
-//        graphic.printBanner();
-//        LOVGrid grid = new LOVGrid(8, 8);
-//        LegendsPlayer p = initPlayer();
-//        System.out.println("========================================================================================");
-//        System.out.println(colors.addColor("blue","'P' = Your position\n" +
-//                "'M' = Market. You can buy or sell items here\n" +
-//                "'#' = Inaccessible space. You cannot land on this space\n" +
-//                "' ' = Common space. This space might be safe or you might encounter some monsters"));
-////        grid.initGrid();
-//
-////        while(play){
-////            play = p.makeMove(grid);
-////
-////        }
-//    }
-
     public void initMonsters(){
         FileParser fp = new FileParser();
         for(int i=0; i<heroes.size(); i++){
             Monster monster = fp.chooseRandMonster();
+            monster.setPosition(0,i*3+1);
             addMonster(monster);
         }
+//        MonsterNexus monsterNexus = new MonsterNexus();
+//        for(int i=0; i<heroes.size(); i++){
+//            monsterNexus.spawn(this);
+//            addMonster(monster);
+//        }
     }
 
     public void initHeroes() {
@@ -100,7 +89,6 @@ public class LegendsOfValor extends RPGGame {
         System.out.println("Now start your journey!");
     }
 
-
     public void initNewHero(Hero hero, int index){
         Lane lane = new Lane(null);
         switch(index){
@@ -127,6 +115,7 @@ public class LegendsOfValor extends RPGGame {
         hero.setCurrLane(lane);
 
     }
+
 
     public void chooseHeroType(int type){
         FileParser fp = new FileParser();

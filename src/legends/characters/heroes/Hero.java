@@ -6,6 +6,7 @@ import legends.gameplay.Inventory;
 import legends.gameplay.Markets;
 import legends.games.LegendsOfValor;
 import legends.grids.cells.Cell;
+import legends.grids.cells.InaccessibleCell;
 import legends.grids.lanes.Lane;
 import legends.items.Armor;
 import legends.items.Item;
@@ -64,6 +65,7 @@ public abstract class Hero extends Character {
         if (row == 7) {
             Markets market = new Markets();
             market.storeConsole(this);
+            System.out.println("Please choose another action for your hero.");
         }
         System.out.println(" 1: Attack\n 2: Cast spell\n 3: Change Weapon/Armor\n 4: Use a potion\n " +
                 "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
@@ -111,7 +113,7 @@ public abstract class Hero extends Character {
                     type = ScannerParser.tryInt();
                 }
                 switch (type) {
-                    case 0:
+                    case 1:
                         System.out.println("Your current armor is:" + currentArmor.getName());
                         unequip(currentArmor);
                         System.out.println("Current armor is taken off.");
@@ -126,7 +128,7 @@ public abstract class Hero extends Character {
                         System.out.println("Armor " + currentArmor.getName() + " is equipped now");
                         break;
 
-                    case 1:
+                    case 2:
                         System.out.println("Your current weapon is:" + currentWeapon.getName());
                         unequip(currentWeapon);
                         System.out.println("Current weapon is unarmed now.");
@@ -166,14 +168,13 @@ public abstract class Hero extends Character {
                 break;
 
             case 6: //teleport
-                System.out.println("Please choose a lane you wish to teleport to :");
-                System.out.println(" 1: Top\n 2: Mid\n 3: Bot\n");
+                System.out.println("Please enter the lane you wish to teleport to :");
+                System.out.println(" Top\n Mid\n Bot\n");
                 String input = ScannerParser.parseString();
                 while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot")) {
                     input = ScannerParser.tryString();
                 }
                 currLane.setName(input);
-
                 System.out.println("Which row would you like to land on?(Between 1~8. You shall not land on a row that surpass any monster" +
                         "or land on the same cell as another hero)");
                 int currrow = ScannerParser.parseInt();
@@ -181,13 +182,13 @@ public abstract class Hero extends Character {
                     currrow = ScannerParser.tryInt();
                 }
                 row = currrow - 1;
-                System.out.println("Which column would you like to land on?(Between 1~8. You shall not land on the same cell as another hero)");
+                System.out.println("Would you like to land on left or right column of this lane?(Between 1~8. You shall not land on the same cell as another hero)");
                 int currcol = ScannerParser.parseInt();
-                while (currcol > 8 || currcol < 1 || grid.getGrid()[row][currcol-1].isHashero() || grid.getGrid()[row][currcol-1].getIcon().equals("I")) {
-                    if (grid.getGrid()[row][currcol-1].isHashero()) {
+                while (currcol > 8 || currcol < 1 || grid.getGrid()[row][currcol - 1].getHeroCount() > 0 || grid.getGrid()[row][currcol - 1].getIcon().equals("I")) {
+                    if (grid.getGrid()[row][currcol - 1].getHeroCount() > 0) {
                         System.out.println("You shall not land on the same cell with another hero!");
                     }
-                    if (grid.getGrid()[row][currcol-1].getIcon().equals("I")) {
+                    if (grid.getGrid()[row][currcol - 1].getIcon().equals("I")) {
                         System.out.println("You shall not land on Inaccessible space! Try again");
                     }
                     currcol = ScannerParser.tryInt();
@@ -197,14 +198,11 @@ public abstract class Hero extends Character {
 
             case 7: //back
                 if (initLane.getName().equals("Top")) {
-                    row = 0;
-                    col = 7;
+                    setPosition(0,7);
                 } else if (initLane.getName().equals("Mid")) {
-                    row = 3;
-                    col = 7;
+                    setPosition(3,7);
                 } else {
-                    row = 6;
-                    col = 7;
+                    setPosition(6,7);
                 }
                 break;
 
@@ -213,8 +211,16 @@ public abstract class Hero extends Character {
                 play = false;
                 break;
         }
-        System.out.println(row + " " + col + "\n");
+//        System.out.println(row+" "+col);
         return play;
+
+    }
+
+    public void respawn(LovMap grid) {
+        if (getHP() <= 0) {
+            grid.getGrid()[row][col].decreaseHeroCount();
+
+        }
     }
 
     /**
@@ -239,33 +245,46 @@ public abstract class Hero extends Character {
         switch (move) {
             case "W":
             case "w":
-                grid.getGrid()[row][col].setHashero(false);
+//                if(grid.getGrid()[row-1][col].getIcon().equals("I")){
+//                    ((InaccessibleCell)grid.getGrid()[row-1][col]).land();
+//                }
+//                grid.getGrid()[row][col].increaseHeroCount();
+//                setRow(row - 1);
+                grid.getGrid()[row][col].decreaseHeroCount();
+                grid.landOnMap(row - 1, col, this, grid.getGrid()[row][col], move);
                 setRow(row - 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                grid.getGrid()[row][col].increaseHeroCount();
                 break;
 
             case "A":
             case "a":
-                grid.getGrid()[row][col].setHashero(false);
+//                grid.getGrid()[row][col].increaseHeroCount();
+//                setCol(col - 1);
+//                grid.landOnMap(row, col, this, grid.getGrid()[row][col], move);
+                grid.getGrid()[row][col].decreaseHeroCount();
+                grid.landOnMap(row, col - 1, this, grid.getGrid()[row][col], move);
                 setCol(col - 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                grid.getGrid()[row][col].increaseHeroCount();
                 break;
 
             case "S":
             case "s":
-                grid.getGrid()[row][col].setHashero(false);
+                grid.getGrid()[row][col].decreaseHeroCount();
+                grid.landOnMap(row + 1, col, this, grid.getGrid()[row][col], move);
                 setRow(row + 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                grid.getGrid()[row][col].increaseHeroCount();
                 break;
 
             case "D":
             case "d":
-                grid.getGrid()[row][col].setHashero(false);
+                grid.getGrid()[row][col].decreaseHeroCount();
+                grid.landOnMap(row, col + 1, this, grid.getGrid()[row][col], move);
                 setCol(col + 1);
-                grid.land(row, col, this, grid.getGrid()[row][col], move);
+                grid.getGrid()[row][col].increaseHeroCount();
                 break;
         }
 //        grid.printGrid(this);
+//        System.out.println(row+" "+col);
     }
 
 
@@ -288,7 +307,7 @@ public abstract class Hero extends Character {
                     System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
-                    if (grids[row - 1][col].isHashero()) {
+                    if (grids[row - 1][col].getHeroCount() > 0) {
                         System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
@@ -305,7 +324,7 @@ public abstract class Hero extends Character {
                     System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
-                    if (grids[row][col - 1].isHashero()) {
+                    if (grids[row][col - 1].getHeroCount() > 0) {
                         System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
@@ -318,7 +337,7 @@ public abstract class Hero extends Character {
                     System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
-                    if (grids[row + 1][col].isHashero()) {
+                    if (grids[row + 1][col].getHeroCount() > 0) {
                         System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
@@ -331,7 +350,7 @@ public abstract class Hero extends Character {
                     System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
-                    if (grids[row][col + 1].isHashero()) {
+                    if (grids[row][col + 1].getHeroCount() > 0) {
                         System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
@@ -341,52 +360,52 @@ public abstract class Hero extends Character {
         return isValid;
     }
 
-    public Monster getNeighborMonster(LovMap grid, LegendsOfValor legendofvalor){
+    public Monster getNeighborMonster(LovMap grid, LegendsOfValor legendofvalor) {
         Cell[][] grids = grid.getGrid();
-        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasmonster()) {
+        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == Math.max(row - 1, 0) && legendofvalor.getMonsters().get(i).getCol() == Math.max(col - 1, 0)) {
                     return legendofvalor.getMonsters().get(i);
                 }
             }
 
-        } else if (grids[Math.max(row - 1, 0)][col].isHasmonster()) {
+        } else if (grids[Math.max(row - 1, 0)][col].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == Math.max(row - 1, 0) && legendofvalor.getMonsters().get(i).getCol() == col) {
                     return legendofvalor.getMonsters().get(i);
                 }
             }
-        } else if (grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasmonster()) {
+        } else if (grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == Math.max(row - 1, 0) && legendofvalor.getMonsters().get(i).getCol() == Math.min(col + 1, 7)) {
                     return legendofvalor.getMonsters().get(i);
                 }
             }
-        } else if (grids[row][Math.max(col - 1, 0)].isHasmonster()) {
+        } else if (grids[row][Math.max(col - 1, 0)].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == row && legendofvalor.getMonsters().get(i).getCol() == Math.min(col - 1, 0)) {
                     return legendofvalor.getMonsters().get(i);
                 }
             }
-        } else if (grids[row][col].isHasmonster()) {
+        } else if (grids[row][col].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == row && legendofvalor.getMonsters().get(i).getCol() == col) {
                     return legendofvalor.getMonsters().get(i);
                 }
             }
-        } else if (grids[row][Math.min(col + 1, 7)].isHasmonster()) {
+        } else if (grids[row][Math.min(col + 1, 7)].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == row && legendofvalor.getMonsters().get(i).getCol() == Math.min(col + 1, 7)) {
                     return legendofvalor.getMonsters().get(i);
                 }
             }
-        } else if (grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHasmonster()) {
+        } else if (grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == Math.min(row + 1, 7) && legendofvalor.getMonsters().get(i).getCol() == Math.max(col - 1, 0)) {
                     return legendofvalor.getMonsters().get(i);
                 }
             }
-        } else if (grids[Math.min(row + 1, 7)][col].isHasmonster()) {
+        } else if (grids[Math.min(row + 1, 7)][col].getMonsterCount() > 0) {
             for (int i = 0; i < legendofvalor.getMonsters().size(); i++) {
                 if (legendofvalor.getMonsters().get(i).getRow() == Math.min(row + 1, 7) && legendofvalor.getMonsters().get(i).getCol() == col) {
                     return legendofvalor.getMonsters().get(i);
@@ -405,9 +424,9 @@ public abstract class Hero extends Character {
     // return boolean indicating whether there is a monster within the hero's attacking range
     public boolean withinRange(LovMap grid) {
         Cell[][] grids = grid.getGrid();
-        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].isHasmonster() || grids[Math.max(row - 1, 0)][col].isHasmonster() || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].isHasmonster() ||
-                grids[row][Math.max(col - 1, 0)].isHasmonster() || grids[row][col].isHasmonster() || grids[row][Math.min(col + 1, 7)].isHasmonster() ||
-                grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].isHasmonster() || grids[Math.min(row + 1, 7)][col].isHasmonster() || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].isHasmonster()) {
+        if (grids[Math.max(row - 1, 0)][Math.max(col - 1, 0)].getMonsterCount() > 0 || grids[Math.max(row - 1, 0)][col].getMonsterCount() > 0 || grids[Math.max(row - 1, 0)][Math.min(col + 1, 7)].getMonsterCount() > 0 ||
+                grids[row][Math.max(col - 1, 0)].getMonsterCount() > 0 || grids[row][col].getMonsterCount() > 0 || grids[row][Math.min(col + 1, 7)].getMonsterCount() > 0 ||
+                grids[Math.min(row + 1, 7)][Math.max(col - 1, 0)].getMonsterCount() > 0 || grids[Math.min(row + 1, 7)][col].getMonsterCount() > 0 || grids[Math.min(row + 1, 7)][Math.min(col + 1, 7)].getMonsterCount() > 0) {
             return true;
         } else {
             return false;
@@ -486,7 +505,7 @@ public abstract class Hero extends Character {
     }
 
     public void attack(Monster m, Spell spell) {
-        int dmg = 0;
+        int dmg = 50;
         int newHP;
         if (spell == null) {
             for (Weapon w : getInventory().getWeapons()) {
@@ -648,7 +667,7 @@ public abstract class Hero extends Character {
         return currLane;
     }
 
-    public void setPosition(int row, int column){
+    public void setPosition(int row, int column) {
         setRow(row);
         setCol(column);
     }

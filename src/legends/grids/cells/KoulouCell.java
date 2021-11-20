@@ -11,6 +11,7 @@ public class KoulouCell extends Cell {
     }
 
     public void land(Hero hero){
+        System.out.println("Hero landed on Koulou cell -- gains 10% of strength for this round\n");
         hero.setStrength((int) (hero.getStrength() * (1 + 0.1)));
     }
 }

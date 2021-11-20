@@ -51,7 +51,7 @@ public class FileParser {
 
     /**
      * choose a random monster who has the input level from all monsters
-     * @param level
+     * @param
      * @return
      */
     public Monster chooseRandMonster() {

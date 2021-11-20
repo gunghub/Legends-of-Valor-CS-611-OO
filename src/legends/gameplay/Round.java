@@ -29,23 +29,29 @@ public class Round {
      * @return
      */
     public boolean playRound(ArrayList<Hero> heroes, ArrayList<Monster> monsters, boolean play, LovMap grid, LegendsOfValor game) {
-        Printer printer = new Printer();
         while (play) {
             for (int i = 0; i < heroes.size(); i++) {
-                System.out.println("Please choose an action for Hero " + (i + 1));
+                grid.display();
+//                if(heroes.get(i).getRow()==7){
+//                    Markets market = new Markets();
+//                    market.storeConsole(heroes.get(i));
+//                }
+                heroes.get(i).setHP((int)1.1*heroes.get(i).getHP());
+                heroes.get(i).setMana((int)1.1*heroes.get(i).getMana());
+                Printer printer = new Printer();
+                System.out.println("Please choose an action for H" + (i + 1)+"----");
                 play = heroes.get(i).takeAction(grid, game);
                 if (play == false) {
                     break;
                 }
-                monsters.get(i).makeMove(heroes.get(i), grid);
+                monsters.get(i).makeMove(heroes.get(i), grid,i);
             }
         }
         if (isOver(heroes, monsters)) {
             winOrLose(heroes, monsters);
+            play = false;
         }
         return play;
-
-
     }
 
     public void levelUps(ArrayList<Hero> heroes) {
@@ -53,6 +59,7 @@ public class Round {
             h.levelUp();
         }
     }
+
 
 
     /**

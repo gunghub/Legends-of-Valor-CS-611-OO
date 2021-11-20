@@ -19,6 +19,10 @@ public class Markets {
         colors = new Colors();
     }
 
+    /**
+     * the main console to implement the store algorithms. Hero can choose to enter or not enter the store
+     * @param h
+     */
     public void storeConsole(Hero h) {
         System.out.println(colors.addColor("cyan", "You are at Nexus. Would you like to enter the market?(y/n)"));
         isShopping = ScannerParser.parseBoolean();
@@ -47,7 +51,8 @@ public class Markets {
 //        h.p();
 //        int input = ScannerParser.parseInt();
 //        Hero chosenHero = p.getHeroes().get(input - 1);
-        System.out.println(colors.addColor("green","Hero " + hero.getName() + " entered the store --"));
+        System.out.println(colors.addColor("green","Hero entered the store. View hero stats below ---"));
+        printer.printHero(hero);
         System.out.println(colors.addColor("blue", "Would you like to buy or sell an item?"));
         System.out.println(" 1: Buy\n 2: Sell\n 3: Exit market");
         int input = ScannerParser.parseInt();

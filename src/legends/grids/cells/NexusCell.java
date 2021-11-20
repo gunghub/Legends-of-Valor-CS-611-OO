@@ -7,18 +7,17 @@ import legends.utilities.Factory;
 public class NexusCell extends Cell {
     public NexusCell(int row, int col){
         super("N", row, col);
-        hasmarket = true;
     }
 
-    //when a hero lands on a NexusCell
-    public void land(Hero hero){
-        if(getRow() == 0){
-            Factory fac = new Factory();
-            Markets m = fac.newMarkets();
-            m.storeConsole(hero);
-        }else if(getRow() == 7){
-             System.out.println("Congratulations! You won!");
-        }
-    }
+//    //when a hero lands on a NexusCell
+//    public void land(Hero hero){
+//        if(getRow() == 7){
+//            Factory fac = new Factory();
+//            Markets m = fac.newMarkets();
+//            m.storeConsole(hero);
+//        }else if(getRow() == 0){
+//             System.out.println("Congratulations! You won!");
+//        }
+//    }
 
 }

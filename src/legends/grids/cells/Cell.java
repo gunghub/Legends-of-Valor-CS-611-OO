@@ -11,15 +11,16 @@ public abstract class Cell {
     private int col;
 
     protected Colors colors;
-    protected boolean hashero;
-    protected boolean hasmonster;
-    protected boolean hasmarket;
+    protected int heroCount;
+    protected int monsterCount;
 
 
     public Cell(String icon, int row, int col){
         this.icon = icon;
         this.row = row;
         this.col = col;
+        heroCount = 0;
+        monsterCount = 0;
     }
 
     private static String getOuterCellStr(char c){
@@ -55,27 +56,35 @@ public abstract class Cell {
         this.col = col;
     }
 
-    public boolean isHashero() {
-        return hashero;
+    public int getHeroCount() {
+        return heroCount;
     }
 
-    public void setHashero(boolean hashero) {
-        this.hashero = hashero;
+    public void setHeroCount(int heroCount) {
+        this.heroCount = heroCount;
     }
 
-    public boolean isHasmonster() {
-        return hasmonster;
+    public int getMonsterCount() {
+        return monsterCount;
     }
 
-    public void setHasmonster(boolean hasmonster) {
-        this.hasmonster = hasmonster;
+    public void setMonsterCount(int monsterCount) {
+        this.monsterCount = monsterCount;
     }
 
-    public boolean isHasmarket() {
-        return hasmarket;
+    public void increaseHeroCount(){
+        this.heroCount++;
     }
 
-    public void setHasmarket(boolean hasmarket) {
-        this.hasmarket = hasmarket;
+    public void decreaseHeroCount(){
+        this.heroCount--;
+    }
+
+    public void increaseMonsterCount(){
+        this.monsterCount++;
+    }
+
+    public void decreaseMonsterCount(){
+        this.monsterCount--;
     }
 }
