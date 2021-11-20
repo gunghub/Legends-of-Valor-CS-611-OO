@@ -271,7 +271,7 @@ public abstract class Hero extends Character {
 
             int destinationRow=getRow()+MOVEMENT_DIRECTIONS.get(inputString)[0];
             int destinationColumn=getCol()+MOVEMENT_DIRECTIONS.get(inputString)[1];
-            if(lovMap.makeHeroToCell(destinationRow,destinationColumn,this)){
+            if(lovMap.makeHeroMove(destinationRow,destinationColumn,this)){
                 break;
             }
         }
@@ -279,6 +279,7 @@ public abstract class Hero extends Character {
 
 
     /**
+     * @deprecated
      * player choose to move a hero a certain direction. The hero then land on the cell and prompt the corresponding
      * scenarios
      *
@@ -344,6 +345,7 @@ public abstract class Hero extends Character {
 
 
     /**
+     * @deprecated
      * check whether a hero move is valid. A hero can't land on the cell that has another hero, or
      * land outside the grid, or bypass any monster
      *
@@ -605,6 +607,7 @@ public abstract class Hero extends Character {
             }
         }
     }
+
 
 
     public void takeDamage(int dmg) {

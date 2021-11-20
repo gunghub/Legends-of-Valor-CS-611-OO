@@ -200,14 +200,15 @@ public class LovMap extends Grid {
 
 
 /**
-     * land on a cell. Prompt the corresponding scenarios after landing on the cell
-     *
-     * @param row  row of the landed cell
-     * @param col  column of the landed cell
-     * @param hero
-     * @param cell
-     * @param move
-     */
+ * @deprecated
+ *land on a cell. Prompt the corresponding scenarios after landing on the cell
+ *
+ * @param row  row of the landed cell
+ * @param col  column of the landed cell
+ * @param hero
+ * @param cell
+ * @param move
+ */
 
     public boolean landOnMap(int row, int col, Hero hero, Cell cell, String move) {
 //        printGrid(p);
@@ -262,16 +263,16 @@ public class LovMap extends Grid {
 
     /**
      *
-     * @param cellRow destination cell row
-     * @param cellColumn destination cell row
+     * @param destinationCellRow destination cell row
+     * @param destinationCellColumn destination cell row
      * @param heroToMove heroToMove
      * @return if this move valid.
      */
-    public boolean makeHeroToCell(int cellRow, int cellColumn, Hero heroToMove){
+    public boolean makeHeroMove(int destinationCellRow, int destinationCellColumn, Hero heroToMove){
 
         boolean allowed=true;
         //Check the boundary
-        if(cellRow>LOV_MAP_SIZE_OF_CELLS-1||cellColumn>LOV_MAP_SIZE_OF_CELLS-1||cellRow<0||cellColumn<0){
+        if(destinationCellRow>LOV_MAP_SIZE_OF_CELLS-1||destinationCellColumn>LOV_MAP_SIZE_OF_CELLS-1||destinationCellRow<0||destinationCellColumn<0){
             System.out.println("You cannot step out of the map");
             return false;
         }
@@ -279,16 +280,19 @@ public class LovMap extends Grid {
         //Check if there is a hero in the cell;
         for (Hero heroInGame:legendsOfValor.getHeroes()
              ) {
-            if (heroInGame.getRow()==cellRow&&heroInGame.getCol()==cellColumn){
+            if (heroInGame.getRow()==destinationCellRow&&heroInGame.getCol()==destinationCellColumn){
                 System.out.println("Sorry, there has already been a hero in the destination cell.");
                 return false;
             }
         }
 
-        Cell destinationCell=cells[cellRow][cellColumn];
+        Cell destinationCell=cells[destinationCellRow][destinationCellColumn];
+        Cell startCell =cells[heroToMove.getRow()][heroToMove.getCol()];
+
+
         String cellIcon = destinationCell.getIcon();
         if (cellIcon.equals("I")){//Inaccessible Cell
-            System.out.println("This space is inaccessible. Please try move another direction!\n");
+            System.out.println("This space is inaccessible. Please try move another direction!");
             return false;
         }else if(cellIcon.equals("N")){//Nexus Cell
             if(destinationCell.getRow()==0) {
@@ -305,7 +309,15 @@ public class LovMap extends Grid {
             System.err.println("There must be something wrong.");
             return false;
         }
-        if(allowed) heroToMove.setPosition(cellRow,cellColumn) ;
+
+
+        if(allowed) {
+            startCell.setHasHero(false);
+            destinationCell.setHasHero(true);
+            heroToMove.setPosition(destinationCellRow,destinationCellColumn) ;
+        }
+
+
         return true;
     }
 }
