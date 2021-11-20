@@ -1,6 +1,7 @@
 package legends;
 
 import legends.characters.heroes.Hero;
+import legends.characters.monsters.Monster;
 import legends.games.LegendsOfValor;
 import legends.grids.Grid;
 import legends.grids.cells.*;
@@ -116,7 +117,8 @@ public class LovMap extends Grid {
         StringBuilder result = new StringBuilder();
         boolean hasHero = false;
         for (int i = 0; i < legendsOfValor.getHeroes().size(); i++) {
-            if (row == legendsOfValor.getHeroes().get(i).getRow() && col == legendsOfValor.getHeroes().get(i).getCol()) {
+            Hero hero=legendsOfValor.getHeroes().get(i);
+            if (row == hero.getRow() && col == hero.getCol()&&!hero.isFaint()) {
                 result.append(HERO_ICON).append(i + 1);
                 hasHero = true;
                 break;
@@ -127,7 +129,8 @@ public class LovMap extends Grid {
 
         boolean hasMonster = false;
         for (int j = 0; j < legendsOfValor.getMonsters().size(); j++) {
-            if (row == legendsOfValor.getMonsters().get(j).getRow() && col == legendsOfValor.getMonsters().get(j).getCol()) {
+            Monster monster=legendsOfValor.getMonsters().get(j);
+            if (row == monster.getRow() && col == monster.getCol()&&!monster.isFaint()) {
                 result.append(" " + MONSTER_ICON + (j + 1) + "");
                 hasMonster = true;
                 break;
@@ -200,7 +203,7 @@ public class LovMap extends Grid {
 
 
 /**
- * @deprecated
+ *
  *land on a cell. Prompt the corresponding scenarios after landing on the cell
  *
  * @param row  row of the landed cell
@@ -210,6 +213,7 @@ public class LovMap extends Grid {
  * @param move
  */
 
+    @Deprecated
     public boolean landOnMap(int row, int col, Hero hero, Cell cell, String move) {
 //        printGrid(p);
         boolean inaccessible = false;
@@ -266,7 +270,7 @@ public class LovMap extends Grid {
      * @param destinationCellRow destination cell row
      * @param destinationCellColumn destination cell row
      * @param heroToMove heroToMove
-     * @return if this move valid.
+     * @return if this move successful.
      */
     public boolean makeHeroMove(int destinationCellRow, int destinationCellColumn, Hero heroToMove){
 
@@ -289,34 +293,29 @@ public class LovMap extends Grid {
         Cell destinationCell=cells[destinationCellRow][destinationCellColumn];
         Cell startCell =cells[heroToMove.getRow()][heroToMove.getCol()];
 
-
+        //if it's inaccessible cell. if it is , then reject.
         String cellIcon = destinationCell.getIcon();
         if (cellIcon.equals("I")){//Inaccessible Cell
             System.out.println("This space is inaccessible. Please try move another direction!");
             return false;
-        }else if(cellIcon.equals("N")){//Nexus Cell
-            if(destinationCell.getRow()==0) {
-                System.out.println("A hero landed on monster's cell! Hero won the game!");
-            }
-            allowed=true;
-        }else if(cellIcon.equals("P")){ // Plain Cell
-            allowed=true;
-        }else if(cellIcon.equals("B")||cellIcon.equals("C")||cellIcon.equals("K")){
-            destinationCell.setHasHero(true);
-            destinationCell.land(heroToMove);
+        }
+
+        if(cellIcon.equals("N")||cellIcon.equals("B")||cellIcon.equals("C")||cellIcon.equals("K")||cellIcon.equals("P")){
             allowed =true;
         }else{
             System.err.println("There must be something wrong.");
             return false;
         }
 
-
+        /**
+         *
+         * MOVE!
+         */
         if(allowed) {
-            startCell.setHasHero(false);
-            destinationCell.setHasHero(true);
+            startCell.leave(heroToMove);
+            destinationCell.land(heroToMove);
             heroToMove.setPosition(destinationCellRow,destinationCellColumn) ;
         }
-
 
         return true;
     }

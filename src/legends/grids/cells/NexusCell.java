@@ -20,4 +20,13 @@ public class NexusCell extends Cell {
 //        }
 //    }
 
+
+    public void land(Hero hero){
+        hasHero=true;
+    }
+
+    public void leave(Hero hero){
+        hasHero=false;
+    }
+
 }

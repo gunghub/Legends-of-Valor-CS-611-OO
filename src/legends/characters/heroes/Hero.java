@@ -286,6 +286,7 @@ public abstract class Hero extends Character {
      * @param
      * @return
      */
+    @Deprecated
     public void makeMove(LovMap grid) {
         grid.display();
         System.out.println("Please choose a move:");
@@ -345,7 +346,7 @@ public abstract class Hero extends Character {
 
 
     /**
-     * @deprecated
+     *
      * check whether a hero move is valid. A hero can't land on the cell that has another hero, or
      * land outside the grid, or bypass any monster
      *
@@ -353,6 +354,7 @@ public abstract class Hero extends Character {
      * @param grid
      * @return
      */
+    @Deprecated
     public boolean isValidMove(String move, LovMap grid) {
         boolean isValid = true;
         Cell[][] grids = grid.getCells();
@@ -751,4 +753,6 @@ public abstract class Hero extends Character {
     public Lane getInitLane() {
         return initLane;
     }
+
+
 }

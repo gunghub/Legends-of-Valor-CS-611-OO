@@ -11,7 +11,15 @@ public class CaveCell extends Cell {
     }
 
     public void land(Hero hero){
-        System.out.println("Hero landed on Cave cell -- gains 10% of agility for this round\n");
+        hasHero=true;
+        System.out.println("Hero landed on Cave cell -- gains 10% of agility for this round.");
         hero.setAgility((int) (hero.getAgility() * (1 + 0.1)));
+    }
+
+    public void leave(Hero hero){
+        System.out.println("Hero left the Cave cell -- lost the extra 10% of agility for this round.");
+        hasHero=false;
+        hero.setAgility((int) (hero.getAgility() * (10f/11f)));
+
     }
 }

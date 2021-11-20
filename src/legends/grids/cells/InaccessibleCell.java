@@ -16,6 +16,7 @@ public class InaccessibleCell extends Cell {
         return type;
     }
 
+    @Deprecated
     public void land(){
         System.out.println("This space is inaccassible. Please try move another direction!\n");
 

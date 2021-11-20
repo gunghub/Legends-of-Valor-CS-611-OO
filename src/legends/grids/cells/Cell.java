@@ -20,6 +20,10 @@ public abstract class Cell {
 
     }
 
+    public void leave(Hero hero){
+
+    }
+
     public Cell(String icon, int row, int col){
         this.icon = icon;
         this.row = row;
