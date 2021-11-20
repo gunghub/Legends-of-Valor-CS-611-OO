@@ -41,17 +41,18 @@ public class LegendsOfValor extends RPGGame {
         graphic.printBanner();
         System.out.println("Here is the game map you are going to play:");
         Factory fac = new Factory();
-        LovMap grid = new LovMap( this);
+        LovMap grid = new LovMap(this);
         initHeroes();
         initMonsters();
         Round round = new Round();
-        round.playRound(heroes, monsters, play, grid, this);
-
+        while (play) {
+            round.playRound(heroes, monsters, play, grid, this);
+        }
     }
 
-    public void initMonsters(){
+    public void initMonsters() {
         FileParser fp = new FileParser();
-        for(int i=0; i<heroes.size(); i++){
+        for (int i = 0; i < heroes.size(); i++) {
             Monster monster = fp.chooseRandMonster();
 //            monster.setPosition(0,i*3+1);
             MonsterNexus monsterNexus = new MonsterNexus();
@@ -99,8 +100,8 @@ public class LegendsOfValor extends RPGGame {
         hero.setInitLane(botLane);
         addHero(hero);
 
-        HeroNexus heroNexus =  new HeroNexus();
-        for(int i=0; i<heroes.size(); i++){
+        HeroNexus heroNexus = new HeroNexus();
+        for (int i = 0; i < heroes.size(); i++) {
             heroNexus.spawn(heroes.get(i), i);
         }
         System.out.println("Please see your heroes below ----\n");
@@ -110,12 +111,10 @@ public class LegendsOfValor extends RPGGame {
     }
 
 
-
-
-    public Hero chooseHeroType(int type){
+    public Hero chooseHeroType(int type) {
         FileParser fp = new FileParser();
         Hero h = null;
-        switch(type){
+        switch (type) {
             case 1:
                 ArrayList<Hero> paladins = fp.parsePaladins();
                 h = paladins.get(ScannerParser.getRandNum(paladins.size()));
@@ -155,11 +154,11 @@ public class LegendsOfValor extends RPGGame {
         this.monsters = monsters;
     }
 
-    public void addHero(Hero hero){
+    public void addHero(Hero hero) {
         heroes.add(hero);
     }
 
-    public void addMonster(Monster monster){
+    public void addMonster(Monster monster) {
         monsters.add(monster);
     }
 
@@ -187,12 +186,12 @@ public class LegendsOfValor extends RPGGame {
         this.botLane = botLane;
     }
 
-    public Lane getLane(String name){
-        if(name.equals(topLane.getName())){
+    public Lane getLane(String name) {
+        if (name.equals(topLane.getName())) {
             return topLane;
-        }else if(name.equals(midLane.getName())){
+        } else if (name.equals(midLane.getName())) {
             return midLane;
-        }else{
+        } else {
             return botLane;
         }
     }
