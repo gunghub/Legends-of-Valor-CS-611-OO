@@ -233,14 +233,14 @@ public abstract class Hero extends Character {
                     String input="";
                     while (true) {
                         boolean inputValid;
-                        System.out.println("Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):");
+                        System.out.println(colors.addColor("purple","Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):"));
                         input = ScannerParser.parseString();
 
                         if(!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot")){
-                            System.out.println("Please check your spell");
+                            System.out.println(colors.addColor("red","Please check your spell"));
                             inputValid=false;
                         }else if (currLane.getName().equals(input)) {
-                            System.out.println("You must teleport to a different lane!");
+                            System.out.println(colors.addColor("red","You must teleport to a different lane!"));
                             inputValid=false;
                         }else{
                             inputValid=true;
@@ -257,17 +257,17 @@ public abstract class Hero extends Character {
                     while(true) {
                         boolean inputValid;
 
-                        System.out.println("Which row would you like to land on?(Between 1~8)");
+                        System.out.println(colors.addColor("purple","Which row would you like to land on?(Between 1~8)"));
                         destinationRow = ScannerParser.parseInt() - 1;
 
                         if (destinationRow > 7 || destinationRow < 0){
-                            System.out.println("Please input a number within the given range:");
-                        inputValid = false;
+                            System.out.println(colors.addColor("red","Please input a number within the given range:"));
+                            inputValid = false;
                         } else if(destinationLane.getMaxMonsterRow() > destinationRow){
-                            System.out.println("You shall not bypass any monster!");
+                            System.out.println(colors.addColor("red","You shall not bypass any monster!"));
                             inputValid=false;
                         }else if(destinationLane.getMaxExplored() > destinationRow){
-                            System.out.println("You shall not exceed the max explored row of this lane!");
+                            System.out.println(colors.addColor("red","You shall not exceed the max explored row of this lane!"));
                             inputValid=false;
                         }else{
                             inputValid=true;
@@ -285,7 +285,7 @@ public abstract class Hero extends Character {
                      */
                     if(grid.getCells()[destinationRow][destinationLane.getLeftCol()].isHasHero()
                             && grid.getCells()[destinationRow][destinationLane.getLeftCol()+1].isHasHero()){
-                        System.out.println("Sorry, both left and right columns of this lane are occupied");
+                        System.out.println(colors.addColor("red","Sorry, both left and right columns of this lane are occupied"));
                         thisActionFinished=false;
                         break;
 
@@ -304,7 +304,7 @@ public abstract class Hero extends Character {
                     Scanner scanner=new Scanner(System.in);
                     while(true) {
                         boolean inputValid;
-                        System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
+                        System.out.println(colors.addColor("purple","Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right"));
                         if (scanner.hasNextInt()) {
                             leftOfRight = scanner.nextInt();
                             if(leftOfRight==1||leftOfRight==2){
@@ -319,19 +319,23 @@ public abstract class Hero extends Character {
                         if(inputValid) break;
                     }
                     int destinationColumn=destinationLane.getLeftCol()+(leftOfRight - 1);
-                    System.out.println("Your destination column is "+ destinationColumn);
+                    System.out.println(colors.addColor("red","Your destination column is "+ destinationColumn));
 
                     /**
+                     *
+                     * Step 5
                      * judge if it has hero
                      * if yes, REJECT!!!
                      */
                     if(grid.getCells()[destinationRow][destinationColumn].isHasHero()){
-                        System.out.println("You shall not land on the same cell with another hero!");
+                        System.out.println(colors.addColor("red","You shall not land on the same cell with another hero!"));
                         thisActionFinished=false;
                         break;
                     }
 
                     /**
+                     *
+                     * Step 6
                      * MOVE TO THE DESTINATION LANE!!!
                      *
                      */
@@ -342,13 +346,7 @@ public abstract class Hero extends Character {
                     break;
 
                 case 7: //back
-                    if (initLane.getName().equals("Top")) {
-                        setCurrLane(lovgame.getLane("Top"));
-                    } else if (initLane.getName().equals("Mid")) {
-                        setCurrLane(lovgame.getLane("Mid"));
-                    } else {
-                        setCurrLane(lovgame.getLane("Bot"));
-                    }
+                    setCurrLane(initLane);
                     break;
 
                 case 8: //quit
@@ -356,11 +354,7 @@ public abstract class Hero extends Character {
                     play = false;
                     break;
             }
-
-
             if(thisActionFinished)break;
-            
-
         }
 //        System.out.println(row+" "+col);
         return play;
