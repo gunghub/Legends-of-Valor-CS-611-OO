@@ -224,7 +224,7 @@ public abstract class Hero extends Character {
                     System.out.println(colors.addColor("red", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
                             " 2. You shall not land on the same cell as another hero\n" +
                             " 3. You must teleport to a different lane than your current lane\n" +
-                            " 4. You shall not go further than the max explored row in this lane");
+                            " 4. You shall not go further than the max explored row in this lane"));
 
 
                     /**
