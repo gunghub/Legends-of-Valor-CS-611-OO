@@ -39,7 +39,7 @@ public class Round {
         hero.setHP((int) 1.1 * hero.getHP());
         hero.setMana((int) 1.1 * hero.getMana());
 
-        System.out.println( "Please choose an action for H" + (index + 1) + " ----");
+        System.out.println( colors.addColor("purple", "Please choose an action for H" + (index + 1) + " ----"));
         play = hero.takeAction(grid, game);
 
         if (!play) {

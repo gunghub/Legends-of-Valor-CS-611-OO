@@ -77,7 +77,7 @@ public abstract class Hero extends Character {
             if (row == 7) {
                 Markets market = new Markets();
                 market.storeConsole(this);
-                System.out.println("Please choose another action for your hero.");
+                System.out.println(colors.addColor("purple", "Please choose another action for your hero."));
             }
             System.out.println(" 1: Attack\n 2: Cast spell\n 3: Change Weapon/Armor\n 4: Use a potion\n " +
                     "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
@@ -218,7 +218,7 @@ public abstract class Hero extends Character {
                     break;
 
                 case 6: //teleport
-                    System.out.println(colors.addColor("red", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
+                    System.out.println(colors.addColor("purple", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
                             " 2. You shall not land on the same cell as another hero\n" +
                             " 3. You must teleport to a different lane than your current lane\n" +
                             " 4. You shall not go further than the max explored row in this lane"));
@@ -233,7 +233,7 @@ public abstract class Hero extends Character {
                         System.out.println(colors.addColor("purple","Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):"));
                         input = ScannerParser.parseString();
 
-                        if(!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot")){
+                        if(!input.equalsIgnoreCase("Top") && !input.equalsIgnoreCase("Mid") && !input.equalsIgnoreCase("Bot")){
                             System.out.println(colors.addColor("red","Please check your spell"));
                             inputValid=false;
                         }else if (currLane.getName().equals(input)) {
@@ -278,6 +278,7 @@ public abstract class Hero extends Character {
 
                     /**
                      * Step 3. check if both left and right are occupied.
+                     * if yes, REJECT!!!
                      *
                      */
                     if(grid.getCells()[destinationRow][destinationLane.getLeftCol()].isHasHero()
@@ -292,7 +293,7 @@ public abstract class Hero extends Character {
 
                     /**
                      * Step 4.
-                     * get a valid input 1 for left  or 2 for right.
+                     * get a valid input 1 for left or 2 for right.
                      * get the destination column
                      */
 
@@ -336,8 +337,11 @@ public abstract class Hero extends Character {
                      * MOVE TO THE DESTINATION LANE!!!
                      *
                      */
-                    setCol(destinationColumn);
-                    setRow(destinationRow);
+                    boolean moveSuccessful=grid.makeHeroMove(destinationRow,destinationColumn,this);
+                    assert moveSuccessful;
+                    if(!moveSuccessful){
+                        System.err.println("There must be something wrong!!");
+                    }
                     setCurrLane(destinationLane);
                     thisActionFinished=true;
                     break;

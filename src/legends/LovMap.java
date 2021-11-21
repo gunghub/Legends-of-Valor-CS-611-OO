@@ -29,10 +29,14 @@ public class LovMap extends Grid {
             {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
     };
 
+
+
     public LovMap(LegendsOfValor legendsOfValor) {
         super(LOV_MAP_SIZE_OF_CELLS, LOV_MAP_SIZE_OF_CELLS);
         this.legendsOfValor = legendsOfValor;
         colors = new Colors();
+        initialize();
+
         display();
     }
 
@@ -75,27 +79,27 @@ public class LovMap extends Grid {
         int cellRow = row / 3;
         switch (map[cellRow][col]) {
             case NEXUS:
-                cells[cellRow][col] = new NexusCell(cellRow, col);
+                //cells[cellRow][col] = new NexusCell(cellRow, col);
                 printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case PLAIN:
-                cells[cellRow][col] = new PlainCell(cellRow, col);
+                //cells[cellRow][col] = new PlainCell(cellRow, col);
                 printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case KOULOU:
-                cells[cellRow][col] = new KoulouCell(cellRow, col);
+                //cells[cellRow][col] = new KoulouCell(cellRow, col);
                 printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case CAVE:
-                cells[cellRow][col] = new CaveCell(cellRow, col);
+                //cells[cellRow][col] = new CaveCell(cellRow, col);
                 printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case BUSH:
-                cells[cellRow][col] = new BushCell(cellRow, col);
+                //cells[cellRow][col] = new BushCell(cellRow, col);
                 printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
             case INACCESSIBLE:
-                cells[cellRow][col] = new InaccessibleCell(cellRow, col);
+                //cells[cellRow][col] = new InaccessibleCell(cellRow, col);
                 printableMap.get(row).append(getOuterCellStr(cells[cellRow][col].getIcon()));
                 break;
         }
@@ -152,11 +156,44 @@ public class LovMap extends Grid {
     }
 
 
+
+
+    public void initialize(){
+        for(int row=0;row<LOV_MAP_SIZE_OF_CELLS;row++){
+            for(int column=0;column<LOV_MAP_SIZE_OF_CELLS;column++){
+                switch (cellTypes[row][column]) {
+                    case NEXUS:
+                        cells[row][column] = new NexusCell(row, column);
+                        break;
+                    case PLAIN:
+                        cells[row][column] = new PlainCell(row, column);
+                        break;
+                    case KOULOU:
+                        cells[row][column] = new KoulouCell(row, column);
+                        break;
+                    case CAVE:
+                        cells[row][column] = new CaveCell(row, column);
+                        break;
+                    case BUSH:
+                        cells[row][column] = new BushCell(row, column);
+                        break;
+                    case INACCESSIBLE:
+                        cells[row][column] = new InaccessibleCell(row, column);
+                        break;
+                }
+            }
+        }
+    }
+
+
+
+
     /**
      * Display the map, heroes, and monsters.
      *
      * @author Gung
      */
+
     public void display() {
 
         List<StringBuilder> printable = new ArrayList<>();
@@ -202,69 +239,6 @@ public class LovMap extends Grid {
 
 
 
-
-/**
- *
- *land on a cell. Prompt the corresponding scenarios after landing on the cell
- *
- * @param row  row of the landed cell
- * @param col  column of the landed cell
- * @param hero
- * @param cell
- * @param move
- */
-
-//    @Deprecated
-//    public boolean landOnMap(int row, int col, Hero hero, Cell cell, String move) {
-////        printGrid(p);
-//        boolean inaccessible = false;
-//        String icon = cells[row][col].getIcon();
-//        switch (icon) {
-//            case "I":
-//                InaccessibleCell inaccessiblecell = (InaccessibleCell) cells[row][col];
-//                inaccessiblecell.land();
-//                hero.makeMove(this);
-//                inaccessible = true;
-//                break;
-//
-//            case "N":
-//                NexusCell nexuscell = (NexusCell) cells[row][col];
-////                nexuscell.land(hero);
-////                hero.makeMove(this);
-//                if(nexuscell.getRow()==0){
-//                    System.out.println("A hero landed on monster's cell! You won the game!");
-//                }
-//                break;
-//
-//            case "P":
-//                cells[row][col].setHasHero(true);
-////                hero.makeMove(this);
-//                break;
-//
-//            case "B":
-//                cells[row][col].setHasHero(true);
-//                BushCell bushcell = (BushCell) cells[row][col];
-//                bushcell.land(hero);
-////                hero.makeMove(this);
-//                break;
-//
-//            case "C":
-//                cells[row][col].setHasHero(true);
-//                CaveCell cavecell = (CaveCell) cells[row][col];
-//                cavecell.land(hero);
-////                hero.makeMove(this);
-//                break;
-//
-//            case "K":
-//                cells[row][col].setHasHero(true);
-//                KoulouCell kouloucell = (KoulouCell) cells[row][col];
-//                kouloucell.land(hero);
-////                hero.makeMove(this);
-//                break;
-//
-//        }
-//        return inaccessible;
-//    }
 
     /**
      *
