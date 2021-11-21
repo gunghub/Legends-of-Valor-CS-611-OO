@@ -265,7 +265,7 @@ public abstract class Hero extends Character {
                             System.out.println(colors.addColor("red", "Please check your spell"));
                             inputValid = false;
                         } else if (currLane.getName().equals(input)) {
-                            System.out.println(colors.addColor("red", "You must teleport to a different lane!"));
+                            System.out.println(colors.addColor("red", "You must teleport to a different lane! Try again:"));
                             inputValid = false;
                         } else {
                             inputValid = true;
@@ -289,10 +289,10 @@ public abstract class Hero extends Character {
                             System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                             inputValid = false;
                         } else if (destinationLane.getMaxMonsterRow() > destinationRow) {
-                            System.out.println(colors.addColor("red", "You shall not bypass any monster!"));
+                            System.out.println(colors.addColor("red", "You shall not bypass any monster! Try again:"));
                             inputValid = false;
                         } else if (destinationLane.getMaxExplored() > destinationRow) {
-                            System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane!"));
+                            System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane! Try again:"));
                             inputValid = false;
                         } else {
                             inputValid = true;
@@ -311,7 +311,7 @@ public abstract class Hero extends Character {
                      */
                     if (grid.getCells()[destinationRow][destinationLane.getLeftCol()].isHasHero()
                             && grid.getCells()[destinationRow][destinationLane.getLeftCol() + 1].isHasHero()) {
-                        System.out.println(colors.addColor("red", "Sorry, both left and right columns of this lane are occupied"));
+                        System.out.println(colors.addColor("red", "Sorry, both left and right columns of this lane are occupied. Try again:"));
                         thisActionFinished = false;
                         break;
 
@@ -344,7 +344,7 @@ public abstract class Hero extends Character {
                         if (inputValid) break;
                     }
                     int destinationColumn = destinationLane.getLeftCol() + (leftOfRight - 1);
-                    System.out.println(colors.addColor("red", "Your destination column is " + destinationColumn));
+//                    System.out.println(colors.addColor("red", "Your destination column is " + destinationColumn));
 
                     /**
                      *
@@ -353,7 +353,7 @@ public abstract class Hero extends Character {
                      * if yes, REJECT!!!
                      */
                     if (grid.getCells()[destinationRow][destinationColumn].isHasHero()) {
-                        System.out.println(colors.addColor("red", "You shall not land on the same cell with another hero!"));
+                        System.out.println(colors.addColor("red", "You shall not land on the same cell with another hero! Try again:"));
                         thisActionFinished = false;
                         break;
                     }
@@ -362,7 +362,7 @@ public abstract class Hero extends Character {
                      *  Step 5.5
                      */
                     if(destinationRow<destinationLane.getMaxExplored()){
-                        System.out.println(colors.addColor("red","Sorry, you cannot surpass the highest explored cell."));
+                        System.out.println(colors.addColor("red","Sorry, you cannot surpass the highest explored cell. Try again:"));
                         thisActionFinished=false;
                         break;
                     }
@@ -372,7 +372,7 @@ public abstract class Hero extends Character {
                      *  Step 5.6
                      */
                     if(destinationRow<destinationLane.getMaxMonsterRow()){
-                        System.out.println(colors.addColor("red","Sorry, you cannot surpass the alive monster."));
+                        System.out.println(colors.addColor("red","Sorry, you cannot surpass the alive monster. Try again:"));
                         thisActionFinished=false;
                         break;
                     }
