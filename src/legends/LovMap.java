@@ -5,9 +5,12 @@ import legends.characters.monsters.Monster;
 import legends.games.LegendsOfValor;
 import legends.grids.Grid;
 import legends.grids.cells.*;
+import legends.grids.lanes.Lane;
 import legends.utilities.Colors;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -192,24 +195,71 @@ public class LovMap extends Grid {
     }
 
 
-
-
     /**
-     * Display the map, heroes, and monsters.
-     *
-     * @author Gung
+     * check and update
      */
 
 
-    public void check(){
+    private void displayDebugInformation(){
         /**
          * display hero's row and col
          */
         for(int heroIndex=0;heroIndex<legendsOfValor.getHeroes().size();heroIndex++){
-            System.out.println("Hero "+heroIndex+" row: " + legendsOfValor.getHeroes().get(heroIndex).getRow()+" col: "+ legendsOfValor.getHeroes().get(heroIndex).getCol());
+            System.out.println("Hero "+heroIndex+" ( " + legendsOfValor.getHeroes().get(heroIndex).getRow()+" , "+ legendsOfValor.getHeroes().get(heroIndex).getCol()+" )");
+        }
+
+        System.out.println("Top Lane: "+" max alive Monster row: "+legendsOfValor.getLane("Top").getMaxMonsterRow()+" highest explored: "+legendsOfValor.getLane("Top").getMaxExplored());
+        System.out.println("Mid Lane: "+" max alive Monster row: "+legendsOfValor.getLane("Mid").getMaxMonsterRow()+" highest explored: "+legendsOfValor.getLane("Mid").getMaxExplored());
+        System.out.println("Bot Lane: "+" max alive Monster row: "+legendsOfValor.getLane("Bot").getMaxMonsterRow()+" highest explored: "+legendsOfValor.getLane("Bot").getMaxExplored());
+    }
+
+    public void checkAndUpdate(){
+
+
+
+        /**
+         * update the max monster row
+         *
+         */
+
+        Map<Lane, Integer> maxAliveMonsterRows=new HashMap<>();
+        for(int i=0;i<legendsOfValor.getMonsters().size();i++){
+            Monster monster=legendsOfValor.getMonsters().get(i);
+
+            if(monster.isFaint())continue;
+
+            if(!maxAliveMonsterRows.containsKey(monster.getLane())){
+                maxAliveMonsterRows.put(monster.getLane(),monster.getRow());
+            }else {
+                if(monster.getRow()>maxAliveMonsterRows.get(monster.getLane())){
+                    maxAliveMonsterRows.put(monster.getLane(),monster.getRow());
+                }
+            }
+        }
+
+        legendsOfValor.getLane("Top").setMaxMonsterRow(-1);
+        legendsOfValor.getLane("Mid").setMaxMonsterRow(-1);
+        legendsOfValor.getLane("Bot").setMaxMonsterRow(-1);
+
+        for (Lane lane:maxAliveMonsterRows.keySet()
+             ) {
+            lane.setMaxMonsterRow(maxAliveMonsterRows.get(lane));
+        }
+
+        /**
+         * update the hero max explored
+         *
+         */
+
+        for (int i = 0; i < legendsOfValor.getHeroes().size(); i++) {
+            Hero hero=legendsOfValor.getHeroes().get(i);
+            hero.getCurrLane().updateMaxExplored();
         }
 
 
+        /**
+         * self-check hero
+         */
         for(int row=0;row<LOV_MAP_SIZE_OF_CELLS;row++){
             for (int col=0;col<LOV_MAP_SIZE_OF_CELLS;col++){
                 /**
@@ -270,10 +320,17 @@ public class LovMap extends Grid {
 
 
     }
+
+    /**
+     * Display the map, heroes, and monsters.
+     *
+     * @author Gung
+     */
     public void display() {
 
+        displayDebugInformation();
 
-        check();
+        checkAndUpdate();
 
         List<StringBuilder> printable = new ArrayList<>();
         for (int row = 0; row < (LOV_MAP_SIZE_OF_CELLS + 1) * 3; row++) {
@@ -327,6 +384,7 @@ public class LovMap extends Grid {
      * @return if this move successful.
      */
     public boolean makeHeroMove(int destinationCellRow, int destinationCellColumn, Hero heroToMove){
+        checkAndUpdate();
 
         boolean allowed=true;
         //Check the boundary
@@ -335,7 +393,7 @@ public class LovMap extends Grid {
             return false;
         }
 
-        //Check if there is a hero in the cell;
+        //Check if there is a hero in the destination cell;
         for (Hero heroInGame:legendsOfValor.getHeroes()
              ) {
             if (heroInGame.getRow()==destinationCellRow&&heroInGame.getCol()==destinationCellColumn){
@@ -343,6 +401,18 @@ public class LovMap extends Grid {
                 return false;
             }
         }
+
+
+
+        /**
+         * Cannot surpass the alive monster
+         */
+
+        if(destinationCellRow<heroToMove.getCurrLane().getMaxMonsterRow()){
+            System.out.println("You can't surpass the alive monster!");
+            return false;
+        }
+
 
         Cell destinationCell=cells[destinationCellRow][destinationCellColumn];
         Cell startCell =cells[heroToMove.getRow()][heroToMove.getCol()];

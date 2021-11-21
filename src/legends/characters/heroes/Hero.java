@@ -59,6 +59,7 @@ public abstract class Hero extends Character {
         armedInventory = new Inventory();
         inventory = new Inventory();
         currLane = initLane;
+        if(initLane!=null){initLane.getIn(this);}
         currentWeapon = null;
         currentArmor = null;
     }
@@ -218,6 +219,9 @@ public abstract class Hero extends Character {
                     break;
 
                 case 6: //teleport
+
+                    grid.checkAndUpdate();
+
                     System.out.println(colors.addColor("purple", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
                             " 2. You shall not land on the same cell as another hero\n" +
                             " 3. You must teleport to a different lane than your current lane\n" +
@@ -254,8 +258,8 @@ public abstract class Hero extends Character {
                     while(true) {
                         boolean inputValid;
 
-                        System.out.println(colors.addColor("purple","Which row would you like to land on?(Between 1~8)"));
-                        destinationRow = ScannerParser.parseInt() - 1;
+                        System.out.println(colors.addColor("purple","Which row would you like to land on?(Between 0~7)"));
+                        destinationRow = ScannerParser.parseInt() ;
 
                         if (destinationRow > 7 || destinationRow < 0){
                             System.out.println(colors.addColor("red","Please input a number within the given range:"));
@@ -332,17 +336,40 @@ public abstract class Hero extends Character {
                     }
 
                     /**
+                     *  Step 5.5
+                     */
+                    if(destinationRow<destinationLane.getMaxExplored()){
+                        System.out.println(colors.addColor("red","Sorry, you cannot surpass the highest explored cell."));
+                        thisActionFinished=false;
+                        break;
+                    }
+
+
+                    /**
+                     *  Step 5.6
+                     */
+                    if(destinationRow<destinationLane.getMaxMonsterRow()){
+                        System.out.println(colors.addColor("red","Sorry, you cannot surpass the alive monster."));
+                        thisActionFinished=false;
+                        break;
+                    }
+
+
+                    /**
                      *
                      * Step 6
                      * MOVE TO THE DESTINATION LANE!!!
                      *
                      */
                     boolean moveSuccessful=grid.makeHeroMove(destinationRow,destinationColumn,this);
-                    if(!moveSuccessful){
-                        System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 8972934");
+                    if(moveSuccessful){
+                        setCurrLane(destinationLane);
+                        thisActionFinished=true;
+                    }else{
+                        thisActionFinished=false;
                     }
-                    setCurrLane(destinationLane);
-                    thisActionFinished=true;
+
+                    grid.checkAndUpdate();
                     break;
 
                 case 7: //back
@@ -843,6 +870,10 @@ public abstract class Hero extends Character {
 
     public void setRow(int row) {
         this.row = row;
+        if(currLane!=null){
+            currLane.updateMaxExplored();
+        };
+
     }
 
     public int getCol() {
@@ -857,10 +888,12 @@ public abstract class Hero extends Character {
     public void setInitLane(Lane initLane) {
         this.initLane = initLane;
         this.currLane = initLane;
+        initLane.getIn(this);
     }
 
     public Lane getCurrLane() {
         return currLane;
+
     }
 
     public void setPosition(int row, int column) {
@@ -868,8 +901,12 @@ public abstract class Hero extends Character {
         setCol(column);
     }
 
-    public void setCurrLane(Lane currLane) {
-        this.currLane = currLane;
+    public void setCurrLane(Lane destinationLane) {
+
+        this.currLane.getOut(this);
+        destinationLane.getIn(this);
+        this.currLane = destinationLane;
+
     }
 
     public Lane getInitLane() {
