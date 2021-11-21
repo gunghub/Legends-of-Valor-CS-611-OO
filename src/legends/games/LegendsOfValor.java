@@ -23,6 +23,8 @@ public class LegendsOfValor extends RPGGame {
     private Lane midLane;
     private Lane botLane;
     private Colors colors;
+    private int numRounds;
+    private ArrayList<Lane> lanes;
 
     public LegendsOfValor() {
         heroes = new ArrayList<Hero>();
@@ -36,6 +38,11 @@ public class LegendsOfValor extends RPGGame {
         topLane.setLeftCol(0);
         midLane.setLeftCol(3);
         botLane.setLeftCol(6);
+        numRounds = 0;
+        lanes = new ArrayList<Lane>();
+        lanes.add(topLane);
+        lanes.add(midLane);
+        lanes.add(botLane);
     }
 
     public void playGame() {
@@ -43,101 +50,51 @@ public class LegendsOfValor extends RPGGame {
         System.out.println(colors.addColor("cyan", "Here is the game map you are going to play:"));
         Factory fac = new Factory();
         LovMap grid = new LovMap(this);
-        initHeroes();
-        initMonsters();
+        initHeroes(grid);
+        initMonsters(grid);
         Round round = new Round();
+        //-----------all good up till here
         while (play) {
-            round.playRound(heroes, monsters, play, grid, this);
+            if(numRounds==8){
+                System.out.println("New 3 monsters are spawned!");
+                initMonsters(grid);
+            }
+            for (int i = 0; i < heroes.size(); i++) {
+                play = round.playRound(heroes.get(i), monsters.get(i), grid, this, i);
+                if(!play){
+                    break;
+                }
+
+            }
+            numRounds++;
         }
     }
 
-    public void initMonsters() {
-        FileParser fp = new FileParser();
+
+
+    public void initMonsters(LovMap grid) {
+        MonsterNexus monsterNexus = new MonsterNexus();
         for (int i = 0; i < heroes.size(); i++) {
-            Monster monster = fp.chooseRandMonster();
-//            monster.setPosition(0,i*3+1);
-            MonsterNexus monsterNexus = new MonsterNexus();
-            monsterNexus.spawn(monster, i);
+            Monster monster = (Monster)monsterNexus.spawn(lanes.get(i));
+            grid.getCells()[monster.getRow()][monster.getCol()].setHasMonster(true);
             addMonster(monster);
         }
-//        MonsterNexus monsterNexus = new MonsterNexus();
-//        for(int i=0; i<heroes.size(); i++){
-//            monsterNexus.spawn(this);
-//            addMonster(monster);
-//        }
     }
 
-    public void initHeroes() {
-        System.out.println(colors.addColor("purple", "What type of hero is your top lane hero?"));
-        System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
-        int type = ScannerParser.parseInt();
-        while (type != 1 && type != 2 && type != 3) {
-            System.out.println("Please input a number within the given range:");
-            type = ScannerParser.parseInt();
-        }
-        Hero hero = chooseHeroType(type);
-        hero.setInitLane(topLane);
-        addHero(hero);
-
-        System.out.println("What type of hero is your middle lane hero?");
-        System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
-        type = ScannerParser.parseInt();
-        while (type != 1 && type != 2 && type != 3) {
-            System.out.println("Please input a number within the given range:");
-            type = ScannerParser.parseInt();
-        }
-        hero = chooseHeroType(type);
-        hero.setInitLane(midLane);
-        addHero(hero);
-
-        System.out.println("What type of hero is your bottom lane hero?");
-        System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
-        type = ScannerParser.parseInt();
-        while (type != 1 && type != 2 && type != 3) {
-            System.out.println("Please input a number within the given range:");
-            type = ScannerParser.parseInt();
-        }
-        hero = chooseHeroType(type);
-        hero.setInitLane(botLane);
-        addHero(hero);
-
+    public void initHeroes(LovMap grid) {
         HeroNexus heroNexus = new HeroNexus();
-        for (int i = 0; i < heroes.size(); i++) {
-            heroNexus.spawn(heroes.get(i), i);
+        for(int i=0; i<lanes.size(); i++){
+            System.out.println(colors.addColor("purple", "What type of hero is your " +lanes.get(i).getName()+" lane hero?"));
+            System.out.println(" 1: Paladin\n 2: Sorcerer\n 3: Warrior");
+            Hero hero = (Hero) heroNexus.spawn(lanes.get(i));
+            grid.getCells()[hero.getRow()][hero.getCol()].setHasHero(true);
+            addHero(hero);
         }
         System.out.println(colors.addColor("blue", "Please see your heroes below ----\n"));
         Printer printer = new Printer();
         printer.printHeroes(heroes);
         System.out.println(colors.addColor("cyan", "Now start your journey!"));
     }
-
-
-    public Hero chooseHeroType(int type) {
-        FileParser fp = new FileParser();
-        Hero h = null;
-        switch (type) {
-            case 1:
-                ArrayList<Hero> paladins = fp.parsePaladins();
-                h = paladins.get(ScannerParser.getRandNum(paladins.size()));
-//                addHero(h);
-                break;
-
-            case 2:
-                ArrayList<Hero> sorcerers = fp.parseSorcerers();
-                h = sorcerers.get(ScannerParser.getRandNum(sorcerers.size()));
-//                addHero(h);
-                break;
-
-            case 3:
-                ArrayList<Hero> warriors = fp.parseWarriors();
-                h = warriors.get(ScannerParser.getRandNum(warriors.size()));
-//                addHero(h);
-                break;
-
-        }
-        return h;
-    }
-
 
     public ArrayList<Hero> getHeroes() {
         return heroes;

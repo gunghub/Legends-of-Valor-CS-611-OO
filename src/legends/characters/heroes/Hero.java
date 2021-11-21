@@ -74,8 +74,6 @@ public abstract class Hero extends Character {
         while (true) {
             boolean thisActionFinished = true;
 
-
-
             if (row == 7) {
                 Markets market = new Markets();
                 market.storeConsole(this);
@@ -93,7 +91,7 @@ public abstract class Hero extends Character {
                 case 1: //attack
                     if (withinRange(grid)) {
                         graphic.printFight();
-                        attack(getNeighborMonster(grid, lovgame), null);
+                        attack(getNeighborMonster(grid, lovgame), null, grid);
                     } else {
                         System.out.println(colors.addColor("red", "No monster is within your attacking range. Please try another move!\n"));
                         thisActionFinished=false;
@@ -111,7 +109,7 @@ public abstract class Hero extends Character {
                                 System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                                 chosenSpell = ScannerParser.parseInt() - 1;
                             }
-                            attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell));
+                            attack(getNeighborMonster(grid, lovgame), inventory.getSpells().get(chosenSpell), grid);
                         } else {
                             System.out.println(colors.addColor("red", "Your hero does not have any spell in their inventory! Choose another move!\n"));
                             thisActionFinished=false;
@@ -217,7 +215,7 @@ public abstract class Hero extends Character {
 
                 case 5: //make move
                     //makeMove(grid);
-                    makeMoveNewVersion(grid);
+                    makeMove(grid);
                     break;
 
                 case 6: //teleport
@@ -276,7 +274,7 @@ public abstract class Hero extends Character {
 
                     }
 
-                    System.out.println("Your destination row is "+destinationRow);
+                    System.out.println("Hero's destination row is "+destinationRow);
 
 
                     /**
@@ -347,6 +345,9 @@ public abstract class Hero extends Character {
 
                 case 7: //back
                     setCurrLane(initLane);
+                    grid.getCells()[row][col].setHasHero(false);
+                    setPosition(7,currLane.getLeftCol());
+                    grid.getCells()[row][col].setHasHero(true);
                     break;
 
                 case 8: //quit
@@ -364,11 +365,10 @@ public abstract class Hero extends Character {
     /**
      *
      */
-    public void makeMoveNewVersion(LovMap lovMap){
+    public void makeMove(LovMap lovMap){
         Scanner scanner=new Scanner(System.in);
         while(true){
-
-            lovMap.display();
+//            lovMap.display();
             System.out.println(colors.addColor("purple", "Please choose a move:"));
             System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
 
@@ -465,7 +465,6 @@ public abstract class Hero extends Character {
      * check whether a hero move is valid. A hero can't land on the cell that has another hero, or
      * land outside the grid, or bypass any monster
      *
-     * @param move
      * @param grid
      * @return
      */
@@ -687,7 +686,7 @@ public abstract class Hero extends Character {
         setAgility(getAgility() + p.getIncrease() * uses[4]);
     }
 
-    public void attack(Monster m, Spell spell) {
+    public void attack(Monster m, Spell spell, LovMap grid) {
         int dmg = 50;
         int newHP;
         if (spell == null) {
@@ -704,6 +703,8 @@ public abstract class Hero extends Character {
                 System.out.println("Monster " + m.getName() + " fainted!");
                 experience += 2;
                 money += m.getLevel() * 100;
+                grid.getCells()[m.getRow()][m.getCol()].setHasMonster(false);
+                m.getLane().setMaxMonsterRow(0);
             } else {
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
@@ -717,7 +718,8 @@ public abstract class Hero extends Character {
                 experience += 2;
                 money += m.getLevel() * 100;
                 m.setFaint(true);
-
+                grid.getCells()[m.getRow()][m.getCol()].setHasMonster(false);
+                m.getLane().setMaxMonsterRow(0);
             } else {
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
@@ -726,7 +728,7 @@ public abstract class Hero extends Character {
     }
 
 
-    public void takeDamage(int dmg) {
+    public void takeDamage(int dmg, LovMap grid) {
         int actualdmg = dmg;
         for (Armor a : getInventory().getArmors()) {
             if (a.isArmed()) {
@@ -736,11 +738,14 @@ public abstract class Hero extends Character {
         }
         System.out.println("Monster" + getName() + " has dealt " + dmg + " damage to " + getName());
         if (getHP() <= actualdmg) {
-            setHP(0);
-            setFaint(true);
+            grid.getCells()[row][col].setHasHero(false);
             System.out.println("Hero " + getName() + " fainted!");
             setCurrLane(initLane);
             setPosition(7, initLane.getLeftCol());
+            setHP(getLevel()*100);
+            grid.getCells()[row][col].setHasHero(true);
+
+
         } else {
             setHP(getHP() - actualdmg);
         }

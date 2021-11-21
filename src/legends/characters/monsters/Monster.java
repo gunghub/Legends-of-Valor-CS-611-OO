@@ -4,6 +4,7 @@ import legends.LovMap;
 import legends.characters.Character;
 import legends.characters.heroes.Hero;
 import legends.grids.cells.Cell;
+import legends.grids.lanes.Lane;
 
 public abstract class Monster extends Character {
     private int defense;
@@ -11,21 +12,24 @@ public abstract class Monster extends Character {
     private int dodge;
     private int row;
     private int col;
+    private Lane lane;
 
     public Monster(String name, int level, int HP, int defense, int damage, int dodge){
         super(name, level, HP);
         this.defense = defense;
         this.damage =damage;
         this.dodge = dodge;
+        lane = null;
     }
 
     public void makeMove(Hero hero, LovMap grid, int index){
         if(withinRange(grid)){
-            hero.takeDamage(damage);
+            hero.takeDamage(damage, grid);
         }else{
             grid.getCells()[row][col].setHasMonster(false);
             row++;
             grid.getCells()[row][col].setHasMonster(true);
+            lane.setMaxMonsterRow(lane.getMaxMonsterRow()+1);
             System.out.println("Monster's turn ---\nM" +(index+1)+" moved forward.");
         }
     }
@@ -40,6 +44,14 @@ public abstract class Monster extends Character {
         } else {
             return false;
         }
+    }
+
+    public Lane getLane() {
+        return lane;
+    }
+
+    public void setLane(Lane lane) {
+        this.lane = lane;
     }
 
     public int getDefense() { return defense;}

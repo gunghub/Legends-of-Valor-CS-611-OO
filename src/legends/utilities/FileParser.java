@@ -23,7 +23,10 @@ import java.util.Random;
 
 public class FileParser {
 
+    private Factory factory;
     public FileParser(){
+        factory = new Factory();
+
     }
 
     public ArrayList<String[]> readFile(String fileName) {
@@ -66,7 +69,7 @@ public class FileParser {
         ArrayList<Armor> armors = new ArrayList<Armor>();
         ArrayList<String[]> file = readFile("/inputs/Armory.txt");
         for(String[] string: file){
-            Armor a = new Armor(string[0], parseint(string[1]), parseint(string[2]), Integer.parseInt(string[3]));
+            Armor a = factory.newArmor(string[0], parseint(string[1]), parseint(string[2]), Integer.parseInt(string[3]));
             armors.add(a);
         }
         return armors;
@@ -76,19 +79,19 @@ public class FileParser {
         ArrayList<Spell> spells = new ArrayList<Spell>();
         ArrayList<String[]> file = readFile("/inputs/FireSpells.txt");
         for(String[] string: file){
-            Spell s = new FireSpell(string[0], parseint(string[1]),
+            Spell s = factory.newFireSpell(string[0], parseint(string[1]),
                     parseint(string[2]),parseint(string[4]),parseint(string[3]));
             spells.add(s);
         }
         file = readFile("/inputs/IceSpells.txt");
         for(String[] string: file){
-            Spell s = new FireSpell(string[0], parseint(string[1]),
+            Spell s = factory.newIceSpell(string[0], parseint(string[1]),
                     parseint(string[2]),parseint(string[4]),parseint(string[3]));
             spells.add(s);
         }
         file = readFile("/inputs/LightningSpells.txt");
         for(String[] string: file){
-            Spell s = new FireSpell(string[0], parseint(string[1]),
+            Spell s = factory.newLightningSpell(string[0], parseint(string[1]),
                     parseint(string[2]),parseint(string[4]),parseint(string[3]));
             spells.add(s);
         }
@@ -99,7 +102,7 @@ public class FileParser {
         HashMap<Potion, Integer> potions = new HashMap<Potion,Integer>();
         ArrayList<String[]> file = readFile("/inputs/Potions.txt");
         for(String[] string: file){
-            Potion p = new Potion(string[0], parseint(string[1]),
+            Potion p = factory.newPotion(string[0], parseint(string[1]),
                     parseint(string[2]),parseint(string[3]),string[4]);
             potions.put(p,0);
         }
@@ -110,7 +113,7 @@ public class FileParser {
         ArrayList<Weapon> weapons = new ArrayList<Weapon>();
         ArrayList<String[]> file = readFile("/inputs/Weaponry.txt");
         for(String[] string: file){
-            Weapon w = new Weapon(string[0], parseint(string[1]),
+            Weapon w = factory.newWeapon(string[0], parseint(string[1]),
                     parseint(string[2]),parseint(string[3]));
             weapons.add(w);
         }
@@ -121,21 +124,21 @@ public class FileParser {
         ArrayList<Monster> monsters = new ArrayList<Monster>();
         ArrayList<String[]> file = readFile("/inputs/Dragons.txt");
         for(String[] string: file){
-            Monster m = new Dragon(string[0], parseint(string[1]),
+            Monster m = factory.newDragon(string[0], parseint(string[1]),
                     parseint(string[1])*100,parseint(string[3]),
                     parseint(string[2]),parseint(string[4]));
             monsters.add(m);
         }
         file = readFile("/inputs/Exoskeletons.txt");
         for(String[] string: file){
-            Monster m = new Exoskeleton(string[0], parseint(string[1]),
+            Monster m = factory.newExoskeleton(string[0], parseint(string[1]),
                     parseint(string[1])*100,parseint(string[3]),
                     parseint(string[2]),parseint(string[4]));
             monsters.add(m);
         }
         file = readFile("/inputs/Spirits.txt");
         for(String[] string: file){
-            Monster m = new Exoskeleton(string[0], parseint(string[1]),
+            Monster m = factory.newSpirit(string[0], parseint(string[1]),
                     parseint(string[1])*100,parseint(string[3]),
                     parseint(string[2]),parseint(string[4]));
             monsters.add(m);
@@ -146,16 +149,15 @@ public class FileParser {
 
     public ArrayList<Hero> parsePaladins(){
         ArrayList<Hero> paladins = new ArrayList<Hero>();
+
         ArrayList<String[]> file = readFile("/inputs/Paladins.txt");
         for(String[] string: file){
-            Hero h = new Paladin(string[0], 1,
+            Hero h = factory.newPaladin(string[0], 1,
                     100, parseint(string[1]),
                     parseint(string[2]),parseint(string[3]),parseint(string[4]),
                     parseint(string[5]), parseint(string[6]), null);
             paladins.add(h);
-//            for(String s: string) {
-//                System.out.printf(s+" ");
-//            }
+
         }
         return paladins;
     }
@@ -164,7 +166,7 @@ public class FileParser {
         ArrayList<Hero> sorcerers = new ArrayList<Hero>();
         ArrayList<String[]> file = readFile("/inputs/Sorcerers.txt");
         for(String[] string: file){
-            Hero h = new Sorcerer(string[0], 1,
+            Hero h = factory.newSorcerer(string[0], 1,
                     100, parseint(string[1]),
                     parseint(string[2]),parseint(string[3]),parseint(string[4]),
                     parseint(string[5]), parseint(string[6]), null);
@@ -177,11 +179,10 @@ public class FileParser {
         ArrayList<Hero> warriors = new ArrayList<Hero>();
         ArrayList<String[]> file = readFile("/inputs/Warriors.txt");
         for(String[] string: file){
-            Hero h = new Warrior(string[0], 1,
+            Hero h = factory.newWarrior(string[0], 1,
                     100, parseint(string[1]),
                     parseint(string[2]),parseint(string[3]),parseint(string[4]),
                     parseint(string[5]), parseint(string[6]), null);
-//            Hero h = new Warrior("A",1,2,3,4,5,6,7,8);
 
             warriors.add(h);
 //                        for(String s: string) {

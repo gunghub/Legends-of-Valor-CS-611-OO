@@ -50,7 +50,6 @@ public class Printer {
         System.out.println("\n");
     }
 
-    //TODO: print name of the lane in the end
     public void printMonsters(ArrayList<Monster> monsters){
         System.out.println(colors.addColor("blue", "\t ID  \t  Name\t\tLevel\t  Damage\t  Defense\t  Dodge Chance"));
         System.out.println("=================================================================================================================");
@@ -92,13 +91,12 @@ public class Printer {
         }
     }
 
-    //TODO: finish printing the rules
-    public static void printBattleRules(){
-        System.out.println("============================================================================");
-        System.out.println("                              Battle Rules                                  ");
-        System.out.println("============================================================================");
-
-    }
+//    public static void printBattleRules(){
+//        System.out.println("============================================================================");
+//        System.out.println("                              Battle Rules                                  ");
+//        System.out.println("============================================================================");
+//
+//    }
 
     public void printArmors(ArrayList<Armor> armors){
         System.out.println(colors.addColor("blue", "\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage Reduction"));

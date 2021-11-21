@@ -24,9 +24,9 @@ public abstract class Character {
         isFaint = faint;
     }
 
-    public void takeDamage(int dmg){
-        setHP(HP-dmg);
-    }
+//    public void takeDamage(int dmg){
+//        setHP(HP-dmg);
+//    }
 
     public int getLevel() {
         return level;

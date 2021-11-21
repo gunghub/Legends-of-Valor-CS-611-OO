@@ -40,7 +40,6 @@ public class ScannerParser {
         return i;
     }
 
-    //TODO: Need to constraint the input
     public static boolean parseBoolean(){
         boolean b = false;
         String s = parseString();
