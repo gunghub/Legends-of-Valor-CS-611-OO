@@ -31,9 +31,9 @@ public class Printer {
 
 
     public void printHero(Hero h){
-        System.out.println(colors.addColor("blue", "\t  Name\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tAgility\t\tDexterity\t\tMoney\t\tExperience\t\tCurrent Lane"));
-        System.out.println("===================================================================================================================================");
-        System.out.format("%24s%7d%8d%8d%12d%11d%13d%18d%12d%17s",h.getName(),h.getLevel(),h.getHP(),h.getMana(),h.getStrength(),h.getAgility()
+        System.out.println(colors.addColor("blue", "Name\t\t\t\t\t\tLevel\t\tHP\t\tMana\t\tStrength\t\tAgility\t\tDexterity\t   Money\t\tExperience\t\tCurrent Lane"));
+        System.out.println("=======================================================================================================================================================");
+        System.out.format("%-20s%9d%13d%9d%13d%15d%15d%13d%13d%17s",h.getName(),h.getLevel(),h.getHP(),h.getMana(),h.getStrength(),h.getAgility()
                 ,h.getDexterity(),h.getMoney(),h.getExperience(), h.getCurrLane().getName());
         System.out.println("\n");
         if(h.getCurrentWeapon()!=null && h.getCurrentArmor()!=null) {
@@ -99,11 +99,11 @@ public class Printer {
 //    }
 
     public void printArmors(ArrayList<Armor> armors){
-        System.out.println(colors.addColor("blue", "\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage Reduction"));
-        System.out.println("=======================================================================================");
+        System.out.println(colors.addColor("blue", "\tID\t\t\t\tName\t\t\t\tCost\t\t\tRequired Level\t\t\tDamage Reduction"));
+        System.out.println("==================================================================================================");
         int id = 1;
         for(Armor a: armors){
-            System.out.format("%7d%12s%7d%8d%13s", id,a.getName(), a.getPrice(), a.getMinLevel(), a.getReduction());
+            System.out.format("%5d%24s%14d%20d%24d", id, a.getName(), a.getPrice(), a.getMinLevel(), a.getReduction());
             System.out.println("\n");
             id++;
         }
@@ -120,22 +120,22 @@ public class Printer {
 //            System.out.println("\n");
 //            id++;
 //        }
-        System.out.println(colors.addColor("blue","\t ID  \t  Name\t\tRequired Level\t  Attribute Increase\t  Attributes Affected"));
-        System.out.println("=======================================================================================");
+        System.out.println(colors.addColor("blue","\tID\t\t\t\tName\t\t\t\tRequired Level\t\t\tAttribute Increase\t\t\t\t\tAttributes Affected"));
+        System.out.println("================================================================================================================================");
         int id = 1;
         for(Potion p :potions.keySet()){
-            System.out.format("%7d%12s%7d%8d%13s", id,p.getName(), p.getMinLevel(), p.getIncrease(), p.getAffectedAttr());
+            System.out.format("%5d%24s%17d%27d%40s", id,p.getName(), p.getMinLevel(), p.getIncrease(), p.getAffectedAttr());
             System.out.println("\n");
             id++;
         }
     }
 
     public void printSpells(ArrayList<Spell> spells){
-        System.out.println(colors.addColor("blue","\t ID  \t  Name\t\t  Cost\t  Required Level\t  Damage\t Mana Cost"));
-        System.out.println("=========================================================================================");
+        System.out.println(colors.addColor("blue","\tID\t\t\t\tName\t\t\t\tCost\t\t\tRequired Level\t\t\tDamage\t\t\tMana Cost"));
+        System.out.println("==============================================================================================================");
         int id = 1;
         for(Spell s: spells){
-            System.out.format("%7d%12s%10d%7d%10d%13d", id, s.getName(), s.getPrice(), s.getMinLevel(), s.getDamage(), s.getMana());
+            System.out.format("%5d%24s%14d%20d%22d%18d", id, s.getName(), s.getPrice(), s.getMinLevel(), s.getDamage(), s.getMana());
             System.out.println("\n");
             id++;
         }
@@ -146,7 +146,7 @@ public class Printer {
         System.out.println("=======================================================================================");
         int id = 1;
         for(Weapon w: weapons){
-            System.out.format("%7d%12s%10d%7d%8d", id,w.getName(), w.getPrice(), w.getMinLevel(), w.getDamage());
+            System.out.format("%7d%12s%10d%11d%22d", id,w.getName(), w.getPrice(), w.getMinLevel(), w.getDamage());
             System.out.println("\n");
             id++;
         }
