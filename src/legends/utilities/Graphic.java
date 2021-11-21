@@ -16,13 +16,13 @@ public class Graphic {
     public static final String cyan = "\u001B[36m";
 
     public Graphic(){
-        banner = readGraphic("./inputs/Banner.txt");
+        banner = readGraphic("./src/ConfigFiles/Banner.txt");
         banner.insert(0, purple);
-        levelUp = readGraphic("./inputs/LevelUp.txt");
+        levelUp = readGraphic("./src/ConfigFiles/LevelUp.txt");
         levelUp.insert(0, cyan);
-        market = readGraphic("./inputs/Market.txt");
+        market = readGraphic("./src/ConfigFiles/Market.txt");
         market.insert(0, green);
-        fight = readGraphic("./inputs/Fight.txt");
+        fight = readGraphic("./src/ConfigFiles/Fight.txt");
         fight.insert(0, red);
     }
 

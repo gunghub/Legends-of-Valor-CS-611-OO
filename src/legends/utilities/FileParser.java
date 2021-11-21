@@ -17,43 +17,65 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class FileParser {
 
     private Factory factory;
-    public FileParser(){
+
+    public FileParser() {
         factory = new Factory();
 
     }
 
-    public ArrayList<String[]> readFile(String fileName) {
-        String absPath = new File("").getAbsolutePath();
-        File f = new File(absPath+fileName);
-        ArrayList<String[]> file = new ArrayList<String[]>();
+    public ArrayList<String[]> readFile(String fileName){
+        String file = System.getProperty("user.dir") + "/src/ConfigFiles/" + fileName;
+        ArrayList<String[]> result = new ArrayList<String[]>();
+        List<String> lines = Collections.emptyList();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            String line = br.readLine();
-            line = br.readLine();
-            while(line!= null){
-                String[] s = line.split("\\s+");
-                file.add(s);
-                line = br.readLine();
-            }
-        }catch (IOException e){
-            System.out.println(e);
+            lines = Files.readAllLines(Paths.get(file), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Please enter the correct filepath");
+            e.printStackTrace();
         }
-        return file;
+        for(int i=1; i<lines.size(); i++){
+        String[] s = lines.get(i).split("\\s+");
+            result.add(s);
+        }
+        return result;
+
     }
 
-    public int parseint(String s){
+//    public ArrayList<String[]> readFile(String fileName) {
+//
+//        String absPath = new File("").getAbsolutePath();
+//        File f = new File(absPath+fileName);
+//        ArrayList<String[]> file = new ArrayList<String[]>();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(f));
+//            String line = br.readLine();
+//            line = br.readLine();
+//            while(line!= null){
+//                String[] s = line.split("\\s+");
+//                file.add(s);
+//                line = br.readLine();
+//            }
+//        }catch (IOException e){
+//            System.out.println(e);
+//        }
+//        return file;
+//    }
+
+    public int parseint(String s) {
         return Integer.parseInt(s);
     }
 
     /**
      * choose a random monster who has the input level from all monsters
+     *
      * @param
      * @return
      */
@@ -65,96 +87,96 @@ public class FileParser {
     }
 
 
-    public ArrayList<Armor> parseArmor(){
+    public ArrayList<Armor> parseArmor() {
         ArrayList<Armor> armors = new ArrayList<Armor>();
-        ArrayList<String[]> file = readFile("/inputs/Armory.txt");
-        for(String[] string: file){
+        ArrayList<String[]> file = readFile("Armory.txt");
+        for (String[] string : file) {
             Armor a = factory.newArmor(string[0], parseint(string[1]), parseint(string[2]), Integer.parseInt(string[3]));
             armors.add(a);
         }
         return armors;
     }
 
-    public ArrayList<Spell> parseSpells(){
+    public ArrayList<Spell> parseSpells() {
         ArrayList<Spell> spells = new ArrayList<Spell>();
-        ArrayList<String[]> file = readFile("/inputs/FireSpells.txt");
-        for(String[] string: file){
+        ArrayList<String[]> file = readFile("FireSpells.txt");
+        for (String[] string : file) {
             Spell s = factory.newFireSpell(string[0], parseint(string[1]),
-                    parseint(string[2]),parseint(string[4]),parseint(string[3]));
+                    parseint(string[2]), parseint(string[4]), parseint(string[3]));
             spells.add(s);
         }
-        file = readFile("/inputs/IceSpells.txt");
-        for(String[] string: file){
+        file = readFile("IceSpells.txt");
+        for (String[] string : file) {
             Spell s = factory.newIceSpell(string[0], parseint(string[1]),
-                    parseint(string[2]),parseint(string[4]),parseint(string[3]));
+                    parseint(string[2]), parseint(string[4]), parseint(string[3]));
             spells.add(s);
         }
-        file = readFile("/inputs/LightningSpells.txt");
-        for(String[] string: file){
+        file = readFile("LightningSpells.txt");
+        for (String[] string : file) {
             Spell s = factory.newLightningSpell(string[0], parseint(string[1]),
-                    parseint(string[2]),parseint(string[4]),parseint(string[3]));
+                    parseint(string[2]), parseint(string[4]), parseint(string[3]));
             spells.add(s);
         }
         return spells;
     }
 
-    public HashMap<Potion, Integer> parsePotions(){
-        HashMap<Potion, Integer> potions = new HashMap<Potion,Integer>();
-        ArrayList<String[]> file = readFile("/inputs/Potions.txt");
-        for(String[] string: file){
+    public HashMap<Potion, Integer> parsePotions() {
+        HashMap<Potion, Integer> potions = new HashMap<Potion, Integer>();
+        ArrayList<String[]> file = readFile("Potions.txt");
+        for (String[] string : file) {
             Potion p = factory.newPotion(string[0], parseint(string[1]),
-                    parseint(string[2]),parseint(string[3]),string[4]);
-            potions.put(p,0);
+                    parseint(string[2]), parseint(string[3]), string[4]);
+            potions.put(p, 0);
         }
         return potions;
     }
 
-    public ArrayList<Weapon> parseWeapons(){
+    public ArrayList<Weapon> parseWeapons() {
         ArrayList<Weapon> weapons = new ArrayList<Weapon>();
-        ArrayList<String[]> file = readFile("/inputs/Weaponry.txt");
-        for(String[] string: file){
+        ArrayList<String[]> file = readFile("Weaponry.txt");
+        for (String[] string : file) {
             Weapon w = factory.newWeapon(string[0], parseint(string[1]),
-                    parseint(string[2]),parseint(string[3]));
+                    parseint(string[2]), parseint(string[3]));
             weapons.add(w);
         }
         return weapons;
     }
 
-    public ArrayList<Monster> parseMonsters(){
+    public ArrayList<Monster> parseMonsters() {
         ArrayList<Monster> monsters = new ArrayList<Monster>();
-        ArrayList<String[]> file = readFile("/inputs/Dragons.txt");
-        for(String[] string: file){
+        ArrayList<String[]> file = readFile("Dragons.txt");
+        for (String[] string : file) {
             Monster m = factory.newDragon(string[0], parseint(string[1]),
-                    parseint(string[1])*100,parseint(string[3]),
-                    parseint(string[2]),parseint(string[4]));
+                    parseint(string[1]) * 100, parseint(string[3]),
+                    parseint(string[2]), parseint(string[4]));
             monsters.add(m);
         }
-        file = readFile("/inputs/Exoskeletons.txt");
-        for(String[] string: file){
+        file = readFile("Exoskeletons.txt");
+        for (String[] string : file) {
             Monster m = factory.newExoskeleton(string[0], parseint(string[1]),
-                    parseint(string[1])*100,parseint(string[3]),
-                    parseint(string[2]),parseint(string[4]));
+                    parseint(string[1]) * 100, parseint(string[3]),
+                    parseint(string[2]), parseint(string[4]));
             monsters.add(m);
         }
-        file = readFile("/inputs/Spirits.txt");
-        for(String[] string: file){
+        file = readFile("Spirits.txt");
+        for (String[] string : file) {
             Monster m = factory.newSpirit(string[0], parseint(string[1]),
-                    parseint(string[1])*100,parseint(string[3]),
-                    parseint(string[2]),parseint(string[4]));
+                    parseint(string[1]) * 100, parseint(string[3]),
+                    parseint(string[2]), parseint(string[4]));
             monsters.add(m);
         }
         return monsters;
     }
 
 
-    public ArrayList<Hero> parsePaladins(){
+    public ArrayList<Hero> parsePaladins() {
         ArrayList<Hero> paladins = new ArrayList<Hero>();
 
-        ArrayList<String[]> file = readFile("/inputs/Paladins.txt");
-        for(String[] string: file){
+        ArrayList<String[]> file = readFile("Paladins.txt");
+        for (String[] string : file) {
             Hero h = factory.newPaladin(string[0], 1,
                     100, parseint(string[1]),
-                    parseint(string[2]),parseint(string[3]),parseint(string[4]),
+                    parseint(string[2]), parseint(string[3]), parseint(string[4]),
                     parseint(string[5]), parseint(string[6]), null);
             paladins.add(h);
 
@@ -162,26 +184,26 @@ public class FileParser {
         return paladins;
     }
 
-    public ArrayList<Hero> parseSorcerers(){
+    public ArrayList<Hero> parseSorcerers() {
         ArrayList<Hero> sorcerers = new ArrayList<Hero>();
-        ArrayList<String[]> file = readFile("/inputs/Sorcerers.txt");
-        for(String[] string: file){
+        ArrayList<String[]> file = readFile("Sorcerers.txt");
+        for (String[] string : file) {
             Hero h = factory.newSorcerer(string[0], 1,
                     100, parseint(string[1]),
-                    parseint(string[2]),parseint(string[3]),parseint(string[4]),
+                    parseint(string[2]), parseint(string[3]), parseint(string[4]),
                     parseint(string[5]), parseint(string[6]), null);
             sorcerers.add(h);
         }
         return sorcerers;
     }
 
-    public ArrayList<Hero> parseWarriors(){
+    public ArrayList<Hero> parseWarriors() {
         ArrayList<Hero> warriors = new ArrayList<Hero>();
-        ArrayList<String[]> file = readFile("/inputs/Warriors.txt");
-        for(String[] string: file){
+        ArrayList<String[]> file = readFile("Warriors.txt");
+        for (String[] string : file) {
             Hero h = factory.newWarrior(string[0], 1,
                     100, parseint(string[1]),
-                    parseint(string[2]),parseint(string[3]),parseint(string[4]),
+                    parseint(string[2]), parseint(string[3]), parseint(string[4]),
                     parseint(string[5]), parseint(string[6]), null);
 
             warriors.add(h);
@@ -191,7 +213,6 @@ public class FileParser {
         }
         return warriors;
     }
-
 
 
 }
