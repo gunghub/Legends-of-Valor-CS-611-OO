@@ -338,9 +338,8 @@ public abstract class Hero extends Character {
                      *
                      */
                     boolean moveSuccessful=grid.makeHeroMove(destinationRow,destinationColumn,this);
-                    assert moveSuccessful;
                     if(!moveSuccessful){
-                        System.err.println("There must be something wrong!!");
+                        System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 8972934");
                     }
                     setCurrLane(destinationLane);
                     thisActionFinished=true;
