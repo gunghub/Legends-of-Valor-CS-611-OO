@@ -24,7 +24,7 @@ public abstract class Monster extends Character {
 
     public void makeMove(Hero hero, LovMap grid, int index){
         if(withinRange(grid)){
-            hero.takeDamage(damage, grid);
+            hero.takeDamage((int)damage/30, grid);
         }else{
             grid.getCells()[row][col].setHasMonster(false);
             row++;
