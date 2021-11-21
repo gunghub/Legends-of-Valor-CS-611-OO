@@ -106,12 +106,18 @@ public class Round {
         if (hero.getRow() == 0) {
             System.out.println("A hero landed on monster's Nexus. You won the game!");
             AudioUtility.playSound(AudioUtility.WIN);
-
+            Scanner scanner=new Scanner(System.in);
+            System.out.println("Press any button to end game ---");
+            scanner.nextLine();
             return;
         } else if (monster.getRow() == 7) {
             AudioUtility.playSound(AudioUtility.LOSE);
 
             System.out.println("A monster landed on your Nexus. You lost!");
+            AudioUtility.playSound(AudioUtility.WIN);
+            Scanner scanner=new Scanner(System.in);
+            System.out.println("Press any button to end game ---");
+            scanner.nextLine();
             return;
         }
     }
