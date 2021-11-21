@@ -197,7 +197,6 @@ public abstract class Hero extends Character {
                     break;
 
                 case 4: // use potion
-
                     HashMap<Potion, Integer> potions = inventory.getPotions();
                     if (potions.size() != 0) {
                         System.out.println("Please choose a potion to use (enter ID):");
@@ -225,41 +224,121 @@ public abstract class Hero extends Character {
                     System.out.println(colors.addColor("red", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
                             " 2. You shall not land on the same cell as another hero\n" +
                             " 3. You must teleport to a different lane than your current lane\n" +
-                            " 4. You shall not go further than the max explored row in this lane"));
-                    System.out.println(colors.addColor("purple","Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):"));
-                    String input = ScannerParser.parseString();
-                    while (!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot") || currLane.getName().equals(input)) {
-                        if (currLane.getName().equals(input)) {
-                            System.out.println(colors.addColor("red", "You must teleport to a different lane!"));
-                        }
-                        input = ScannerParser.tryString();
-                    }
-                    setCurrLane(lovgame.getLane(input));
+                            " 4. You shall not go further than the max explored row in this lane");
 
-                    System.out.println("Which row would you like to land on?(Between 1~8)");
-                    int currrow = ScannerParser.parseInt();
-                    while (currrow > 8 || currrow < 1 || currLane.getMaxMonsterRow() > currrow - 1 || currLane.getMaxExplored() > currrow - 1) {
-                        if (currLane.getMaxMonsterRow() > currrow - 1) {
-                            System.out.println(colors.addColor("red", "You shall not bypass any monster!"));
+
+                    /**
+                     * step 1. get the destination lane
+                     */
+                    String input="";
+                    while (true) {
+                        boolean inputValid;
+                        System.out.println("Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):");
+                        input = ScannerParser.parseString();
+
+                        if(!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot")){
+                            System.out.println("Please check your spell");
+                            inputValid=false;
+                        }else if (currLane.getName().equals(input)) {
+                            System.out.println("You must teleport to a different lane!");
+                            inputValid=false;
+                        }else{
+                            inputValid=true;
                         }
-                        if (currLane.getMaxExplored() > currrow - 1) {
-                            System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane!"));
-                        }
-                        System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                        currrow = ScannerParser.parseInt();
+                        if(inputValid)break;
                     }
-                    row = currrow - 1;
-                    System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
-                    int leftorright = ScannerParser.parseInt();
-                    //check if lands on a cell that has a already hero
-                    while ((leftorright != 1 && leftorright != 2) || grid.getCells()[row][currLane.getLeftCol() + (leftorright - 1)].isHasHero()) {
-                        if (grid.getCells()[row][currLane.getLeftCol() + (leftorright - 1)].isHasHero()) {
-                            System.out.println(colors.addColor("red", "You shall not land on the same cell with another hero!"));
+                    Lane destinationLane=lovgame.getLane(input);
+
+                    /**
+                     * Step 2. Get the destination row
+                     */
+
+                    int destinationRow;
+                    while(true) {
+                        boolean inputValid;
+
+                        System.out.println("Which row would you like to land on?(Between 1~8)");
+                        destinationRow = ScannerParser.parseInt() - 1;
+
+                        if (destinationRow > 7 || destinationRow < 0){
+                            System.out.println("Please input a number within the given range:");
+                        inputValid = false;
+                        } else if(destinationLane.getMaxMonsterRow() > destinationRow){
+                            System.out.println("You shall not bypass any monster!");
+                            inputValid=false;
+                        }else if(destinationLane.getMaxExplored() > destinationRow){
+                            System.out.println("You shall not exceed the max explored row of this lane!");
+                            inputValid=false;
+                        }else{
+                            inputValid=true;
                         }
-                        System.out.println(colors.addColor("red", "Please input a number within the given range:"));
-                        leftorright = ScannerParser.parseInt();
+                        if(inputValid)break;
+
                     }
-                    col = currLane.getLeftCol() + (leftorright - 1);
+
+                    System.out.println("Your destination row is "+destinationRow);
+
+
+                    /**
+                     * Step 3. check if both left and right are occupied.
+                     *
+                     */
+                    if(grid.getCells()[destinationRow][destinationLane.getLeftCol()].isHasHero()
+                            && grid.getCells()[destinationRow][destinationLane.getLeftCol()+1].isHasHero()){
+                        System.out.println("Sorry, both left and right columns of this lane are occupied");
+                        thisActionFinished=false;
+                        break;
+
+                    }
+
+
+
+                    /**
+                     * Step 4.
+                     * get a valid input 1 for left  or 2 for right.
+                     * get the destination column
+                     */
+
+
+                    int leftOfRight=0;
+                    Scanner scanner=new Scanner(System.in);
+                    while(true) {
+                        boolean inputValid;
+                        System.out.println("Would you like to land on left or right column of this lane?\n 1. Left\n 2. Right");
+                        if (scanner.hasNextInt()) {
+                            leftOfRight = scanner.nextInt();
+                            if(leftOfRight==1||leftOfRight==2){
+                                inputValid=true;
+                            }else{
+                                inputValid=false;
+                            }
+                        } else {
+                            scanner.next();
+                            inputValid=false;
+                        }
+                        if(inputValid) break;
+                    }
+                    int destinationColumn=destinationLane.getLeftCol()+(leftOfRight - 1);
+                    System.out.println("Your destination column is "+ destinationColumn);
+
+                    /**
+                     * judge if it has hero
+                     * if yes, REJECT!!!
+                     */
+                    if(grid.getCells()[destinationRow][destinationColumn].isHasHero()){
+                        System.out.println("You shall not land on the same cell with another hero!");
+                        thisActionFinished=false;
+                        break;
+                    }
+
+                    /**
+                     * MOVE TO THE DESTINATION LANE!!!
+                     *
+                     */
+                    setCol(destinationColumn);
+                    setRow(destinationRow);
+                    setCurrLane(destinationLane);
+                    thisActionFinished=true;
                     break;
 
                 case 7: //back
@@ -280,14 +359,13 @@ public abstract class Hero extends Character {
 
 
             if(thisActionFinished)break;
+            
 
         }
 //        System.out.println(row+" "+col);
         return play;
 
     }
-
-
 
     /**
      *
@@ -321,7 +399,7 @@ public abstract class Hero extends Character {
     }
 
 
-    /**
+ /*   *//**
      * @deprecated
      * player choose to move a hero a certain direction. The hero then land on the cell and prompt the corresponding
      * scenarios
@@ -332,7 +410,7 @@ public abstract class Hero extends Character {
     @Deprecated
     public void makeMove(LovMap grid) {
         grid.display();
-        System.out.println(colors.addColor("purple", "Please choose a move:"));
+        System.out.println("Please choose a move:");
         System.out.println("W/w: move up\nA/a: move left\nS/s: move down\nD/d: move right\n");
         String move = ScannerParser.parseString();
         while (move.equals("W") && move.equals("w") && move.equals("A") && move.equals("a") && move.equals("S") && move.equals("s") &&
@@ -389,6 +467,7 @@ public abstract class Hero extends Character {
 
 
     /**
+     *
      * check whether a hero move is valid. A hero can't land on the cell that has another hero, or
      * land outside the grid, or bypass any monster
      *
@@ -397,7 +476,7 @@ public abstract class Hero extends Character {
      * @return
      */
     @Deprecated
-    public boolean isValidMove(String move, LovMap grid) {
+    /*public boolean isValidMove(String move, LovMap grid) {
         boolean isValid = true;
         Cell[][] grids = grid.getCells();
 
@@ -405,16 +484,16 @@ public abstract class Hero extends Character {
             case "W":
             case "w":
                 if (row - 1 < 0) {
-                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
+                    System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
                     if (grids[row - 1][col].isHasHero()) {
-                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
+                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
                 }
                 if (row == currLane.getMaxMonsterRow()) {
-                    System.out.println(colors.addColor("red", "You shall not bypass an monster without killing it! Please try again!"));
+                    System.out.println("You shall not bypass an monster without killing it! Please try again!");
                     isValid = false;
                 }
 
@@ -423,11 +502,11 @@ public abstract class Hero extends Character {
             case "A":
             case "a":
                 if (col - 1 < 0) {
-                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
+                    System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
                     if (grids[row][col - 1].isHasHero()) {
-                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
+                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
                 }
@@ -436,11 +515,11 @@ public abstract class Hero extends Character {
             case "S":
             case "s":
                 if (row + 1 > 7) {
-                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
+                    System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
                     if (grids[row + 1][col].isHasHero()) {
-                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
+                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
                 }
@@ -449,18 +528,18 @@ public abstract class Hero extends Character {
             case "D":
             case "d":
                 if (col + 1 > 7) {
-                    System.out.println(colors.addColor("red", "You shall not land outside the map!"));
+                    System.out.println("You shall not land outside the map!");
                     isValid = false;
                 } else {
                     if (grids[row][col + 1].isHasHero()) {
-                        System.out.println(colors.addColor("red", "You shall not land in the same cell with another hero! Please try again!"));
+                        System.out.println("You shall not land in the same cell with another hero! Please try again!");
                         isValid = false;
                     }
                 }
                 break;
         }
         return isValid;
-    }
+    }*/
 
     public Monster getNeighborMonster(LovMap grid, LegendsOfValor legendofvalor) {
         Cell[][] grids = grid.getCells();
