@@ -3,6 +3,7 @@ package legends.utilities;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.io.File;
 import java.util.Scanner;
 
@@ -74,6 +75,10 @@ public class AudioUtility {
                     if(loop) {
                         clip.loop(Clip.LOOP_CONTINUOUSLY);
                     }
+
+                    FloatControl volume= (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                    //volume.setValue(volumeOffset);
+
                     clip.start();
 
                     // If you want the playSound to loop infinitely, then put: clip.loop(Clip.LOOP_CONTINUOUSLY);

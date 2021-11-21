@@ -286,13 +286,16 @@ public abstract class Hero extends Character {
                         destinationRow = ScannerParser.parseInt() ;
 
                         if (destinationRow > 7 || destinationRow < 0) {
+                            System.out.println("Hero's destination row is "+destinationRow);
                             System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                             inputValid = false;
                         } else if (destinationLane.getMaxMonsterRow() > destinationRow) {
-                            System.out.println(colors.addColor("red", "You shall not bypass any monster! Try again:"));
-                            inputValid = false;
-                        } else if (destinationLane.getMaxExplored() > destinationRow) {
-                            System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane! Try again:"));
+                            System.out.println("Hero's destination row is "+destinationRow);
+                            System.out.println(colors.addColor("red","You shall not bypass any monster!"));
+                            inputValid=false;
+                        }else if(destinationLane.getMaxExplored() > destinationRow){
+                            System.out.println("Hero's destination row is "+destinationRow) ;
+                            System.out.println(colors.addColor("red", "You shall not exceed the max explored row of this lane!"));
                             inputValid = false;
                         } else {
                             inputValid = true;
