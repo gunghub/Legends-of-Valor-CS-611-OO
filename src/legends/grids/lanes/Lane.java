@@ -1,14 +1,38 @@
 package legends.grids.lanes;
 
 
+import legends.characters.heroes.Hero;
 import legends.grids.cells.Cell;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Lane {
 
     private int maxMonsterRow;
     private String name;
-    private int maxExplored;
+    private int maxExplored=7;
     private int leftCol;
+    Set<Hero> heroSet=new HashSet<>();
+
+
+    public void getIn(Hero hero){
+        heroSet.add(hero);
+        updateMaxExplored();
+    }
+
+    public void getOut(Hero hero){
+        heroSet.remove(hero);
+        updateMaxExplored();
+    }
+    public int updateMaxExplored(){
+        for (Hero hero:heroSet
+             ) {
+            if(hero.getRow()<maxExplored) maxExplored=hero.getRow();
+        }
+        return 0;
+    }
+
 
     public Lane(){
 
@@ -47,6 +71,7 @@ public class Lane {
     }
 
     public int getMaxExplored() {
+        updateMaxExplored();
         return maxExplored;
     }
 
@@ -61,4 +86,8 @@ public class Lane {
     public void setLeftCol(int leftCol) {
         this.leftCol = leftCol;
     }
+
+
+
+
 }
