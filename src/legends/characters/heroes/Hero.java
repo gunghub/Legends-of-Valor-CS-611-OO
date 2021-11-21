@@ -198,15 +198,14 @@ public abstract class Hero extends Character {
                     HashMap<Potion, Integer> potions = inventory.getPotions();
                     if (potions.size() != 0) {
                         System.out.println("Please choose a potion to use (enter ID):");
-
-                        Potion[] keys = (Potion[]) potions.keySet().toArray();
+                        ArrayList<Potion> keys = new ArrayList<>(potions.keySet()) ;
                         printer.printPotions(potions);
                         int chosenPotion = ScannerParser.parseInt() - 1;
                         while (chosenPotion > inventory.getPotions().size()) {
                             System.out.println(colors.addColor("red", "Please input a number within the given range:"));
                             chosenPotion = ScannerParser.parseInt() - 1;
                         }
-                        use(keys[chosenPotion]);
+                        use(keys.get(chosenPotion));
                     } else {
                         System.out.println(colors.addColor("red", "You hero does not have any potion in their inventory! Choose another move!\n"));
                         thisActionFinished=false;

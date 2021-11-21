@@ -65,25 +65,25 @@ public class Printer {
     public void printShop(Inventory inventory, int type){
         int id = -1;
         switch(type){
-            case 0:
+            case 1:
                 ArrayList<Weapon> weapons = inventory.getWeapons();
                 System.out.println(colors.addColor("green", "Shop Weapons:"));
                 printWeapons(weapons);
                 break;
 
-            case 1:
+            case 2:
                 ArrayList<Armor> armors = inventory.getArmors();
                 System.out.println("Shop Armors:");
                 printArmors(armors);
                 break;
 
-            case 2:
+            case 3:
                 HashMap<Potion, Integer> potions = inventory.getPotions();
                 System.out.println("Shop Potions:");
                 printPotions(potions);
                 break;
 
-            case 3:
+            case 4:
                 ArrayList<Spell> spells = inventory.getSpells();
                 System.out.println("Shop Spells:");
                 printSpells(spells);
@@ -110,11 +110,20 @@ public class Printer {
     }
 
     public void printPotions(HashMap<Potion, Integer> potions){
-        Potion[] keys = (Potion[])potions.keySet().toArray();
+//        Potion[] keys = (Potion[])potions.keySet().toArray();
+//
+//        System.out.println(colors.addColor("blue","\t ID  \t  Name\t\tRequired Level\t  Attribute Increase\t  Attributes Affected"));
+//        System.out.println("=======================================================================================");
+//        int id = 1;
+//        for(Potion p: keys){
+//            System.out.format("%7d%12s%7d%8d%13s", id,p.getName(), p.getMinLevel(), p.getIncrease(), p.getAffectedAttr());
+//            System.out.println("\n");
+//            id++;
+//        }
         System.out.println(colors.addColor("blue","\t ID  \t  Name\t\tRequired Level\t  Attribute Increase\t  Attributes Affected"));
         System.out.println("=======================================================================================");
         int id = 1;
-        for(Potion p: keys){
+        for(Potion p :potions.keySet()){
             System.out.format("%7d%12s%7d%8d%13s", id,p.getName(), p.getMinLevel(), p.getIncrease(), p.getAffectedAttr());
             System.out.println("\n");
             id++;

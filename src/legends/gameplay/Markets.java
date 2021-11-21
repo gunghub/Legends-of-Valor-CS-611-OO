@@ -5,7 +5,9 @@ import legends.characters.heroes.Hero;
 import legends.items.Potion;
 import legends.players.LegendsPlayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Markets {
     private final Graphic graphic;
@@ -46,12 +48,6 @@ public class Markets {
         Factory fac = new Factory();
         Printer printer = new Printer();
         initMarket();
-//        System.out.println("Welcome to the market!");
-//        graphic.printMarket();
-//        System.out.println(colors.addColor("green", "Please choose an hero from your list to enter the store:"));
-//        h.p();
-//        int input = ScannerParser.parseInt();
-//        Hero chosenHero = p.getHeroes().get(input - 1);
         System.out.println(colors.addColor("green", "Hero entered the store. View hero stats below ---"));
         printer.printHero(hero);
         System.out.println(colors.addColor("green", "Would you like to buy or sell an item?"));
@@ -77,7 +73,6 @@ public class Markets {
                 break;
             case 3:
                 isShopping = false;
-//                enterStore(p);
                 break;
         }
     }
@@ -85,50 +80,70 @@ public class Markets {
 
     public void heroBuy(Hero h) {
         System.out.println(colors.addColor("green", "What would you like to purchase?"));
-        System.out.println(colors.addColor("green", " 1: Weapon\n 2: Armor\n 3: Potion\n 4: Spell"));
+        System.out.println(colors.addColor("green", " 1: Weapon\n 2: Armor\n 3: Potion\n 4: Spell\n 5: Go back"));
         int input = ScannerParser.parseInt();
-        while (input != 1 && input != 2 && input != 3 && input != 4) {
+        while (input != 1 && input != 2 && input != 3 && input != 4 && input != 5) {
             input = ScannerParser.tryInt();
         }
-        Printer printer = new Printer();
-        printer.printShop(market, input);
-        System.out.println(colors.addColor("green", "Which item would you like to purchase?"));
-        int id = ScannerParser.parseInt() - 1;
-        switch (input) {
-            case 1:
-                while (h.getMoney() < market.getWeapons().get(id).getPrice()) {
-                    System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this weapon. Please try again"));
-                    id = ScannerParser.parseInt() - 1;
-                }
-                h.buy(market.getWeapons().get(id));
-                System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
-                break;
-            case 2:
-                while (h.getMoney() < market.getArmors().get(id).getPrice()) {
-                    System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this armor. Please try again"));
-                    id = ScannerParser.parseInt() - 1;
-                }
-                h.buy(market.getArmors().get(id));
-                System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
-                break;
-            case 3:
-                HashMap<Potion, Integer> potions = market.getPotions();
-                Potion[] keys = (Potion[]) potions.keySet().toArray();
-                while (h.getMoney() < keys[id - 1].getPrice()) {
-                    System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this potion. Please try again"));
-                    id = ScannerParser.parseInt() - 1;
-                }
-                h.buy(keys[id - 1]);
-                System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
-                break;
-            case 4:
-                while (h.getMoney() < market.getSpells().get(id).getPrice()) {
-                    System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this spell. Please try again"));
-                    id = ScannerParser.parseInt() - 1;
-                }
-                h.buy(market.getSpells().get(id));
-                System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
-                break;
+        if (input != 5) {
+            Printer printer = new Printer();
+            printer.printShop(market, input);
+            System.out.println(colors.addColor("green", "Which item would you like to purchase? (or enter 0 to go back)"));
+            int id = ScannerParser.parseInt() - 1;
+            switch (input) {
+                case 1:
+                    if (id == -1) {
+                        break;
+                    } else {
+                        while (h.getMoney() < market.getWeapons().get(id).getPrice()) {
+                            System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this weapon. Please try again"));
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.buy(market.getWeapons().get(id));
+                        System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
+                        break;
+                    }
+                case 2:
+                    if (id == -1) {
+                        break;
+                    } else {
+                        while (h.getMoney() < market.getArmors().get(id).getPrice()) {
+                            System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this armor. Please try again"));
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.buy(market.getArmors().get(id));
+                        System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
+                        break;
+                    }
+                case 3:
+                    if (id == -1) {
+                        break;
+                    } else {
+
+                        HashMap<Potion, Integer> potions = market.getPotions();
+                        ArrayList<Potion> keys = new ArrayList<>(potions.keySet()) ;
+                        while (h.getMoney() < keys.get(id).getPrice()) {
+                            System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this potion. Please try again"));
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.buy(keys.get(id));
+                        System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
+                        break;
+                    }
+                case 4:
+                    if (id == -1) {
+                        break;
+                    } else {
+                        while (h.getMoney() < market.getSpells().get(id).getPrice()) {
+                            System.out.println(colors.addColor("red", "Your hero doesn't have enough money to buy this spell. Please try again"));
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.buy(market.getSpells().get(id));
+                        System.out.println(colors.addColor("purple", "Item is purchased successfully!\n"));
+                        break;
+                    }
+
+            }
         }
 
     }
@@ -136,63 +151,81 @@ public class Markets {
 
     public void heroSell(Hero h) {
         System.out.println(colors.addColor("green", "What would you like to sell?"));
-        System.out.println(" 1: Weapon\n 2: Armor\n 3: Potion\n 4: Spell");
+        System.out.println(" 1: Weapon\n 2: Armor\n 3: Potion\n 4: Spell\n 5: Go back");
         int input = ScannerParser.parseInt();
-        while (input != 1 && input != 2 && input != 3 && input != 4) {
+        while (input != 1 && input != 2 && input != 3 && input != 4 && input != 5) {
             input = ScannerParser.tryInt();
         }
         Printer printer = new Printer();
+        if (input != 5) {
+            switch (input) {
+                case 1:
+                    //sell a weapon
+                    printer.printWeapons(h.getInventory().getWeapons());
+                    System.out.println(colors.addColor("green", "Which item would you like to sell? (or enter 0 to go back)"));
+                    int id = ScannerParser.parseInt() - 1;
+                    if (id == -1) {
+                        break;
+                    } else {
+                        while (id < 0 || id >= h.getInventory().getWeapons().size()) {
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.sell(h.getInventory().getWeapons().get(id));
+                        System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
+                        break;
+                    }
+                case 2:
+                    //sell an armor
+                    printer.printArmors(h.getInventory().getArmors());
+                    System.out.println(colors.addColor("green", "Which item would you like to sell? (or enter 0 to go back)"));
+                    id = ScannerParser.parseInt() - 1;
+                    if (id == -1) {
+                        break;
+                    } else {
+                        while (id < 0 || id >= h.getInventory().getArmors().size()) {
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.sell(h.getInventory().getArmors().get(id));
+                        System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
+                        break;
+                    }
 
-        switch (input) {
-            case 1:
-                //sell a weapon
-                printer.printWeapons(h.getInventory().getWeapons());
-                System.out.println(colors.addColor("green", "Which item would you like to sell?"));
-                int id = ScannerParser.parseInt() - 1;
-                while (id<1 || id>h.getInventory().getWeapons().size()) {
-                    id = ScannerParser.parseInt() - 1;
-                }
-                h.sell(h.getInventory().getWeapons().get(id));
-                System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
-                break;
-            case 2:
-                //sell an armor
-                printer.printArmors(h.getInventory().getArmors());
-                System.out.println(colors.addColor("green", "Which item would you like to sell?"));
-                id = ScannerParser.parseInt() - 1;
-                while (id<1 || id>h.getInventory().getArmors().size()) {
-                    id = ScannerParser.parseInt() - 1;
-                }
-                h.sell(h.getInventory().getArmors().get(id));
-                System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
-                break;
+                case 3:
+                    //sell a potion
 
-            case 3:
-                //sell a potion
-                printer.printPotions(h.getInventory().getPotions());
-                System.out.println(colors.addColor("green", "Which item would you like to sell?"));
-                id = ScannerParser.parseInt() - 1;
-                HashMap<Potion, Integer> potions = h.getInventory().getPotions();
-                Potion[] keys = (Potion[]) potions.keySet().toArray();
-                while (id<1 || id> potions.size()) {
+                    printer.printPotions(h.getInventory().getPotions());
+                    System.out.println(colors.addColor("green", "Which item would you like to sell? (or enter 0 to go back)"));
                     id = ScannerParser.parseInt() - 1;
-                }
-                h.sell(keys[id - 1]);
-                System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
-                break;
-            case 4:
-                //sell a spell
-                printer.printSpells(h.getInventory().getSpells());
-                System.out.println(colors.addColor("green", "Which item would you like to sell?"));
-                id = ScannerParser.parseInt() - 1;
-                while (id<1 || id>h.getInventory().getSpells().size()) {
+                    HashMap<Potion, Integer> potions = h.getInventory().getPotions();
+                    ArrayList<Potion> keys = new ArrayList<>(potions.keySet()) ;
+                    if (id == -1) {
+                        break;
+                    } else {
+                        while (id < 0 || id >= potions.size()) {
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.sell(keys.get(id));
+                        System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
+                        break;
+                    }
+                case 4:
+                    //sell a spell
+                    printer.printSpells(h.getInventory().getSpells());
+                    System.out.println(colors.addColor("green", "Which item would you like to sell? (or enter 0 to go back)"));
+
                     id = ScannerParser.parseInt() - 1;
-                }
-                h.sell(h.getInventory().getArmors().get(id));
-                System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
-                break;
+                    if (id == -1) {
+                        break;
+                    } else {
+                        while (id < 0 || id >= h.getInventory().getSpells().size()) {
+                            id = ScannerParser.parseInt() - 1;
+                        }
+                        h.sell(h.getInventory().getArmors().get(id));
+                        System.out.println(colors.addColor("purple", "Item is sold successfully!\n"));
+                        break;
+                    }
+            }
         }
-
     }
 
 
