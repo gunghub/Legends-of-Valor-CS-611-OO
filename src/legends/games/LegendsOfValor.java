@@ -46,6 +46,8 @@ public class LegendsOfValor extends RPGGame {
     }
 
     public void playGame() {
+        AudioUtility.playSound(AudioUtility.DRAGON_ROAR);
+//        AudioUtility.playSound(AudioUtility.BGM_THE_GREAT_BATTLE,true);
         graphic.printBanner();
         System.out.println(colors.addColor("cyan", "Here is the game map you are going to play:"));
         Factory fac = new Factory();

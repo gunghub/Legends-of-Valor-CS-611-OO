@@ -4,8 +4,11 @@ import legends.LovMap;
 import legends.characters.heroes.Hero;
 import legends.games.LegendsOfValor;
 import legends.characters.monsters.Monster;
+import legends.utilities.AudioUtility;
 import legends.utilities.Printer;
 import legends.utilities.Colors;
+
+import java.util.Scanner;
 
 
 public class Round {
@@ -30,6 +33,7 @@ public class Round {
         boolean play = true;
 
         grid.display();
+        AudioUtility.playSound(AudioUtility.NOTIFICATION);
 
         Printer printer = new Printer();
         //print hero stats at the beginning of each round
@@ -45,10 +49,21 @@ public class Round {
         if (!play) {
             return false;
         }
+
+//        Scanner scanner=new Scanner(System.in);
+//        System.out.println("Press any button to continue ---");
+//        scanner.nextLine();
+//
+
         hero.levelUp();
         if(!monster.isFaint()){
         monster.makeMove(hero, grid, index);
         }
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("Press any button to continue ---");
+        scanner.nextLine();
+
+
         if (isOver(hero, monster)) {
             winOrLose(hero, monster);
             return false;
@@ -90,8 +105,12 @@ public class Round {
     public void winOrLose(Hero hero, Monster monster) {
         if (hero.getRow() == 0) {
             System.out.println("A hero landed on monster's Nexus. You won the game!");
+            AudioUtility.playSound(AudioUtility.WIN);
+
             return;
         } else if (monster.getRow() == 7) {
+            AudioUtility.playSound(AudioUtility.LOSE);
+
             System.out.println("A monster landed on your Nexus. You lost!");
             return;
         }

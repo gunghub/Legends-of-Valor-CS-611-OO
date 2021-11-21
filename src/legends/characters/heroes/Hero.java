@@ -723,14 +723,18 @@ public abstract class Hero extends Character {
             }
             System.out.println("Hero" + getName() + " has dealt " + dmg + " damage to " + m.getName());
             if (m.getHP() <= dmg) {
+                AudioUtility.playSound(AudioUtility.EPIC_DAMAGE);
                 m.setHP(0);
                 m.setFaint(true);
                 System.out.println("Monster " + m.getName() + " fainted!");
+                AudioUtility.playSound(AudioUtility.LEVEL_UP);
+
                 experience += 2;
                 money += m.getLevel() * 100;
                 grid.getCells()[m.getRow()][m.getCol()].setHasMonster(false);
                 m.getLane().setMaxMonsterRow(0);
             } else {
+                AudioUtility.playSound(AudioUtility.LIGHT_HIT);
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
             }
@@ -738,14 +742,18 @@ public abstract class Hero extends Character {
             mana -= spell.getMana();
             dmg = spell.calcAttack(dexterity, m);
             if (m.getHP() <= dmg) {
+                AudioUtility.playSound(AudioUtility.EPIC_DAMAGE);
                 m.setHP(0);
                 System.out.println("Monster " + m.getName() + " fainted!");
+                AudioUtility.playSound(AudioUtility.LEVEL_UP);
                 experience += 2;
                 money += m.getLevel() * 100;
                 m.setFaint(true);
                 grid.getCells()[m.getRow()][m.getCol()].setHasMonster(false);
                 m.getLane().setMaxMonsterRow(0);
             } else {
+                AudioUtility.playSound(AudioUtility.LIGHT_HIT);
+
                 newHP = m.getHP() - dmg;
                 m.setHP(newHP);
             }
@@ -762,6 +770,8 @@ public abstract class Hero extends Character {
             }
         }
         System.out.println("Monster" + getName() + " has dealt " + dmg + " damage to " + getName());
+        AudioUtility.playSound(AudioUtility.GETTING_HIT);
+
         if (getHP() <= actualdmg) {
             grid.getCells()[row][col].setHasHero(false);
             System.out.println("Hero " + getName() + " fainted!");

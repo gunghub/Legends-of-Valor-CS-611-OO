@@ -83,7 +83,8 @@ public class Markets {
         System.out.println(colors.addColor("green", " 1: Weapon\n 2: Armor\n 3: Potion\n 4: Spell\n 5: Go back"));
         int input = ScannerParser.parseInt();
         while (input != 1 && input != 2 && input != 3 && input != 4 && input != 5) {
-            input = ScannerParser.tryInt();
+            System.out.println("Invalid input! Try again:");
+            input = ScannerParser.parseInt();
         }
         if (input != 5) {
             Printer printer = new Printer();
@@ -154,7 +155,8 @@ public class Markets {
         System.out.println(" 1: Weapon\n 2: Armor\n 3: Potion\n 4: Spell\n 5: Go back");
         int input = ScannerParser.parseInt();
         while (input != 1 && input != 2 && input != 3 && input != 4 && input != 5) {
-            input = ScannerParser.tryInt();
+            System.out.println("Invalid input! Try again:");
+            input = ScannerParser.parseInt();
         }
         Printer printer = new Printer();
         if (input != 5) {

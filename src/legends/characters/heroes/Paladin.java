@@ -1,6 +1,7 @@
 package legends.characters.heroes;
 
 import legends.grids.lanes.Lane;
+import legends.utilities.AudioUtility;
 import legends.utilities.Colors;
 import legends.utilities.Graphic;
 
@@ -19,6 +20,7 @@ public class Paladin extends Hero {
 
     public void levelUp(){
         while(getExperience()>=getLevel()*10){
+            AudioUtility.playSound(AudioUtility.LEVEL_UP);
             setLevel(getLevel()+1);
             setMana((int)(getMana()*1.1));
             setHP(getLevel()*100);

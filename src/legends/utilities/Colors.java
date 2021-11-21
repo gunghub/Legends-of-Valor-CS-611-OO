@@ -22,6 +22,6 @@ public class Colors {
         return colors.get(color) + message;
     }
     public String addColorHOrM(String color, String message, String color2){
-        return colors.get(color) + message + colors.get("cyan");
+        return colors.get(color) + message + colors.get(color);
     }
 }

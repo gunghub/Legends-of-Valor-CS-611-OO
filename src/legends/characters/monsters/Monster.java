@@ -5,6 +5,8 @@ import legends.characters.Character;
 import legends.characters.heroes.Hero;
 import legends.grids.cells.Cell;
 import legends.grids.lanes.Lane;
+import legends.utilities.AudioUtility;
+import legends.utilities.Colors;
 
 public abstract class Monster extends Character {
     private int defense;
@@ -13,13 +15,14 @@ public abstract class Monster extends Character {
     private int row;
     private int col;
     private Lane lane;
-
+    private Colors colors;
     public Monster(String name, int level, int HP, int defense, int damage, int dodge){
         super(name, level, HP);
         this.defense = defense;
         this.damage =damage;
         this.dodge = dodge;
         lane = null;
+        colors = new Colors();
     }
 
     public void makeMove(Hero hero, LovMap grid, int index){
@@ -30,7 +33,9 @@ public abstract class Monster extends Character {
             row++;
             grid.getCells()[row][col].setHasMonster(true);
             lane.setMaxMonsterRow(lane.getMaxMonsterRow()+1);
-            System.out.println("Monster's turn ---\nM" +(index+1)+" moved forward.");
+            System.out.println(colors.addColorHOrM("yellow", "\nMonster's turn ---\nM" +(index+1)+" moved forward.", "purple"));
+            AudioUtility.playSound(AudioUtility.DRAGON_ROAR);
+
         }
     }
 

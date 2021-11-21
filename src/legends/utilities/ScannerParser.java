@@ -20,6 +20,8 @@ public class ScannerParser {
                 s = sc.next();
                 break;
             }catch (Exception e){
+                AudioUtility.playSound(AudioUtility.ERROR);
+
                 System.out.println(colors.addColor("red", "Please choose the given option to make your choice: "));
             }
         }
@@ -34,6 +36,7 @@ public class ScannerParser {
                 i = sc.nextInt();
                 break;
             }catch (Exception e){
+                AudioUtility.playSound(AudioUtility.ERROR);
                 System.out.println(colors.addColor("red", "Input not valid! Please try again:"));
             }
         }
