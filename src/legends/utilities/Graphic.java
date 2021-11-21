@@ -10,6 +10,7 @@ public class Graphic {
     private final StringBuilder market;
     private final StringBuilder levelUp;
     private final StringBuilder fight;
+    private final StringBuilder end;
     public static final String red = "\u001B[31m";
     public static final String green = "\u001B[32m";
     public static final String purple = "\u001B[35m";
@@ -24,6 +25,8 @@ public class Graphic {
         market.insert(0, green);
         fight = readGraphic("./src/ConfigFiles/Fight.txt");
         fight.insert(0, red);
+        end = readGraphic("./src/ConfigFiles/End.txt");
+        end.insert(0, cyan);
     }
 
     public StringBuilder readGraphic(String pathname) {
@@ -58,6 +61,10 @@ public class Graphic {
         return fight;
     }
 
+    public StringBuilder getEnd() {
+        return end;
+    }
+
     public void printBanner(){
         System.out.println(getBanner());
     }
@@ -74,4 +81,7 @@ public class Graphic {
         System.out.println(getFight());
     }
 
+    public void printEnd(){
+        System.out.println(getEnd());
+    }
 }

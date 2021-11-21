@@ -354,7 +354,8 @@ public abstract class Hero extends Character {
                     break;
 
                 case 8: //quit
-                    System.out.println(colors.addColor("red", "Thanks for playing! Exiting program..."));
+//                    System.out.println(colors.addColor("red", "Thanks for playing! Exiting program..."));
+                    graphic.printEnd();
                     play = false;
                     break;
             }
