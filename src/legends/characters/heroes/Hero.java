@@ -361,9 +361,8 @@ public abstract class Hero extends Character {
                      *
                      */
                     boolean moveSuccessful = grid.makeHeroMove(destinationRow, destinationColumn, this);
-                    assert moveSuccessful;
                     if (!moveSuccessful) {
-                        System.err.println("There must be something wrong!!");
+                        System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 8972934");
                     }
                     setCurrLane(destinationLane);
                     thisActionFinished = true;
@@ -377,7 +376,8 @@ public abstract class Hero extends Character {
                     break;
 
                 case 8: //quit
-                    System.out.println(colors.addColor("red", "Thanks for playing! Exiting program..."));
+//                    System.out.println(colors.addColor("red", "Thanks for playing! Exiting program..."));
+                    graphic.printEnd();
                     play = false;
                     break;
             }

@@ -119,30 +119,36 @@ public class LovMap extends Grid {
         final String HERO_ICON = "H";
         final String MONSTER_ICON = "M";
 
+
+
+
+
+
+
+
         StringBuilder result = new StringBuilder();
-        boolean hasHero = false;
+        boolean hasNonFaintHero = false;
         for (int i = 0; i < legendsOfValor.getHeroes().size(); i++) {
             Hero hero=legendsOfValor.getHeroes().get(i);
             if (row == hero.getRow() && col == hero.getCol()&&!hero.isFaint()) {
                 result.append(colors.addColorHOrM("magenta", HERO_ICON + (i + 1), "cyan"));
-                hasHero = true;
+                hasNonFaintHero = true;
                 break;
             }
         }
+        if (!hasNonFaintHero) result.append("  ");
 
-        if (!hasHero) result.append("  ");
-
-        boolean hasMonster = false;
+        boolean hasNotFaintMonster = false;
         for (int j = 0; j < legendsOfValor.getMonsters().size(); j++) {
             Monster monster=legendsOfValor.getMonsters().get(j);
             if (row == monster.getRow() && col == monster.getCol()&&!monster.isFaint()) {
                 result.append(colors.addColorHOrM("red", " " + MONSTER_ICON + (j + 1) + "", "cyan"));
-                hasMonster = true;
+                hasNotFaintMonster = true;
                 break;
             }
         }
 
-        if (!hasMonster) result.append("   ");
+        if (!hasNotFaintMonster) result.append("   ");
 
         return result.toString();
     }
@@ -194,7 +200,80 @@ public class LovMap extends Grid {
      * @author Gung
      */
 
+
+    public void check(){
+        /**
+         * display hero's row and col
+         */
+        for(int heroIndex=0;heroIndex<legendsOfValor.getHeroes().size();heroIndex++){
+            System.out.println("Hero "+heroIndex+" row: " + legendsOfValor.getHeroes().get(heroIndex).getRow()+" col: "+ legendsOfValor.getHeroes().get(heroIndex).getCol());
+        }
+
+
+        for(int row=0;row<LOV_MAP_SIZE_OF_CELLS;row++){
+            for (int col=0;col<LOV_MAP_SIZE_OF_CELLS;col++){
+                /**
+                 * Check hero
+                 */
+                int heroCounter=0;
+                for (int i = 0; i < legendsOfValor.getHeroes().size(); i++) {
+                    Hero hero=legendsOfValor.getHeroes().get(i);
+                    if (row == hero.getRow() && col == hero.getCol()) {
+                        heroCounter++;
+                    }
+                }
+                if(heroCounter>1) {
+                    System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 1234123");
+                    System.err.println(row+" "+col);
+                }
+                if(heroCounter>0&&!cells[row][col].isHasHero()){
+                    System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 9089823");
+                    System.err.println(row+" "+col);
+                }
+                if(heroCounter==0&&cells[row][col].isHasHero()){
+                    System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 8712347");
+                    System.err.println(row+" "+col);
+                }
+                //check ends.
+            }
+
+
+
+
+        }
+
+        /**
+         * Check monster
+         */
+
+        for(int row=0;row<LOV_MAP_SIZE_OF_CELLS;row++){
+            for (int col=0;col<LOV_MAP_SIZE_OF_CELLS;col++) {
+                int nonFaintMonsterCounter = 0;
+                for (int i = 0; i < legendsOfValor.getMonsters().size(); i++) {
+                    Monster monster = legendsOfValor.getMonsters().get(i);
+                    if (row == monster.getRow() && col == monster.getCol() && !monster.isFaint()) {
+                        nonFaintMonsterCounter++;
+                    }
+                }
+                if (nonFaintMonsterCounter > 1) {
+                    System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 1812444");
+                }
+                if (nonFaintMonsterCounter > 0 && !cells[row][col].isHasMonster()) {
+                    System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 88734243");
+                }
+                if (nonFaintMonsterCounter == 0 && cells[row][col].isHasMonster()) {
+                    System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 746124o");
+                }
+                //check ends.
+            }
+        }
+
+
+    }
     public void display() {
+
+
+        check();
 
         List<StringBuilder> printable = new ArrayList<>();
         for (int row = 0; row < (LOV_MAP_SIZE_OF_CELLS + 1) * 3; row++) {
@@ -278,7 +357,7 @@ public class LovMap extends Grid {
         if(cellIcon.equals("N")||cellIcon.equals("B")||cellIcon.equals("C")||cellIcon.equals("K")||cellIcon.equals("P")){
             allowed =true;
         }else{
-            System.err.println(colors.addColor("red", "There must be something wrong."));
+            System.err.println("THERE MUST BE SOMETHING WRONG! PLEASE CHECK! ERROR_CODE: 38424");
             return false;
         }
 
