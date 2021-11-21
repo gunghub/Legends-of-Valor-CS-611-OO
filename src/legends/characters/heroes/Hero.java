@@ -218,7 +218,7 @@ public abstract class Hero extends Character {
                     break;
 
                 case 6: //teleport
-                    System.out.println(colors.addColor("red", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
+                    System.out.println(colors.addColor("purple", "Rules of teleporting:\n 1. You shall not land on a row that surpass any monster\n" +
                             " 2. You shall not land on the same cell as another hero\n" +
                             " 3. You must teleport to a different lane than your current lane\n" +
                             " 4. You shall not go further than the max explored row in this lane"));
@@ -278,6 +278,7 @@ public abstract class Hero extends Character {
 
                     /**
                      * Step 3. check if both left and right are occupied.
+                     * if yes, REJECT!!!
                      *
                      */
                     if(grid.getCells()[destinationRow][destinationLane.getLeftCol()].isHasHero()
@@ -336,8 +337,11 @@ public abstract class Hero extends Character {
                      * MOVE TO THE DESTINATION LANE!!!
                      *
                      */
-                    setCol(destinationColumn);
-                    setRow(destinationRow);
+                    boolean moveSuccessful=grid.makeHeroMove(destinationRow,destinationColumn,this);
+                    assert moveSuccessful;
+                    if(!moveSuccessful){
+                        System.err.println("There must be something wrong!!");
+                    }
                     setCurrLane(destinationLane);
                     thisActionFinished=true;
                     break;
