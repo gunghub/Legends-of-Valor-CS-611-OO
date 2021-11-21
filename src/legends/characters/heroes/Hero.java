@@ -77,7 +77,7 @@ public abstract class Hero extends Character {
             if (row == 7) {
                 Markets market = new Markets();
                 market.storeConsole(this);
-                System.out.println("Please choose another action for your hero.");
+                System.out.println(colors.addColor("purple", "Please choose another action for your hero."));
             }
             System.out.println(" 1: Attack\n 2: Cast spell\n 3: Change Weapon/Armor\n 4: Use a potion\n " +
                     "5: Move\n 6: Teleport\n 7: Back\n 8: Quit game\n");
@@ -233,7 +233,7 @@ public abstract class Hero extends Character {
                         System.out.println(colors.addColor("purple","Please enter the name of lane you wish to teleport to (Top/ Mid/ Bot):"));
                         input = ScannerParser.parseString();
 
-                        if(!input.equals("Top") && !input.equals("Mid") && !input.equals("Bot")){
+                        if(!input.equalsIgnoreCase("Top") && !input.equalsIgnoreCase("Mid") && !input.equalsIgnoreCase("Bot")){
                             System.out.println(colors.addColor("red","Please check your spell"));
                             inputValid=false;
                         }else if (currLane.getName().equals(input)) {
@@ -292,7 +292,7 @@ public abstract class Hero extends Character {
 
                     /**
                      * Step 4.
-                     * get a valid input 1 for left  or 2 for right.
+                     * get a valid input 1 for left or 2 for right.
                      * get the destination column
                      */
 
